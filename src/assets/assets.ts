@@ -15,7 +15,7 @@ export const dummyResumeData = [
     },
     _id: "68d2a31a1c4dd38875bb037e",
     userId: "68c180acdf1775dfd02c6d87",
-    title: "Alex's Resume",
+    title: "dummy Resume",
 
     summary: "Passionate Full Stack Developer with 3+ years of experience building scalable web applications using React, Node.js, and cloud technologies.",
     
