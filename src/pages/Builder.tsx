@@ -5,6 +5,7 @@ import { ArrowBigLeftIcon ,ChevronLeft,ChevronRight,FileText,FolderIcon,Graduati
 import PersonalInfoForm from "../components/Home/PersonalInfoForm";
 import ResumePreviewer from "../components/Home/ResumePreviewer";
 import TemplateSelector from "../components/Home/TemplateSelector";
+import ColorPicker from "../components/Home/ColorPicker"
    interface ResumeStructure {
     _id: string;
     title: string;
@@ -79,13 +80,14 @@ const Builder=()=>{
                             style={{width:`${activeSectionIndex * 100 / (sections.length-1) }%`}}></hr>
 
                             {/*section nav*/}
-                            <div className=" flex justify-between items-center mb-6 border-b border-gray-300 py-1">
+                            <div className=" flex items-center gap-2">
                                 <div className="flex justify-between items-center mb-6 border border-gray-300 py-1">
                                     <TemplateSelector selectedTemplate={resumeData.template} onChange={(template)=>{setResumeData(prev => ({...prev,template}))}}/>
-
+                                    <ColorPicker selectedColor={resumeData.accent_color} onChange={(color)=>setResumeData(prev=>({...prev,accent_color}))} />
                                 </div>
 
-                                
+
+
                                 <div className="flex items-center">
                                     {activeSectionIndex !==0 && (
                                         <button onClick={()=>setActiveSectionIndex((prevIndex)=>Math.max(prevIndex-1,0))}  className="flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hoverLbg-gray-50 transition-all
