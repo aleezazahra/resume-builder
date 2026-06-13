@@ -4,6 +4,7 @@ import { dummyResumeData } from "../assets/assets";
 import { ArrowBigLeftIcon ,ChevronLeft,ChevronRight,FileText,FolderIcon,GraduationCap,Sparkles,User} from "lucide-react";
 import PersonalInfoForm from "../components/Home/PersonalInfoForm";
 import ResumePreviewer from "../components/Home/ResumePreviewer";
+import TemplateSelector from "../components/Home/TemplateSelector";
    interface ResumeStructure {
     _id: string;
     title: string;
@@ -79,7 +80,12 @@ const Builder=()=>{
 
                             {/*section nav*/}
                             <div className=" flex justify-between items-center mb-6 border-b border-gray-300 py-1">
-                                <div></div>
+                                <div className="flex justify-between items-center mb-6 border border-gray-300 py-1">
+                                    <TemplateSelector selectedTemplate={resumeData.template} onChange={(template)=>{setResumeData(prev => ({...prev,template}))}}/>
+
+                                </div>
+
+                                
                                 <div className="flex items-center">
                                     {activeSectionIndex !==0 && (
                                         <button onClick={()=>setActiveSectionIndex((prevIndex)=>Math.max(prevIndex-1,0))}  className="flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hoverLbg-gray-50 transition-all
@@ -120,7 +126,8 @@ const Builder=()=>{
 
 
                     {/* right panel or preview of resume */}
-                    <div className="lg:col-span-7 max-lg:mt-6">
+                    <div className="lg:col-span-7 bg-slate-100 rounded-lg p-4 border border-slate-200 min-h-[800px] sticky top-6">
+                        <div className="mb-4 flex justify-between items-center">
 
 
                         <div>{/*buttons*/}</div>
@@ -132,6 +139,7 @@ const Builder=()=>{
                     {/*resume preview*/}
                     <ResumePreviewer data={resumeData} template={resumeData.template} 
                     accentColor={resumeData.accent_color}/>
+                </div>
                 </div>
 
             </div>

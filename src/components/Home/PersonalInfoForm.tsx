@@ -5,14 +5,17 @@ const PersonalInfoForm = ({ data, onChange, removeBackground, setRemoveBackgroun
         onChange({ ...data, [field]: value });
     };
 
-    const fields = [
-        { key: "full_name", label: "Full name", icon: User, type: "text", required: true },
-        { key: "email", label: "Email Address", icon: Mail, type: "email", required: true },
-        { key: "phone_number", label: "Phone Number", icon: PhoneIcon, type: "tel", required: true },
-        { key: "location", label: "Location", icon: MapPin, type: "text" },
-        { key: "profession", label: "Profession", icon: BriefcaseBusiness, type: "text" },
-        { key: "website", label: "Personal Website", icon: Globe, type: "url" }, 
-    ];
+   const fields = [
+    { key: "full_name", label: "Full name", icon: User, type: "text", required: true },
+    { key: "email", label: "Email Address", icon: Mail, type: "email", required: true },
+    
+
+    { key: "phone", label: "Phone Number", icon: PhoneIcon, type: "tel", required: true },
+    
+    { key: "location", label: "Location", icon: MapPin, type: "text" },
+    { key: "title", label: "Profession", icon: BriefcaseBusiness, type: "text" },
+    { key: "website", label: "Personal Website", icon: Globe, type: "url" }, 
+];
 
     return (
         <div>
