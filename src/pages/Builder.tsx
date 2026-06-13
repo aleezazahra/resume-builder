@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { dummyResumeData } from "../assets/assets";
 import { ArrowBigLeftIcon ,ChevronLeft,ChevronRight,FileText,FolderIcon,GraduationCap,Sparkles,User} from "lucide-react";
-
-const Builder=()=>{
-    const {resumeId}=useParams()
-    interface ResumeStructure {
+import PersonalInfoForm from "../components/Home/PersonalInfoForm";
+   interface ResumeStructure {
     _id: string;
     title: string;
     personal_info: Record<string, any>;
@@ -18,6 +16,10 @@ const Builder=()=>{
     accent_color: string;
     public: boolean;
 }
+
+const Builder=()=>{
+    const {resumeId}=useParams()
+ 
     const [resumeData,setResumeData]=useState<ResumeStructure>({
         _id:'',
         title:'',
@@ -35,8 +37,8 @@ const Builder=()=>{
     const loadExistingResume=async()=>{
         const resume=dummyResumeData.find(resume=> resume._id==resumeId)
         if(resume){
-            setResumeData(resume)
-            document.title=resume.title
+            setResumeData(resume);
+            document.title=resume.title;
 
         }
     }
@@ -95,8 +97,13 @@ const Builder=()=>{
 
                             {/*form */}
                             <div className="space-y-6">
-                                {activeSection.id ==='personal' &&(
-                                    <div></div>
+                                {activeSelection.id === 'personal' && (
+                                    <PersonalInfoForm 
+                                        data={resumeData.personal_info} 
+                                        onChange={(data) => setResumeData(prev => ({ ...prev, personal_info: data }))} 
+                                        removeBackground={removeBackground} 
+                                        setRemoveBackground={setRemoveBackground} 
+                                    />
                                 )}
 
                             </div>
@@ -112,7 +119,10 @@ const Builder=()=>{
 
 
                     {/* right panel or preview of resume */}
-                    <div></div>
+                    <div>
+                        
+                        
+                    </div>
                 </div>
 
             </div>
