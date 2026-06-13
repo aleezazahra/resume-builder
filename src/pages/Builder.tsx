@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { dummyResumeData } from "../assets/assets";
 import { ArrowBigLeftIcon ,ChevronLeft,ChevronRight,FileText,FolderIcon,GraduationCap,Sparkles,User} from "lucide-react";
 import PersonalInfoForm from "../components/Home/PersonalInfoForm";
+import ResumePreviewer from "../components/Home/ResumePreviewer";
    interface ResumeStructure {
     _id: string;
     title: string;
@@ -119,10 +120,18 @@ const Builder=()=>{
 
 
                     {/* right panel or preview of resume */}
-                    <div>
-                        
+                    <div className="lg:col-span-7 max-lg:mt-6">
+
+
+                        <div>{/*buttons*/}</div>
+
+
                         
                     </div>
+
+                    {/*resume preview*/}
+                    <ResumePreviewer data={resumeData} template={resumeData.template} 
+                    accentColor={resumeData.accent_color}/>
                 </div>
 
             </div>
