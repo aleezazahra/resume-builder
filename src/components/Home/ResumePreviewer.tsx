@@ -15,13 +15,14 @@ const ResumePreviewer: React.FC<ResumePreviewerProps> = ({ data, template, accen
   const renderTemplate = () => {
     switch (template) {
       case "modern":
-        return <ModernTemplate data={data} settings={{ primaryColor: accentColor }} />;
+        return <ModernTemplate data={data} accentColor={accentColor} />;
       case "minimal":
-        return <MinimalTemplate data={data} settings={{ primaryColor: accentColor }} />;
+        return <MinimalTemplate data={data} accentColor={accentColor} />;
       case "minimal-image":
-        return <MinimalImageTemplate data={data} settings={{ primaryColor: accentColor }} />;
+        return <MinimalImageTemplate data={data} accentColor={accentColor} />;
       default:
-        return <ClassicTemplate data={data} settings={{ primaryColor: accentColor }} />;
+        return <ClassicTemplate data={data} accentColor={accentColor} />;
+        
     }
   };
 
