@@ -8,6 +8,7 @@ import TemplateSelector from "../components/Home/TemplateSelector";
 import ColorPicker from "../components/Home/ColorPicker";
 import Summaryform from "../components/Home/Summaryform";
 import ExperienceForm from "../components/Home/ExperienceForm";
+import Educationform from "../components/Home/Educationform";
 
 interface ResumeStructure {
     _id: string;
@@ -180,6 +181,18 @@ const Builder = () => {
                                            
                                         )
                                         }  />
+                                    )
+                                }
+                                  {
+                                    activeSelection.id==='education'&&(
+                                        <Educationform data={resumeData.education} onChange={(data)=>
+                                            setResumeData(prev=>({
+                                                ...prev,
+                                                education:data
+                                            })
+                                           
+                                        )
+                                        } />
                                     )
                                 }
 

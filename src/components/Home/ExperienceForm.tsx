@@ -34,8 +34,7 @@ const updateExperience=(index,field,value)=>{
                 <div>
                     <h3 className="flex items-center gap-2
                     text-lg font-semibold text-gray-900">Professional Experience</h3>
-                    <p className="flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700
-                    rounded hover:bg-purple-200 transition-colors disabled:opacity-50">Add your job experience</p>
+                   
                 </div>
                 <button onClick={addExperience} className="flex items-center gap-2px-3 py-1 text-sm
                 bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors">
@@ -58,7 +57,7 @@ const updateExperience=(index,field,value)=>{
                         <div key={index} className="p-4 border border-gray-200 rounded-lg space-y-3">
                             <div className="flex justify-between items-start">
                                 <h4>Experience #{index+1}</h4>
-                             <button onClick={removeExperience} className="
+                             <button onClick={()=>removeExperience(index)} className="
                              text-red-500 hover:text-red-700 transition-colors">
                                 <Trash className="size-4"/>
                              </button>
@@ -85,11 +84,15 @@ const updateExperience=(index,field,value)=>{
                               
 
                             </div>
-                            <label>
-                                <input type="checkbox" checked={experience.is_current || false} onChange={(e)=>updateExperience(index,"is_current",
-                                e.target.check? true :false )} className="rounded border border-gray-300 text-blue-600 focus:ring-blue-500" />
-                                <span className="text-sm text-gray-700">Currently working here</span>
-                            </label>
+<label className="flex items-center gap-2"> 
+    <input 
+        type="checkbox" 
+        checked={experience.is_current || false} 
+        onChange={(e) => updateExperience(index, "is_current", e.target.checked)} 
+        className="rounded border border-gray-300 text-blue-600 focus:ring-blue-500" 
+    />
+    <span className="text-sm text-gray-700">Currently working here</span>
+</label>
                             <div className="space-y-2">
                                 <div className="flex items-center justify-between">
                                     <label className="text-sm font-medium text-gray-700">Job description</label>
