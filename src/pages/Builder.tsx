@@ -6,6 +6,8 @@ import PersonalInfoForm from "../components/Home/PersonalInfoForm";
 import ResumePreviewer from "../components/Home/ResumePreviewer";
 import TemplateSelector from "../components/Home/TemplateSelector";
 import ColorPicker from "../components/Home/ColorPicker";
+import Summaryform from "../components/Home/Summaryform";
+import ExperienceForm from "../components/Home/ExperienceForm";
 
 interface ResumeStructure {
     _id: string;
@@ -63,6 +65,7 @@ const Builder = () => {
     const sections = [
         { id: "personal", name: "personal info", icon: User },
         { id: "summary", name: "Summary", icon: FileText },
+        {id:"experience",name:"Experience" ,icon:FileText},
         { id: "education", name: "Education", icon: GraduationCap },
         { id: "projects", name: "Projects", icon: FolderIcon },
         { id: "skills", name: "Skills", icon: Sparkles },
@@ -155,6 +158,31 @@ const Builder = () => {
                                         setRemoveBackground={setRemoveBackground}
                                     />
                                 )}
+                                {
+                                    activeSelection.id==='summary'&&(
+                                        <Summaryform data={resumeData.professional_summary} onChange={(data)=>
+                                            setResumeData(prev=>({
+                                                ...prev,
+                                                professional_summary:data
+                                            })
+                                           
+                                        )
+                                        }  setResumeData={setResumeData}/>
+                                    )
+                                }
+                                  {
+                                    activeSelection.id==='experience'&&(
+                                        <ExperienceForm data={resumeData.experience} onChange={(data)=>
+                                            setResumeData(prev=>({
+                                                ...prev,
+                                               experience:data
+                                            })
+                                           
+                                        )
+                                        }  />
+                                    )
+                                }
+
 
                             </div>
 

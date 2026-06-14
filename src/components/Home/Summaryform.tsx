@@ -23,6 +23,7 @@ const Summaryform=({data,onChange,setResumeData})=>{
             
         </div>
         </div>
+    )
       
 
 }
