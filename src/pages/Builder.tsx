@@ -9,6 +9,7 @@ import ColorPicker from "../components/Home/ColorPicker";
 import Summaryform from "../components/Home/Summaryform";
 import ExperienceForm from "../components/Home/ExperienceForm";
 import Educationform from "../components/Home/Educationform";
+import ProjectsForm from "../components/Home/ProjectsForm";
 
 interface ResumeStructure {
     _id: string;
@@ -195,6 +196,20 @@ const Builder = () => {
                                         } />
                                     )
                                 }
+                                {
+                                    activeSelection.id==='projects'&&(
+                                        <ProjectsForm data={resumeData.project} onChange={(data)=>
+                                            setResumeData(prev=>({
+                                                ...prev,
+                                                project:data
+                                            })
+                                           
+                                        )
+                                        } />
+                                    )
+                                }
+                                
+
 
 
                             </div>
