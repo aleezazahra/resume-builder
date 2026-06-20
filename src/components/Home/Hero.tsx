@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -10,186 +9,143 @@ import {
   ChevronUp,
 } from "lucide-react";
 
-const LandingPage = () => {
-  const [openFAQ, setOpenFAQ] = useState(null);
+const Hero = () => {
+  const [openFAQ, setOpenFAQ] = useState<number | null>(null);
 
   const features = [
     {
       icon: <Sparkles className="w-10 h-10 text-yellow-400" />,
       title: "AI Resume Builder",
-      desc: "Generate professional resumes in minutes using AI-powered suggestions.",
+      desc: "Generate professional resumes in minutes.",
     },
     {
       icon: <Layout className="w-10 h-10 text-yellow-400" />,
       title: "Modern Templates",
-      desc: "Choose from beautiful ATS-friendly resume templates.",
+      desc: "ATS-friendly professional designs.",
     },
     {
       icon: <Download className="w-10 h-10 text-yellow-400" />,
       title: "PDF Export",
-      desc: "Download your resume instantly as a high-quality PDF.",
+      desc: "Download resumes instantly.",
     },
     {
       icon: <FileText className="w-10 h-10 text-yellow-400" />,
       title: "Live Preview",
-      desc: "See every change in real time while building your resume.",
+      desc: "See changes in real time.",
     },
   ];
 
   const faqs = [
     {
-      question: "Is the resume builder free?",
-      answer:
-        "Yes, you can start building your resume for free and access professional templates.",
+      question: "Is it free?",
+      answer: "Yes, basic usage is free.",
     },
     {
-      question: "Can I download my resume as PDF?",
-      answer:
-        "Absolutely. You can export your resume as a PDF with a single click.",
+      question: "Can I download PDF?",
+      answer: "Yes, one-click export.",
     },
     {
-      question: "Are the templates ATS-friendly?",
-      answer:
-        "Yes. All templates are optimized for Applicant Tracking Systems.",
-    },
-    {
-      question: "Can I edit my resume later?",
-      answer:
-        "Yes. Simply log in to your account and continue editing anytime.",
+      question: "Can I edit later?",
+      answer: "Yes, saved in dashboard.",
     },
     {
       question: "Do I need design skills?",
-      answer:
-        "No. Our builder handles the design so you can focus on your content.",
+      answer: "No, everything is automated.",
     },
   ];
 
   return (
     <div className="bg-black text-white min-h-screen">
 
-      {/* Navbar */}
-      <nav className="max-w-7xl mx-auto px-6 lg:px-10 py-6 flex items-center justify-between">
+      {/* NAV */}
+      <nav className="flex justify-between px-6 py-6">
         <h1 className="text-2xl font-bold">
           Resume<span className="text-yellow-400">Builder</span>
         </h1>
 
         <Link
           to="/login"
-          className="border border-yellow-400 text-yellow-400 px-5 py-2 rounded-lg hover:bg-yellow-400 hover:text-black transition"
+          className="border border-yellow-400 text-yellow-400 px-4 py-2 rounded-lg"
         >
           Login
         </Link>
       </nav>
 
-      {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      {/* HERO */}
+      <section className="px-6 py-20 grid lg:grid-cols-2 gap-12">
 
-          <div>
-            <span className="bg-yellow-400 text-black px-4 py-2 rounded-full text-sm font-semibold">
-              Build Better Resumes
+        <div>
+          <h1 className="text-5xl font-bold">
+            Build a Resume{" "}
+            <span className="text-yellow-400">
+              That Gets You Hired
             </span>
+          </h1>
 
-            <h1 className="text-5xl md:text-7xl font-bold mt-8 leading-tight">
-              Build a Resume
-              <span className="text-yellow-400"> That Gets You Hired</span>
-            </h1>
+          <p className="text-gray-400 mt-6">
+            Create ATS-friendly resumes in minutes.
+          </p>
 
-            <p className="text-zinc-400 text-lg mt-6 max-w-xl">
-              Create professional, ATS-friendly resumes in minutes.
-              Choose a template, customize your details, and download
-              instantly.
-            </p>
+          <div className="flex gap-4 mt-10">
 
-            <div className="flex flex-wrap gap-4 mt-10">
-              <Link
-                to="/app?state=register"
-                className="bg-yellow-400 text-black px-8 py-4 rounded-xl font-semibold hover:bg-yellow-300 transition"
-              >
-                Build Resume
-              </Link>
+            {/* ✅ FIXED ROUTE */}
+            <Link
+              to="/app"
+              className="bg-yellow-400 text-black px-6 py-3 rounded-xl font-semibold"
+            >
+              Build Resume
+            </Link>
 
-              <Link
-                to="/login"
-                className="border border-yellow-400 px-8 py-4 rounded-xl hover:bg-yellow-400 hover:text-black transition"
-              >
-                Signup
-              </Link>
-            </div>
+            <Link
+              to="/login"
+              className="border border-yellow-400 px-6 py-3 rounded-xl"
+            >
+              Login
+            </Link>
+
           </div>
-
-          
-          </div>
+        </div>
 
       </section>
 
-
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold">
-           Features
-          </h2>
-
-          <p className="text-zinc-400 mt-4">
-            Everything you need to build a professional resume.
-          </p>
-        </div>
-
-       
+      {/* FEATURES */}
+      <section className="px-6 py-20 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {features.map((f, i) => (
+          <div key={i} className="bg-zinc-900 p-6 rounded-xl">
+            {f.icon}
+            <h3 className="mt-4 font-semibold">{f.title}</h3>
+            <p className="text-gray-400">{f.desc}</p>
+          </div>
+        ))}
       </section>
 
       {/* FAQ */}
-      <section className="max-w-4xl mx-auto px-6 py-24">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold">
-            Frequently Asked Questions
-          </h2>
+      <section className="max-w-3xl mx-auto px-6 py-20">
+        {faqs.map((faq, i) => (
+          <div key={i} className="mb-4 bg-zinc-900 rounded-lg">
 
-          <p className="text-zinc-400 mt-4">
-            Everything you need to know.
-          </p>
-        </div>
-
-        <div className="space-y-4">
-          {faqs.map((faq, index) => (
-            <div
-              key={index}
-              className="bg-zinc-900 border border-yellow-400/10 rounded-xl overflow-hidden"
+            <button
+              onClick={() =>
+                setOpenFAQ(openFAQ === i ? null : i)
+              }
+              className="w-full flex justify-between p-4"
             >
-              <button
-                onClick={() =>
-                  setOpenFAQ(openFAQ === index ? null : index)
-                }
-                className="w-full flex justify-between items-center p-6 text-left"
-              >
-                <span className="font-medium">
-                  {faq.question}
-                </span>
+              {faq.question}
+              {openFAQ === i ? <ChevronUp /> : <ChevronDown />}
+            </button>
 
-                {openFAQ === index ? (
-                  <ChevronUp />
-                ) : (
-                  <ChevronDown />
-                )}
-              </button>
+            {openFAQ === i && (
+              <div className="p-4 text-gray-400">
+                {faq.answer}
+              </div>
+            )}
 
-              {openFAQ === index && (
-                <div className="px-6 pb-6 text-zinc-400">
-                  {faq.answer}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-zinc-800 py-8 text-center text-zinc-500">
-        © 2026 ResumeBuilder. All rights reserved.
-      </footer>
     </div>
   );
 };
 
-export default LandingPage;
-
+export default Hero;

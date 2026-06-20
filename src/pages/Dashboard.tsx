@@ -1,43 +1,77 @@
-
-
 import { useEffect, useState } from "react";
-import { dummyResumeData } from "../assets/assets";
 import { useNavigate } from "react-router-dom";
+import { dummyResumeData } from "../assets/assets";
+import {
+  XIcon,
+  PlusIcon,
+  UploadIcon,
+  FilePenIcon,
+  TrashIcon,
+  PencilIcon
+} from "lucide-react";
+
+
+
+type Resume = {
+  _id: string;
+  title: string;
+  updatedAt: string;
+};
 
 const Dashboard = () => {
-  const colors = ["#9333ea", "#d97706", "#dc2626", "#0284c7", "#16a34a"];
+  const colors: string[] = [
+    "#9333ea",
+    "#d97706",
+    "#dc2626",
+    "#0284c7",
+    "#16a34a"
+  ];
 
-  const [allResumes, setAllResumes] = useState<any[]>([]);
-  const [showCreateResume, setShowCreateResume] = useState(false);
-  const [showUploadResume, setShowUploadResume] = useState(false);
-  const [title, setTitle] = useState("");
+  const [allResumes, setAllResumes] = useState<Resume[]>([]);
+  const [showCreateResume, setShowCreateResume] = useState<boolean>(false);
+  const [showUploadResume, setShowUploadResume] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>("");
   const [resume, setResume] = useState<File | null>(null);
-  const [editResumeId, setEditResumeId] = useState("");
+  const [editResumeId, setEditResumeId] = useState<string>("");
 
   const navigate = useNavigate();
 
+
+
   const loadAllResumes = () => {
-    setAllResumes(dummyResumeData);
+    setAllResumes(dummyResumeData as Resume[]);
   };
 
-  const createResume = async (event: React.FormEvent) => {
+  useEffect(() => {
+    loadAllResumes();
+  }, []);
+
+
+
+  const createResume = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setShowCreateResume(false);
 
     navigate(`/app/builder/res123`);
   };
 
-  const uploadResume = async (event: React.FormEvent) => {
+
+
+  const uploadResume = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setShowUploadResume(false);
 
     navigate(`/app/builder/res123`);
   };
 
-  const editTtitle = async (event: React.FormEvent) => {
+
+
+  const editTtitle = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setEditResumeId("");
   };
+
+
 
   const deleteResume = async (resumeId: string) => {
     const isConfirm = window.confirm(
@@ -46,49 +80,42 @@ const Dashboard = () => {
 
     if (isConfirm) {
       setAllResumes((prev) =>
-        prev.filter((resume) => resume._id !== resumeId)
+        prev.filter((r) => r._id !== resumeId)
       );
     }
   };
 
-  useEffect(() => {
-    loadAllResumes();
-  }, []);
+
 
   return (
     <div>
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <p className="text-2xl font-medium mb-6 bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text text-transparent sm:hidden">
+        <p className="text-2xl font-medium mb-6">
           Welcome, Aleeza Zahra
         </p>
 
-        {/* CREATE / UPLOAD */}
+       
         <div className="flex flex-wrap gap-4 mb-8">
+
           <button
             onClick={() => setShowCreateResume(true)}
-            className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
+            className="w-full sm:max-w-36 h-48 flex flex-col items-center justify-center border rounded-lg"
           >
-            <PlusIcon className="size-11 p-2.5 bg-indigo-400 text-white rounded-full" />
-            <p className="text-sm group-hover:text-indigo-600">
-              Create Resume
-            </p>
+            <PlusIcon className="size-10" />
+            Create Resume
           </button>
 
           <button
             onClick={() => setShowUploadResume(true)}
-            className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover:border-indigo-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
+            className="w-full sm:max-w-36 h-48 flex flex-col items-center justify-center border rounded-lg"
           >
-            <UploadIcon className="size-11 p-2.5 bg-indigo-400 text-white rounded-full" />
-            <p className="text-sm group-hover:text-indigo-600">
-              Upload Resume
-            </p>
+            <UploadIcon className="size-10" />
+            Upload Resume
           </button>
         </div>
 
-        <hr className="border-slate-200 my-8" />
-
-        {/* RESUME LIST */}
-        <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-4">
+        {/* LIST */}
+        <div className="grid grid-cols-2 sm:flex flex-wrap gap-4">
           {allResumes.map((resume, index) => {
             const baseColor = colors[index % colors.length];
 
@@ -98,45 +125,37 @@ const Dashboard = () => {
                 onClick={() =>
                   navigate(`/app/builder/${resume._id}`)
                 }
-                className="relative w-full sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 border group hover:shadow-lg transition-all duration-300 cursor-pointer"
+                className="relative w-full sm:max-w-36 h-48 flex flex-col items-center justify-center border rounded-lg"
                 style={{
-                  background: `linear-gradient(135deg, ${baseColor}10, ${baseColor}40)`,
-                  borderColor: baseColor + "40"
+                  borderColor: baseColor
                 }}
               >
-                <FilePenIcon className="size-7" />
+                <FilePenIcon className="size-6" />
 
-                <p
-                  className="text-sm px-2 text-center"
-                  style={{ color: baseColor }}
-                >
+                <p style={{ color: baseColor }}>
                   {resume.title}
                 </p>
 
-                <p
-                  className="absolute bottom-1 text-[11px] px-2 text-center"
-                  style={{ color: baseColor + "90" }}
-                >
-                  Updated on{" "}
-                  {new Date(resume.updatedAt).toLocaleDateString()}
+                <p className="text-xs">
+                  Updated {new Date(resume.updatedAt).toLocaleDateString()}
                 </p>
 
                 {/* ACTIONS */}
                 <div
                   onClick={(e) => e.stopPropagation()}
-                  className="absolute top-1 right-1 hidden group-hover:flex items-center bg-white/80 rounded shadow-sm"
+                  className="absolute top-1 right-1 flex gap-2"
                 >
                   <TrashIcon
+                    className="size-5 cursor-pointer"
                     onClick={() => deleteResume(resume._id)}
-                    className="size-7 p-1.5 hover:text-red-600"
                   />
 
                   <PencilIcon
+                    className="size-5 cursor-pointer"
                     onClick={() => {
                       setEditResumeId(resume._id);
                       setTitle(resume.title);
                     }}
-                    className="size-7 p-1.5"
                   />
                 </div>
               </button>
@@ -144,35 +163,31 @@ const Dashboard = () => {
           })}
         </div>
 
-
+        {/* CREATE MODAL */}
         {showCreateResume && (
           <form
             onSubmit={createResume}
             onClick={() => setShowCreateResume(false)}
-            className="fixed inset-0 flex items-center justify-center bg-black/70 z-50"
+            className="fixed inset-0 flex items-center justify-center bg-black/60"
           >
             <div
               onClick={(e) => e.stopPropagation()}
               className="bg-white p-6 rounded-lg w-full max-w-sm relative"
             >
-              <h2 className="text-xl font-bold mb-4">
-                Create Resume
-              </h2>
+              <h2>Create Resume</h2>
 
               <input
-                type="text"
-                className="w-full border p-2 mb-4"
-                placeholder="Enter title"
-                required
+                className="border w-full p-2 mb-4"
+                placeholder="Title"
               />
 
-              <button className="w-full bg-green-600 text-white py-2 rounded">
+              <button className="w-full bg-green-600 text-white py-2">
                 Create
               </button>
 
               <XIcon
                 onClick={() => setShowCreateResume(false)}
-                className="absolute top-3 right-3 cursor-pointer"
+                className="absolute top-2 right-2 cursor-pointer"
               />
             </div>
           </form>
@@ -183,77 +198,69 @@ const Dashboard = () => {
           <form
             onSubmit={uploadResume}
             onClick={() => setShowUploadResume(false)}
-            className="fixed inset-0 flex items-center justify-center bg-black/70 z-50"
+            className="fixed inset-0 flex items-center justify-center bg-black/60"
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className="bg-white p-6 rounded-lg w-full max-w-sm relative"
+              className="bg-white p-6 rounded-lg w-full max-w-sm"
             >
-              <h2 className="text-xl font-bold mb-4">
-                Upload Resume
-              </h2>
+              <h2>Upload Resume</h2>
 
               <input
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                type="text"
-                className="w-full border p-2 mb-4"
-                placeholder="Enter title"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setTitle(e.target.value)
+                }
+                className="border w-full p-2 mb-4"
               />
 
-              <label className="block cursor-pointer border p-4 text-center mb-4">
-                {resume ? resume.name : "Select PDF"}
+              <label className="border p-4 block text-center mb-4">
+                {resume ? resume.name : "Select File"}
 
                 <input
                   type="file"
-                  accept=".pdf"
                   hidden
-                  onChange={(e) =>
+                  accept=".pdf"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setResume(e.target.files?.[0] || null)
                   }
                 />
               </label>
 
-              <button className="w-full bg-green-600 text-white py-2 rounded">
+              <button className="w-full bg-green-600 text-white py-2">
                 Upload
               </button>
-
-              <XIcon
-                onClick={() => setShowUploadResume(false)}
-                className="absolute top-3 right-3 cursor-pointer"
-              />
             </div>
           </form>
         )}
 
-        {/* EDIT MODAL */}
         {editResumeId && (
           <form
             onSubmit={editTtitle}
             onClick={() => setEditResumeId("")}
-            className="fixed inset-0 flex items-center justify-center bg-black/70 z-50"
+            className="fixed inset-0 flex items-center justify-center bg-black/60"
           >
             <div
               onClick={(e) => e.stopPropagation()}
-              className="bg-white p-6 rounded-lg w-full max-w-sm relative"
+              className="bg-white p-6 rounded-lg w-full max-w-sm"
             >
-              <h2 className="text-xl font-bold mb-4">
-                Edit Resume
-              </h2>
+              <h2>Edit Resume</h2>
 
               <input
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full border p-2 mb-4"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setTitle(e.target.value)
+                }
+                className="border w-full p-2 mb-4"
               />
 
-              <button className="w-full bg-green-600 text-white py-2 rounded">
+              <button className="w-full bg-green-600 text-white py-2">
                 Update
               </button>
 
               <XIcon
                 onClick={() => setEditResumeId("")}
-                className="absolute top-3 right-3 cursor-pointer"
+                className="absolute top-2 right-2"
               />
             </div>
           </form>
