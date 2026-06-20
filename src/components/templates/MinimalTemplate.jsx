@@ -1,3 +1,11 @@
+// Adjust this relative path if MinimalTemplate.jsx doesn't live next to the
+// "Home" folder that contains AddSocials.tsx (e.g. components/Templates/ vs components/Home/)
+import { SOCIAL_PLATFORMS } from "../Home/AddSocials";
+
+const normalizeUrl = (url) => {
+    if (!url) return "#";
+    return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+};
 
 const MinimalTemplate = ({ data, accentColor }) => {
     const formatDate = (dateStr) => {
@@ -21,13 +29,34 @@ const MinimalTemplate = ({ data, accentColor }) => {
                     {data.personal_info?.email && <span>{data.personal_info.email}</span>}
                     {data.personal_info?.phone && <span>{data.personal_info.phone}</span>}
                     {data.personal_info?.location && <span>{data.personal_info.location}</span>}
-                    {data.personal_info?.linkedin && (
-                        <span className="break-all">{data.personal_info.linkedin}</span>
-                    )}
+                    {data.personal_info?.title && <span>{data.personal_info.title}</span>}
+                   
                     {data.personal_info?.website && (
                         <span className="break-all">{data.personal_info.website}</span>
                     )}
                 </div>
+
+                {/* Socials */}
+                {data.socials && data.socials.length > 0 && (
+                    <div className="flex flex-wrap gap-6 text-sm text-gray-600 mt-3">
+                        {data.socials.map((social, index) => {
+                            const platform = SOCIAL_PLATFORMS.find((p) => p.id === social.platform);
+                            return (
+                                <a
+                                    key={index}
+                                    href={normalizeUrl(social.url)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1.5 hover:underline"
+                                    style={{ color: accentColor }}
+                                >
+                                    <span className="flex items-center">{platform?.icon}</span>
+                                    <span>{social.label}</span>
+                                </a>
+                            );
+                        })}
+                    </div>
+                )}
             </header>
 
             {data.professional_summary && (
@@ -111,13 +140,32 @@ const MinimalTemplate = ({ data, accentColor }) => {
 
             {/* Skills */}
             {data.skills && data.skills.length > 0 && (
-                <section>
+                <section className="mb-10">
                     <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
                         Skills
                     </h2>
 
                     <div className="text-gray-700">
                         {data.skills.join(" • ")}
+                    </div>
+                </section>
+            )}
+
+            {/* Languages */}
+            {data.languages && data.languages.length > 0 && (
+                <section>
+                    <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
+                        Languages
+                    </h2>
+
+                    <div className="text-gray-700 flex flex-wrap gap-x-2">
+                        {data.languages.map((lang, index) => (
+                            <span key={index}>
+                                {lang.name}
+                                {lang.level && <span className="text-gray-500"> ({lang.level})</span>}
+                                {index < data.languages.length - 1 && <span className="text-gray-400"> •</span>}
+                            </span>
+                        ))}
                     </div>
                 </section>
             )}

@@ -14,6 +14,8 @@ import {
   Sparkles,
   User,
   CheckCircle,
+  LanguagesIcon,
+  Link2,
 } from "lucide-react";
 
 import PersonalInfoForm from "../components/Home/PersonalInfoForm";
@@ -24,7 +26,11 @@ import Summaryform from "../components/Home/Summaryform";
 import ExperienceForm from "../components/Home/ExperienceForm";
 import Educationform from "../components/Home/Educationform";
 import ProjectsForm from "../components/Home/ProjectsForm";
+import Languages from "../components/Home/Languages";
 import SkillsForm from "../components/Home/SkillsForm";
+import AddSocials from "../components/Home/AddSocials";
+import type { Social } from "../components/Home/AddSocials";
+import type { Language } from "../components/Home/Languages";
 
 interface ResumeStructure {
   _id: string;
@@ -35,6 +41,8 @@ interface ResumeStructure {
   education: any[];
   project: any[];
   skills: any[];
+  languages: Language[];
+  socials: Social[];
   template: string;
   accent_color: string;
   public: boolean;
@@ -47,6 +55,8 @@ const sections = [
   { id: "education",  name: "Education",     icon: GraduationCap },
   { id: "projects",   name: "Projects",      icon: FolderIcon    },
   { id: "skills",     name: "Skills",        icon: Sparkles      },
+  { id: "languages",  name: "Languages",     icon: LanguagesIcon },
+  { id: "socials",    name: "Socials",       icon: Link2         },
 ];
 
 const Builder = () => {
@@ -62,6 +72,8 @@ const Builder = () => {
     education: [],
     project: [],
     skills: [],
+    languages: [],
+    socials: [],
     template: "classic",
     accent_color: "#3882F6",
     public: false,
@@ -195,7 +207,7 @@ const Builder = () => {
           <aside className="lg:col-span-5 flex flex-col gap-4">
 
             <div className="bg-zinc-900 rounded-xl border border-white/10 overflow-hidden">
-              <div className="grid grid-cols-3 sm:grid-cols-6">
+              <div className="grid grid-cols-4 sm:grid-cols-8">
                 {sections.map((s, i) => {
                   const Icon = s.icon;
                   const active = i === activeSectionIndex;
@@ -203,6 +215,7 @@ const Builder = () => {
                     <button
                       key={s.id}
                       onClick={() => setActiveSectionIndex(i)}
+                      title={s.name}
                       className={`flex flex-col items-center gap-1 py-3 text-[11px] font-medium transition-colors border-b-2
                         ${active
                           ? "border-white text-white bg-white/5"
@@ -210,7 +223,6 @@ const Builder = () => {
                         }`}
                     >
                       <Icon className="size-4" />
-            
                     </button>
                   );
                 })}
@@ -260,6 +272,18 @@ const Builder = () => {
                   onChange={(data) => setResumeData((p) => ({ ...p, skills: data }))}
                 />
               )}
+              {activeSection.id === "languages" && (
+                <Languages
+                  data={resumeData.languages}
+                  onChange={(data) => setResumeData((p) => ({ ...p, languages: data }))}
+                />
+              )}
+              {activeSection.id === "socials" && (
+                <AddSocials
+                  data={resumeData.socials}
+                  onChange={(data) => setResumeData((p) => ({ ...p, socials: data }))}
+                />
+              )}
 
               <div className="flex justify-between mt-8 pt-4 border-t border-white/10">
                 <button
@@ -283,7 +307,6 @@ const Builder = () => {
           <div className="lg:col-span-7 flex flex-col gap-4">
 
             <div className="bg-zinc-900 rounded-xl border border-white/10 px-4 py-3 flex items-center justify-between gap-2 flex-wrap">
-
               <div className="flex items-center gap-2">
                 <TemplateSelector
                   selectedTemplate={resumeData.template}
@@ -296,10 +319,7 @@ const Builder = () => {
               </div>
 
               <div className="flex items-center gap-2">
-                <button
-                  onClick={changeVisibility}
-                  className="btn btn-sm"
-                >
+                <button onClick={changeVisibility} className="btn btn-sm">
                   {resumeData.public ? <Eye className="size-4" /> : <EyeOff className="size-4" />}
                   {resumeData.public ? "Public" : "Private"}
                 </button>

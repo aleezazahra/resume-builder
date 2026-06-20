@@ -1,4 +1,12 @@
 import { Mail, Phone, MapPin, Globe } from "lucide-react";
+// Adjust this relative path if ClassicTemplate.jsx doesn't live next to the
+// "Home" folder that contains AddSocials.tsx (e.g. components/Templates/ vs components/Home/)
+import { SOCIAL_PLATFORMS } from "../Home/AddSocials";
+
+const normalizeUrl = (url) => {
+    if (!url) return "#";
+    return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+};
 
 const ClassicTemplate = ({ data, accentColor }) => {
     const formatDate = (dateStr) => {
@@ -43,7 +51,34 @@ const ClassicTemplate = ({ data, accentColor }) => {
                             <span className="break-all">{data.personal_info.website}</span>
                         </div>
                     )}
+                    {data.personal_info?.title && (
+                        <p className="flex items-center gap-1">
+                            {data.personal_info.title}
+                        </p>
+                    )}
                 </div>
+
+                {/* Socials */}
+                {data.socials && data.socials.length > 0 && (
+                    <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600 mt-3">
+                        {data.socials.map((social, index) => {
+                            const platform = SOCIAL_PLATFORMS.find((p) => p.id === social.platform);
+                            return (
+                                <a
+                                    key={index}
+                                    href={normalizeUrl(social.url)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1.5 hover:underline"
+                                    style={{ color: accentColor }}
+                                >
+                                    <span className="flex items-center">{platform?.icon}</span>
+                                    <span>{social.label}</span>
+                                </a>
+                            );
+                        })}
+                    </div>
+                )}
             </header>
 
             {/* Professional Summary */}
@@ -143,6 +178,23 @@ const ClassicTemplate = ({ data, accentColor }) => {
                         {data.skills.map((skill, index) => (
                             <div key={index} className="text-gray-700">
                                 • {skill}
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            {/* Languages */}
+            {data.languages && data.languages.length > 0 && (
+                <section className="mb-6">
+                    <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
+                        LANGUAGES
+                    </h2>
+                    <div className="flex gap-4 flex-wrap">
+                        {data.languages.map((lang, index) => (
+                            <div key={index} className="text-gray-700">
+                                • {lang.name}
+                                {lang.level && <span className="text-gray-500"> ({lang.level})</span>}
                             </div>
                         ))}
                     </div>

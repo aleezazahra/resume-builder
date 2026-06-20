@@ -1,4 +1,12 @@
 import { Mail, Phone, MapPin } from "lucide-react";
+// Adjust this relative path if MinimalImageTemplate.jsx doesn't live next to the
+// "Home" folder that contains AddSocials.tsx (e.g. components/Templates/ vs components/Home/)
+import { SOCIAL_PLATFORMS } from "../Home/AddSocials";
+
+const normalizeUrl = (url) => {
+    if (!url) return "#";
+    return /^https?:\/\//i.test(url) ? url : `https://${url}`;
+};
 
 const MinimalImageTemplate = ({ data, accentColor }) => {
     const formatDate = (dateStr) => {
@@ -34,9 +42,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     <h1 className="text-4xl font-bold text-zinc-700 tracking-widest">
                         {data.personal_info?.full_name || "Your Name"}
                     </h1>
-                    <p className="uppercase text-zinc-600 font-medium text-sm tracking-widest">
-                        {data?.personal_info?.profession || "Profession"}
-                    </p>
+                   
                 </div>
 
                 {/* Left Sidebar */}
@@ -61,6 +67,12 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                     <span>{data.personal_info.email}</span>
                                 </div>
                             )}
+                              {data.personal_info?.title && (
+                                <div className="flex items-center gap-2">
+                                    <Mail size={14} style={{ color: accentColor }} />
+                                    <span>{data.personal_info.title}</span>
+                                </div>
+                            )}
                             {data.personal_info?.location && (
                                 <div className="flex items-center gap-2">
                                     <MapPin size={14} style={{ color: accentColor }} />
@@ -69,6 +81,32 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                             )}
                         </div>
                     </section>
+
+                    {/* Socials */}
+                    {data.socials && data.socials.length > 0 && (
+                        <section className="mb-8">
+                            <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
+                                SOCIALS
+                            </h2>
+                            <div className="space-y-2 text-sm">
+                                {data.socials.map((social, index) => {
+                                    const platform = SOCIAL_PLATFORMS.find((p) => p.id === social.platform);
+                                    return (
+                                        <a
+                                            key={index}
+                                            href={normalizeUrl(social.url)}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-2 hover:underline"
+                                        >
+                                            <span className="flex items-center" style={{ color: accentColor }}>{platform?.icon}</span>
+                                            <span>{social.label}</span>
+                                        </a>
+                                    );
+                                })}
+                            </div>
+                        </section>
+                    )}
 
                     {/* Education */}
                     {data.education && data.education.length > 0 && (
@@ -92,13 +130,30 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
 
                     {/* Skills */}
                     {data.skills && data.skills.length > 0 && (
-                        <section>
+                        <section className="mb-8">
                             <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
                                 SKILLS
                             </h2>
                             <ul className="space-y-1 text-sm">
                                 {data.skills.map((skill, index) => (
                                     <li key={index}>{skill}</li>
+                                ))}
+                            </ul>
+                        </section>
+                    )}
+
+                    {/* Languages */}
+                    {data.languages && data.languages.length > 0 && (
+                        <section>
+                            <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
+                                LANGUAGES
+                            </h2>
+                            <ul className="space-y-1 text-sm">
+                                {data.languages.map((lang, index) => (
+                                    <li key={index}>
+                                        {lang.name}
+                                        {lang.level && <span className="text-zinc-500"> – {lang.level}</span>}
+                                    </li>
                                 ))}
                             </ul>
                         </section>

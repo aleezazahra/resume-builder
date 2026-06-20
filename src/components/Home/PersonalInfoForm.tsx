@@ -1,4 +1,4 @@
-import { User, UserIcon, Mail, PhoneIcon, MapPin, BriefcaseBusiness, Globe } from "lucide-react";
+import { User, UserIcon, Mail, PhoneIcon, MapPin, BriefcaseBusiness, Globe, Icon } from "lucide-react";
 
 const PersonalInfoForm = ({ data, onChange, removeBackground, setRemoveBackground }) => {
     const handleChange = (field, value) => {
@@ -11,9 +11,10 @@ const PersonalInfoForm = ({ data, onChange, removeBackground, setRemoveBackgroun
     
 
     { key: "phone", label: "Phone Number", icon: PhoneIcon, type: "tel", required: true },
+    {key:"title",label:"Profession",icon:BriefcaseBusiness, type:"text", required:true},
     
     { key: "location", label: "Location", icon: MapPin, type: "text" },
-    { key: "title", label: "Profession", icon: BriefcaseBusiness, type: "text" },
+
     { key: "website", label: "Personal Website", icon: Globe, type: "url" }, 
 ];
 
