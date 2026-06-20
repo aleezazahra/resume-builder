@@ -118,7 +118,6 @@ const LandingPage = () => {
             </div>
           </div>
 
-          {/* Resume Preview */}
           
           </div>
 
