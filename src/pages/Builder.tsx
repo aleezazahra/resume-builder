@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
-import { dummyResumeData } from "../assets/assets";
 import {
   ArrowLeft,
   ChevronLeft,
@@ -51,7 +50,8 @@ const sections = [
 ];
 
 const Builder = () => {
-  const { resumeId } = useParams();
+  const { resumeID } = useParams();
+  const resumeId = resumeID;
 
   const [resumeData, setResumeData] = useState<ResumeStructure>({
     _id: "",
@@ -74,14 +74,37 @@ const Builder = () => {
 
   const resumeRef = useRef<HTMLDivElement>(null);
 
-  /* ── Load resume ─────────────────────────────────────────── */
+  /* ── Load resume from localStorage ──────────────────────── */
   useEffect(() => {
-    const resume = dummyResumeData.find((r: any) => r._id === resumeId);
-    if (resume) {
-      setResumeData((prev) => ({ ...prev, ...resume }));
-      document.title = resume.title || "Resume Builder";
+    try {
+      const all = JSON.parse(localStorage.getItem("resumes") || "[]");
+      const resume = all.find((r: any) => r._id === resumeId);
+      if (resume) {
+        setResumeData((prev) => ({ ...prev, ...resume }));
+        document.title = resume.title || "Resume Builder";
+      }
+    } catch {
+      // nothing stored yet
     }
   }, [resumeId]);
+
+  /* ── Save resume to localStorage whenever data changes ───── */
+  useEffect(() => {
+    if (!resumeData._id) return; // don't save empty state
+    try {
+      const all: any[] = JSON.parse(localStorage.getItem("resumes") || "[]");
+      const idx = all.findIndex((r) => r._id === resumeData._id);
+      const updated = { ...resumeData, updatedAt: new Date().toISOString() };
+      if (idx >= 0) {
+        all[idx] = updated;
+      } else {
+        all.unshift(updated);
+      }
+      localStorage.setItem("resumes", JSON.stringify(all));
+    } catch {
+      // storage full or unavailable
+    }
+  }, [resumeData]);
 
   /* ── Print / Download (proper A4) ───────────────────────── */
   const handlePrint = useCallback(() => {
@@ -307,10 +330,13 @@ const Builder = () => {
             </div>
           </aside>
 
+          {/* ── RIGHT: preview ──────────────────────────── */}
           <div className="lg:col-span-7 flex flex-col gap-4">
 
+            {/* Action bar */}
             <div className="bg-white rounded-xl border border-slate-200 shadow-sm px-4 py-3 flex items-center justify-between gap-2 flex-wrap">
 
+              {/* Left: Template + Color */}
               <div className="flex items-center gap-2">
                 <TemplateSelector
                   selectedTemplate={resumeData.template}
@@ -322,7 +348,7 @@ const Builder = () => {
                 />
               </div>
 
-             
+              {/* Right: Visibility / Share / Download */}
               <div className="flex items-center gap-2">
 
               {/* Visibility */}
