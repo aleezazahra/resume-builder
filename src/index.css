@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @layer base {
   :root {
@@ -10,51 +8,71 @@
     --color-border: #27272a;
   }
 
-  html,
-  body,
-  #root {
+  html, body, #root {
     background-color: #000000;
     color: #ffffff;
   }
 
-  /* Scrollbar */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: #000; }
   ::-webkit-scrollbar-thumb { background: #333; border-radius: 99px; }
 }
 
 @layer components {
-
-  /* ── The pill outlined button from your screenshot ── */
   .btn {
-    @apply inline-flex items-center gap-2
-           px-7 py-3
-           rounded-full
-           border border-white/40
-           text-white text-sm font-light tracking-[0.2em] uppercase
-           bg-transparent
-           hover:border-white hover:bg-white/5
-           active:scale-95
-           transition-all duration-200
-           cursor-pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.75rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
   }
 
-  /* Filled variant (white bg, black text) */
+  .btn:hover {
+    border-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .btn:active {
+    transform: scale(0.95);
+  }
+
   .btn-filled {
-    @apply inline-flex items-center gap-2
-           px-7 py-3
-           rounded-full
-           bg-white text-black
-           text-sm font-light tracking-[0.2em] uppercase
-           hover:bg-zinc-100
-           active:scale-95
-           transition-all duration-200
-           cursor-pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.75rem;
+    border-radius: 9999px;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
   }
 
-  /* Small size modifier */
+  .btn-filled:hover {
+    background-color: #e4e4e7;
+  }
+
+  .btn-filled:active {
+    transform: scale(0.95);
+  }
+
   .btn-sm {
-    @apply px-5 py-2 text-xs;
+    padding: 0.375rem 1.25rem;
+    font-size: 0.7rem;
   }
 }
 
