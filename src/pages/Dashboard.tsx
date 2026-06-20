@@ -11,11 +11,10 @@ import {
 } from "lucide-react";
 
 
-
 type Resume = {
   _id: string;
   title: string;
-  updatedAt: string;
+  updatedAt?: string;
 };
 
 const Dashboard = () => {
@@ -137,10 +136,11 @@ const Dashboard = () => {
                 </p>
 
                 <p className="text-xs">
-                  Updated {new Date(resume.updatedAt).toLocaleDateString()}
-                </p>
+  {resume.updatedAt
+    ? `Updated ${new Date(resume.updatedAt).toLocaleDateString()}`
+    : "No update date"}
+        </p>
 
-                {/* ACTIONS */}
                 <div
                   onClick={(e) => e.stopPropagation()}
                   className="absolute top-1 right-1 flex gap-2"
