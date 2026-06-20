@@ -1,12 +1,4 @@
-import {
-  FilePenIcon,
-  PencilIcon,
-  PlusIcon,
-  TrashIcon,
-  UploadCloud,
-  UploadIcon,
-  XIcon
-} from "lucide-react";
+
 
 import { useEffect, useState } from "react";
 import { dummyResumeData } from "../assets/assets";
@@ -152,7 +144,7 @@ const Dashboard = () => {
           })}
         </div>
 
-        {/* CREATE MODAL */}
+
         {showCreateResume && (
           <form
             onSubmit={createResume}
