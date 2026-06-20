@@ -28,10 +28,8 @@ const updateEducation=(index,field,value)=>{
         <div>
              <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                    <div>
-                        <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">Education</h3>
-                    </div>
-                    <button onClick={addEducatione} className="flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors">
+                  
+                    <button onClick={addEducatione} className="btn">
                         <Plus className="size-4"/>
                         Add Education
                     </button>

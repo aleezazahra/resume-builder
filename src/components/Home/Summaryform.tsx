@@ -5,13 +5,11 @@ const Summaryform=({data,onChange})=>{
         <div className="space-y-4">
         <div className="flex items-center justify-between"></div>
         <div>
-            <h3 className="flex items-center gap-2 text-lg font-semibold">Professional Summary</h3>
-            <p className="text-sm text-gray-500">Add summary to your resume here.</p>
+            <p className="-mt-8 text-sm text-gray-500">Add summary to your resume here.</p>
         </div>
-        <button className="flex items-center gap-2 px-3 py-1 text-sm bg-purple-100
-        text-purple-700 rounded hover:bg-purple-200 transition-colors disabled:opacity-50">
+        <button className="btn py-2 px-6">
 
-            <Sparkles size={4} />
+            <Sparkles size={17} />
             AI enhance
         </button>
         <div className="mt-6">

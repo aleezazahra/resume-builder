@@ -31,13 +31,8 @@ const updateExperience=(index,field,value)=>{
     return(
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <div>
-                    <h3 className="flex items-center gap-2
-                    text-lg font-semibold text-gray-900">Professional Experience</h3>
-                   
-                </div>
-                <button onClick={addExperience} className="flex items-center gap-2px-3 py-1 text-sm
-                bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors">
+            
+                <button onClick={addExperience} className="btn py-1 px-8">
                     <Plus className="size-4"/>
                     Add Experience
                 </button>
@@ -75,7 +70,7 @@ const updateExperience=(index,field,value)=>{
                                 
                                  <input value={experience.start_date|| ""} onChange={(e)=>updateExperience(index,"start_date",e.target.value)}
                                 type="month" className="
-                                px-3 py-2 text-sm rounded-lg" />
+                                px-3 py-2 text-sm rounded-lg text-white" />
 
                                  <input value={experience.end_date || ""} onChange={(e)=>updateExperience(index,"end_date",e.target.value)}
                                 type="month" disabled={experience.is_current}

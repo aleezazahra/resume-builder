@@ -25,11 +25,11 @@ const ProjectsForm = ({ data = [], onChange }) => {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-gray-900">Projects</h3>
+      
         <button 
           type="button" 
           onClick={addProject} 
-          className="flex items-center gap-2 px-3 py-1 text-sm bg-purple-100 text-purple-700 rounded hover:bg-purple-200 transition-colors"
+          className="btn"
         >
           <Plus className="size-4" />
           Add your projects

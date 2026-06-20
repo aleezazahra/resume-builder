@@ -41,12 +41,12 @@ interface ResumeStructure {
 }
 
 const sections = [
-  { id: "personal",    name: "Personal Info", icon: User         },
-  { id: "summary",     name: "Summary",       icon: FileText     },
-  { id: "experience",  name: "Experience",    icon: FileText     },
-  { id: "education",   name: "Education",     icon: GraduationCap},
-  { id: "projects",    name: "Projects",      icon: FolderIcon   },
-  { id: "skills",      name: "Skills",        icon: Sparkles     },
+  { id: "personal",   name: "Personal Info", icon: User          },
+  { id: "summary",    name: "Summary",       icon: FileText      },
+  { id: "experience", name: "Experience",    icon: FileText      },
+  { id: "education",  name: "Education",     icon: GraduationCap },
+  { id: "projects",   name: "Projects",      icon: FolderIcon    },
+  { id: "skills",     name: "Skills",        icon: Sparkles      },
 ];
 
 const Builder = () => {
@@ -74,7 +74,6 @@ const Builder = () => {
 
   const resumeRef = useRef<HTMLDivElement>(null);
 
-  /* ── Load resume from localStorage ──────────────────────── */
   useEffect(() => {
     try {
       const all = JSON.parse(localStorage.getItem("resumes") || "[]");
@@ -83,92 +82,64 @@ const Builder = () => {
         setResumeData((prev) => ({ ...prev, ...resume }));
         document.title = resume.title || "Resume Builder";
       }
-    } catch {
-      // nothing stored yet
-    }
+    } catch {}
   }, [resumeId]);
 
-  /* ── Save resume to localStorage whenever data changes ───── */
   useEffect(() => {
-    if (!resumeData._id) return; // don't save empty state
+    if (!resumeData._id) return;
     try {
       const all: any[] = JSON.parse(localStorage.getItem("resumes") || "[]");
       const idx = all.findIndex((r) => r._id === resumeData._id);
       const updated = { ...resumeData, updatedAt: new Date().toISOString() };
-      if (idx >= 0) {
-        all[idx] = updated;
-      } else {
-        all.unshift(updated);
-      }
+      if (idx >= 0) all[idx] = updated;
+      else all.unshift(updated);
       localStorage.setItem("resumes", JSON.stringify(all));
-    } catch {
-      // storage full or unavailable
-    }
+    } catch {}
   }, [resumeData]);
 
-  /* ── Print / Download (proper A4) ───────────────────────── */
   const handlePrint = useCallback(() => {
     if (!resumeRef.current) return;
-
-    // Inject a dedicated print style into <head> once
     const styleId = "resume-print-style";
     if (!document.getElementById(styleId)) {
       const style = document.createElement("style");
       style.id = styleId;
       style.innerHTML = `
         @media print {
-          /* Hide everything on the page … */
-          body > *                { display: none !important; }
-          /* … except our portal root */
-          #resume-print-portal    { display: block !important; }
-
-          @page {
-            size: A4 portrait;
-            margin: 0;
-          }
-
+          body > * { display: none !important; }
+          #resume-print-portal { display: block !important; }
+          @page { size: A4 portrait; margin: 0; }
           html, body {
-            width: 210mm;
-            height: 297mm;
-            margin: 0;
-            padding: 0;
+            width: 210mm !important;
+            height: 297mm !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: white !important;
+            background-color: white !important;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
             color-adjust: exact;
           }
-
           #resume-print-portal {
             position: fixed;
             inset: 0;
             z-index: 99999;
-            background: white;
+            background: white !important;
+            background-color: white !important;
           }
         }
       `;
       document.head.appendChild(style);
     }
-
-    // Create / reuse a print portal
     let portal = document.getElementById("resume-print-portal");
     if (!portal) {
       portal = document.createElement("div");
       portal.id = "resume-print-portal";
       document.body.appendChild(portal);
     }
-
-    // Clone the resume node into the portal
     portal.innerHTML = "";
     const clone = resumeRef.current.cloneNode(true) as HTMLElement;
-    clone.style.cssText = `
-      width: 210mm;
-      min-height: 297mm;
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      background: white;
-    `;
+    clone.style.cssText = `width:210mm;min-height:297mm;margin:0;padding:0;box-sizing:border-box;background:white;`;
     portal.appendChild(clone);
-
     setIsPrinting(true);
     requestAnimationFrame(() => {
       window.print();
@@ -177,31 +148,21 @@ const Builder = () => {
     });
   }, []);
 
-  /* ── Share / Copy link ───────────────────────────────────── */
   const handleShare = useCallback(async () => {
     const url = `${window.location.origin}/view/${resumeId}`;
-
     if (navigator.share) {
-      try {
-        await navigator.share({ title: "My Resume", text: "Check out my resume", url });
-      } catch {
-        // user cancelled – silent
-      }
+      try { await navigator.share({ title: "My Resume", text: "Check out my resume", url }); } catch {}
       return;
     }
-
-    // Fallback: copy to clipboard
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      // Last resort
       prompt("Copy this link:", url);
     }
   }, [resumeId]);
 
-  /* ── Visibility toggle ───────────────────────────────────── */
   const changeVisibility = () =>
     setResumeData((prev) => ({ ...prev, public: !prev.public }));
 
@@ -210,36 +171,30 @@ const Builder = () => {
   const isLast  = activeSectionIndex === sections.length - 1;
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans">
+    <div className="min-h-screen bg-black font-sans">
 
-      {/* ── Top bar ───────────────────────────────────────── */}
-      <header className="sticky top-0 z-20 bg-white border-b border-slate-200 shadow-sm">
+      <header className="sticky top-0 z-20 bg-black border-b border-white/10 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center gap-4">
           <Link
             to="/"
-            className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-800 transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white transition-colors"
           >
             <ArrowLeft className="size-4" />
             Dashboard
           </Link>
-
-          <span className="text-slate-300 select-none">|</span>
-
-          <h1 className="text-sm font-semibold text-slate-700 truncate">
+          <span className="text-white/20 select-none">|</span>
+          <h1 className="text-sm font-semibold text-white/80 truncate">
             {resumeData.title || "Untitled Resume"}
           </h1>
         </div>
       </header>
 
-      {/* ── Main grid ─────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="grid lg:grid-cols-12 gap-6 items-start">
 
-          {/* ── LEFT: editor panel ──────────────────────── */}
           <aside className="lg:col-span-5 flex flex-col gap-4">
 
-            {/* Section tabs */}
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            <div className="bg-zinc-900 rounded-xl border border-white/10 overflow-hidden">
               <div className="grid grid-cols-3 sm:grid-cols-6">
                 {sections.map((s, i) => {
                   const Icon = s.icon;
@@ -250,21 +205,20 @@ const Builder = () => {
                       onClick={() => setActiveSectionIndex(i)}
                       className={`flex flex-col items-center gap-1 py-3 text-[11px] font-medium transition-colors border-b-2
                         ${active
-                          ? "border-blue-500 text-blue-600 bg-blue-50"
-                          : "border-transparent text-slate-400 hover:text-slate-600 hover:bg-slate-50"
+                          ? "border-white text-white bg-white/5"
+                          : "border-transparent text-white/30 hover:text-white/60 hover:bg-white/5"
                         }`}
                     >
                       <Icon className="size-4" />
-                      <span className="hidden sm:block">{s.name.split(" ")[0]}</span>
+            
                     </button>
                   );
                 })}
               </div>
             </div>
 
-            {/* Form card */}
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
-              <h2 className="text-base font-semibold text-slate-800 mb-5">
+            <div className="bg-zinc-900 rounded-xl border border-white/10 p-6">
+              <h2 className="text-base font-semibold text-white mb-5">
                 {activeSection.name}
               </h2>
 
@@ -307,22 +261,18 @@ const Builder = () => {
                 />
               )}
 
-              {/* Prev / Next */}
-              <div className="flex justify-between mt-8 pt-4 border-t border-slate-100">
+              <div className="flex justify-between mt-8 pt-4 border-t border-white/10">
                 <button
                   onClick={() => setActiveSectionIndex((p) => Math.max(p - 1, 0))}
                   disabled={isFirst}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium
-                    text-slate-600 bg-slate-100 hover:bg-slate-200 disabled:opacity-30 disabled:cursor-not-allowed transition"
+                  className="btn btn-sm disabled:opacity-20 disabled:cursor-not-allowed"
                 >
                   <ChevronLeft className="size-4" /> Back
                 </button>
-
                 <button
                   onClick={() => setActiveSectionIndex((p) => Math.min(p + 1, sections.length - 1))}
                   disabled={isLast}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium
-                    text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-30 disabled:cursor-not-allowed transition"
+                  className="btn-filled btn-sm disabled:opacity-20 disabled:cursor-not-allowed"
                 >
                   Next <ChevronRight className="size-4" />
                 </button>
@@ -330,13 +280,10 @@ const Builder = () => {
             </div>
           </aside>
 
-          {/* ── RIGHT: preview ──────────────────────────── */}
           <div className="lg:col-span-7 flex flex-col gap-4">
 
-            {/* Action bar */}
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm px-4 py-3 flex items-center justify-between gap-2 flex-wrap">
+            <div className="bg-zinc-900 rounded-xl border border-white/10 px-4 py-3 flex items-center justify-between gap-2 flex-wrap">
 
-              {/* Left: Template + Color */}
               <div className="flex items-center gap-2">
                 <TemplateSelector
                   selectedTemplate={resumeData.template}
@@ -348,64 +295,43 @@ const Builder = () => {
                 />
               </div>
 
-              {/* Right: Visibility / Share / Download */}
               <div className="flex items-center gap-2">
-
-              {/* Visibility */}
-              <button
-                onClick={changeVisibility}
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium border transition
-                  ${resumeData.public
-                    ? "border-green-200 bg-green-50 text-green-700 hover:bg-green-100"
-                    : "border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100"
-                  }`}
-              >
-                {resumeData.public ? <Eye className="size-4" /> : <EyeOff className="size-4" />}
-                {resumeData.public ? "Public" : "Private"}
-              </button>
-
-              {/* Share (only when public) */}
-              {resumeData.public && (
                 <button
-                  onClick={handleShare}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium border
-                    border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100 transition"
+                  onClick={changeVisibility}
+                  className="btn btn-sm"
                 >
-                  {copied
-                    ? <><CheckCircle className="size-4 text-green-500" /> Copied!</>
-                    : <><Share2 className="size-4" /> Share</>
-                  }
+                  {resumeData.public ? <Eye className="size-4" /> : <EyeOff className="size-4" />}
+                  {resumeData.public ? "Public" : "Private"}
                 </button>
-              )}
 
-              {/* Download */}
-              <button
-                onClick={handlePrint}
-                disabled={isPrinting}
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-sm font-semibold
-                  text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-60 transition shadow-sm"
-              >
-                <Download className="size-4" />
-                {isPrinting ? "Preparing…" : "Download PDF"}
-              </button>
+                {resumeData.public && (
+                  <button onClick={handleShare} className="btn btn-sm">
+                    {copied
+                      ? <><CheckCircle className="size-4" /> Copied!</>
+                      : <><Share2 className="size-4" /> Share</>
+                    }
+                  </button>
+                )}
 
-              </div>{/* end right group */}
-            </div>{/* end action bar */}
+                <button
+                  onClick={handlePrint}
+                  disabled={isPrinting}
+                  className="btn-filled btn-sm disabled:opacity-50"
+                >
+                  <Download className="size-4" />
+                  {isPrinting ? "Preparing…" : "Download PDF"}
+                </button>
+              </div>
+            </div>
 
-            {/* A4 preview shell */}
-            <div className="bg-slate-300 rounded-xl p-4 flex justify-center overflow-auto">
-              {/*
-                The outer div is just a visual frame.
-                resumeRef points ONLY to the A4 content below —
-                exactly what gets cloned for print.
-              */}
+            <div className="bg-zinc-800 rounded-xl p-4 flex justify-center overflow-auto">
               <div
                 ref={resumeRef}
                 style={{
                   width: "210mm",
                   minHeight: "297mm",
                   background: "white",
-                  boxShadow: "0 4px 32px rgba(0,0,0,0.18)",
+                  boxShadow: "0 4px 32px rgba(0,0,0,0.5)",
                   boxSizing: "border-box",
                   overflow: "hidden",
                 }}

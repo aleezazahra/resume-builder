@@ -98,7 +98,7 @@ const Hero = () => {
 
             <Link
               to="/login"
-              className="border border-yellow-400 px-6 py-3 rounded-xl"
+              className="btn-primary"
             >
               Login
             </Link>
@@ -128,7 +128,7 @@ const Hero = () => {
               onClick={() =>
                 setOpenFAQ(openFAQ === i ? null : i)
               }
-              className="w-full flex justify-between p-4"
+              className="btn-primary"
             >
               {faq.question}
               {openFAQ === i ? <ChevronUp /> : <ChevronDown />}

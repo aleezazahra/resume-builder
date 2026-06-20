@@ -1,19 +1,67 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-* {
-  font-family: "Outfit", sans-serif;
-  scroll-behavior: smooth;
+@layer base {
+  :root {
+    --color-bg: #000000;
+    --color-text: #ffffff;
+    --color-muted: #a1a1aa;
+    --color-border: #27272a;
+  }
+
+  html,
+  body,
+  #root {
+    background-color: #000000;
+    color: #ffffff;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #000; }
+  ::-webkit-scrollbar-thumb { background: #333; border-radius: 99px; }
 }
 
-button {
-  @apply cursor-pointer;
+@layer components {
+
+  /* ── The pill outlined button from your screenshot ── */
+  .btn {
+    @apply inline-flex items-center gap-2
+           px-7 py-3
+           rounded-full
+           border border-white/40
+           text-white text-sm font-light tracking-[0.2em] uppercase
+           bg-transparent
+           hover:border-white hover:bg-white/5
+           active:scale-95
+           transition-all duration-200
+           cursor-pointer;
+  }
+
+  /* Filled variant (white bg, black text) */
+  .btn-filled {
+    @apply inline-flex items-center gap-2
+           px-7 py-3
+           rounded-full
+           bg-white text-black
+           text-sm font-light tracking-[0.2em] uppercase
+           hover:bg-zinc-100
+           active:scale-95
+           transition-all duration-200
+           cursor-pointer;
+  }
+
+  /* Small size modifier */
+  .btn-sm {
+    @apply px-5 py-2 text-xs;
+  }
 }
 
-input:not([type='checkbox']) {
-  @apply outline-hidden border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg;
-}
-
-textarea {
-  @apply outline-hidden border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-lg resize-none;
+@media print {
+  html, body, #root {
+    background: white !important;
+    background-color: white !important;
+    color: black !important;
+  }
 }

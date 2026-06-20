@@ -25,17 +25,15 @@ const SkillsForm=({data,onChange})=>{
 
     return(
         <div className="space-y-4">
-            <h3 className="flex items-center gap-2 text-lg font-semibold text-gray-900">Skills</h3>
-            <p className="text-sm text-gray-500">Add your technical and soft skills</p>
+           
+           
 
 
             <div className="flex gap-2">
                 <input type="text" placeholder="Enter a skill" className="flex-1 py-2 px-3 text-sm"
                 onChange={(e)=>SetnewSkill(e.target.value)} value={newSkill} onKeyDown={handlekeypress} ></input>
 
-                <button onClick={addSkill} disabled={!newSkill.trim()} className="flex items-center
-                gap-2 px-4 py-2 text-sm bg-blue-600 tet0white rounded-lg hover:bg-blue-700 transition-colors
-                disabled:opacity-50 disabled:cursor-not-allowed">
+                <button onClick={addSkill} disabled={!newSkill.trim()} className="btn py-2">
                     <Plus className="size-4"></Plus>
                     Add
                 </button>
@@ -45,7 +43,7 @@ const SkillsForm=({data,onChange})=>{
             {data.length >0?(
                 <div className="flex flex-wrap gap-2">
                     {data.map((skill,index)=>(
-                        <span key={index} className="flex items-center gap-1 px-3 py-1 bg-blue-100 rounded-full text-sm">
+                        <span key={index} className="flex items-center gap-1 px-3 py-1 bg-gray-500 rounded-full text-sm">
                             {skill}
                             <button>
                                 <X className="w-3 h-3"/>
@@ -58,7 +56,7 @@ const SkillsForm=({data,onChange})=>{
                 </div>
             ):
             (
-                <div className="text-center py-6 text-gray-500">
+                <div className="text-center py-6 text-gray-300">
                     <Sparkles className="w-10 h-10 mx-auto mb-2 text-gray-300" />
                     <p>No skills added yet</p>
                     <p className="text-sm">Add your technical skills and soft skills</p>
@@ -66,7 +64,7 @@ const SkillsForm=({data,onChange})=>{
                 </div>
             ) }
             <div>
-                <p className="text-sm text-blue-800"> <strong>Tip:</strong>
+                <p className="text-sm text-gray-500 text-center"> <strong>Tip: </strong>
                     Add 8-12 relevant skills, include both tecnical skills(programming , languages, tools ) andd skills (leadership, communication)</p>
 
             </div>
