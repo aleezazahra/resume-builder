@@ -22,39 +22,36 @@ const ModernTemplate = ({ data, accentColor }) => {
         <div className="max-w-4xl mx-auto bg-white text-gray-800">
             {/* Header */}
             <header className="p-8 text-white" style={{ backgroundColor: accentColor }}>
-                <h1 className="text-4xl font-light mb-3">
+                <h1 className="text-4xl font-light mb-1">
                     {data.personal_info?.full_name || "Your Name"}
                 </h1>
+                {data.personal_info?.title && (
+                    <p className="text-white/90 mb-3">{data.personal_info.title}</p>
+                )}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm ">
                     {data.personal_info?.email && (
                         <div className="flex items-center gap-2">
-                            <Mail className="size-4" />
+                            <Mail className="size-4 shrink-0" />
                             <span>{data.personal_info.email}</span>
                         </div>
                     )}
                     {data.personal_info?.phone && (
                         <div className="flex items-center gap-2">
-                            <Phone className="size-4" />
+                            <Phone className="size-4 shrink-0" />
                             <span>{data.personal_info.phone}</span>
-                        </div>
-                    )}
-                    {data.personal_info?.title && (
-                        <div className="flex items-center gap-2">
-                            <Phone className="size-4" />
-                            <span>{data.personal_info.title}</span>
                         </div>
                     )}
                     {data.personal_info?.location && (
                         <div className="flex items-center gap-2">
-                            <MapPin className="size-4" />
+                            <MapPin className="size-4 shrink-0" />
                             <span>{data.personal_info.location}</span>
                         </div>
                     )}
         
                     {data.personal_info?.website && (
                         <a target="_blank" href={data.personal_info?.website} className="flex items-center gap-2">
-                            <Globe className="size-4" />
+                            <Globe className="size-4 shrink-0" />
                             <span className="break-all text-xs">{data.personal_info.website.split("https://")[1] ? data.personal_info.website.split("https://")[1] : data.personal_info.website}</span>
                         </a>
                     )}
@@ -73,7 +70,9 @@ const ModernTemplate = ({ data, accentColor }) => {
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-2 hover:underline"
                                 >
-                                    <span className="flex items-center">{platform?.icon}</span>
+                                    <span className="flex items-center justify-center shrink-0 size-4 [&>svg]:w-full [&>svg]:h-full">
+                                        {platform?.icon}
+                                    </span>
                                     <span>{social.label}</span>
                                 </a>
                             );
