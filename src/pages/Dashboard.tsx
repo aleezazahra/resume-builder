@@ -89,7 +89,7 @@ const Dashboard = () => {
   return (
     <div>
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <p className="text-2xl font-medium mb-6">
+        <p className="text-xl mb-10 font-medium mb-6">
           Welcome, Aleeza Zahra
         </p>
 
@@ -98,22 +98,22 @@ const Dashboard = () => {
 
           <button
             onClick={() => setShowCreateResume(true)}
-            className="w-full sm:max-w-36 h-48 flex flex-col items-center justify-center border rounded-lg"
+            className="w-full sm:max-w-36 h-48 flex flex-col items-center border-gray-500 justify-center border rounded-lg "
           >
-            <PlusIcon className="size-10" />
+            <PlusIcon className="size-6 mb-4 text-gray-700" />
             Create Resume
           </button>
 
           <button
             onClick={() => setShowUploadResume(true)}
-            className="w-full sm:max-w-36 h-48 flex flex-col items-center justify-center border rounded-lg"
+            className="w-full sm:max-w-36 h-48 flex flex-col items-center justify-center border border-gray-500 rounded-lg"
           >
-            <UploadIcon className="size-10" />
+            <UploadIcon className="size-6 mb-4 text-gray-700" />
             Upload Resume
           </button>
         </div>
 
-        {/* LIST */}
+ 
         <div className="grid grid-cols-2 sm:flex flex-wrap gap-4">
           {allResumes.map((resume, index) => {
             const baseColor = colors[index % colors.length];
@@ -193,7 +193,6 @@ const Dashboard = () => {
           </form>
         )}
 
-        {/* UPLOAD MODAL */}
         {showUploadResume && (
           <form
             onSubmit={uploadResume}
