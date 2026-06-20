@@ -74,6 +74,7 @@ const Builder = () => {
 
   const resumeRef = useRef<HTMLDivElement>(null);
 
+  /* ── Load resume ─────────────────────────────────────────── */
   useEffect(() => {
     const resume = dummyResumeData.find((r: any) => r._id === resumeId);
     if (resume) {
@@ -82,10 +83,11 @@ const Builder = () => {
     }
   }, [resumeId]);
 
+  /* ── Print / Download (proper A4) ───────────────────────── */
   const handlePrint = useCallback(() => {
     if (!resumeRef.current) return;
 
-   
+    // Inject a dedicated print style into <head> once
     const styleId = "resume-print-style";
     if (!document.getElementById(styleId)) {
       const style = document.createElement("style");
@@ -123,6 +125,7 @@ const Builder = () => {
       document.head.appendChild(style);
     }
 
+    // Create / reuse a print portal
     let portal = document.getElementById("resume-print-portal");
     if (!portal) {
       portal = document.createElement("div");
@@ -130,6 +133,7 @@ const Builder = () => {
       document.body.appendChild(portal);
     }
 
+    // Clone the resume node into the portal
     portal.innerHTML = "";
     const clone = resumeRef.current.cloneNode(true) as HTMLElement;
     clone.style.cssText = `
@@ -150,6 +154,7 @@ const Builder = () => {
     });
   }, []);
 
+  /* ── Share / Copy link ───────────────────────────────────── */
   const handleShare = useCallback(async () => {
     const url = `${window.location.origin}/view/${resumeId}`;
 
@@ -157,23 +162,23 @@ const Builder = () => {
       try {
         await navigator.share({ title: "My Resume", text: "Check out my resume", url });
       } catch {
-   
+        // user cancelled – silent
       }
       return;
     }
 
-
+    // Fallback: copy to clipboard
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
-    
+      // Last resort
       prompt("Copy this link:", url);
     }
   }, [resumeId]);
 
-  
+  /* ── Visibility toggle ───────────────────────────────────── */
   const changeVisibility = () =>
     setResumeData((prev) => ({ ...prev, public: !prev.public }));
 
@@ -184,6 +189,7 @@ const Builder = () => {
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
 
+      {/* ── Top bar ───────────────────────────────────────── */}
       <header className="sticky top-0 z-20 bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center gap-4">
           <Link
@@ -202,14 +208,14 @@ const Builder = () => {
         </div>
       </header>
 
-
+      {/* ── Main grid ─────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="grid lg:grid-cols-12 gap-6 items-start">
 
-         
+          {/* ── LEFT: editor panel ──────────────────────── */}
           <aside className="lg:col-span-5 flex flex-col gap-4">
 
-
+            {/* Section tabs */}
             <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
               <div className="grid grid-cols-3 sm:grid-cols-6">
                 {sections.map((s, i) => {
@@ -233,7 +239,7 @@ const Builder = () => {
               </div>
             </div>
 
- 
+            {/* Form card */}
             <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
               <h2 className="text-base font-semibold text-slate-800 mb-5">
                 {activeSection.name}
@@ -278,6 +284,7 @@ const Builder = () => {
                 />
               )}
 
+              {/* Prev / Next */}
               <div className="flex justify-between mt-8 pt-4 border-t border-slate-100">
                 <button
                   onClick={() => setActiveSectionIndex((p) => Math.max(p - 1, 0))}
@@ -300,13 +307,25 @@ const Builder = () => {
             </div>
           </aside>
 
-   
           <div className="lg:col-span-7 flex flex-col gap-4">
 
+            <div className="bg-white rounded-xl border border-slate-200 shadow-sm px-4 py-3 flex items-center justify-between gap-2 flex-wrap">
 
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm px-4 py-3 flex items-center justify-end gap-2">
+              <div className="flex items-center gap-2">
+                <TemplateSelector
+                  selectedTemplate={resumeData.template}
+                  onChange={(t) => setResumeData((p) => ({ ...p, template: t }))}
+                />
+                <ColorPicker
+                  selectedColor={resumeData.accent_color}
+                  onChange={(c) => setResumeData((p) => ({ ...p, accent_color: c }))}
+                />
+              </div>
 
-     
+             
+              <div className="flex items-center gap-2">
+
+              {/* Visibility */}
               <button
                 onClick={changeVisibility}
                 className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium border transition
@@ -319,7 +338,7 @@ const Builder = () => {
                 {resumeData.public ? "Public" : "Private"}
               </button>
 
-        
+              {/* Share (only when public) */}
               {resumeData.public && (
                 <button
                   onClick={handleShare}
@@ -343,10 +362,17 @@ const Builder = () => {
                 <Download className="size-4" />
                 {isPrinting ? "Preparing…" : "Download PDF"}
               </button>
-            </div>
 
+              </div>{/* end right group */}
+            </div>{/* end action bar */}
+
+            {/* A4 preview shell */}
             <div className="bg-slate-300 rounded-xl p-4 flex justify-center overflow-auto">
-           
+              {/*
+                The outer div is just a visual frame.
+                resumeRef points ONLY to the A4 content below —
+                exactly what gets cloned for print.
+              */}
               <div
                 ref={resumeRef}
                 style={{
