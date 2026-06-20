@@ -57,7 +57,7 @@ const Hero = () => {
   return (
     <div className="bg-black text-white min-h-screen">
 
-      {/* NAV */}
+
       <nav className="flex justify-between px-6 py-6">
         <h1 className="text-2xl font-bold">
           Resume<span className="text-yellow-400">Builder</span>
@@ -71,7 +71,7 @@ const Hero = () => {
         </Link>
       </nav>
 
-      {/* HERO */}
+
       <section className="px-6 py-20 grid lg:grid-cols-2 gap-12">
 
         <div>
@@ -88,7 +88,7 @@ const Hero = () => {
 
           <div className="flex gap-4 mt-10">
 
-            {/* ✅ FIXED ROUTE */}
+         
             <Link
               to="/app"
               className="bg-yellow-400 text-black px-6 py-3 rounded-xl font-semibold"
@@ -108,7 +108,7 @@ const Hero = () => {
 
       </section>
 
-      {/* FEATURES */}
+
       <section className="px-6 py-20 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {features.map((f, i) => (
           <div key={i} className="bg-zinc-900 p-6 rounded-xl">
@@ -119,7 +119,7 @@ const Hero = () => {
         ))}
       </section>
 
-      {/* FAQ */}
+
       <section className="max-w-3xl mx-auto px-6 py-20">
         {faqs.map((faq, i) => (
           <div key={i} className="mb-4 bg-zinc-900 rounded-lg">
