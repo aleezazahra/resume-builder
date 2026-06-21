@@ -8,4 +8,5 @@ landing page is something that I have left for the last , I am js currently work
 Typescript , ReactJS, TailwindCSS
 
 ### Backend
+Node, Express, MongoDB
 
