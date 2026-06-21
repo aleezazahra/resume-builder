@@ -188,7 +188,7 @@ const Builder = () => {
       <header className="sticky top-0 z-20 bg-black border-b border-white/10 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center gap-4">
           <Link
-            to="/"
+            to="/app"
             className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white transition-colors"
           >
             <ArrowLeft className="size-4" />
@@ -319,19 +319,16 @@ const Builder = () => {
               </div>
 
               <div className="flex items-center gap-2">
-                <button onClick={changeVisibility} className="btn btn-sm">
-                  {resumeData.public ? <Eye className="size-4" /> : <EyeOff className="size-4" />}
-                  {resumeData.public ? "Public" : "Private"}
-                </button>
+               
 
-                {resumeData.public && (
+              
                   <button onClick={handleShare} className="btn btn-sm">
                     {copied
                       ? <><CheckCircle className="size-4" /> Copied!</>
                       : <><Share2 className="size-4" /> Share</>
                     }
                   </button>
-                )}
+                
 
                 <button
                   onClick={handlePrint}

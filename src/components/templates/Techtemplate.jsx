@@ -85,7 +85,8 @@ const TechTemplate = ({ data, accentColor }) => {
           <div key={i} className="mb-4">
             <div className="flex justify-between items-baseline">
               <span className="font-bold">{proj.name}</span>
-              <span className="text-gray-500 text-xs">{proj.date}</span>
+              <a href={proj.link.startsWith('http') ? proj.link : `https://${proj.link}`} 
+              target="_blank" rel="noopener noreferrer" className="text-gray-500 text-xs">{proj.link}</a>
             </div>
             <p className="text-gray-700">{proj.description}</p>
           </div>

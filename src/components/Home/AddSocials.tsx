@@ -155,7 +155,7 @@ const AddSocials = ({ data, onChange }: AddSocialsProps) => {
           </select>
           <input
             type="text"
-            placeholder={selectedPlatform?.placeholder ?? "Enter URL or username"}
+            placeholder={selectedPlatform?.placeholder ?? "Enter URL"}
             className="w-1/2 py-2 px-3 text-sm border border-gray-600 rounded bg-transparent"
             value={url}
             onChange={(e) => setUrl(e.target.value)}

@@ -1,6 +1,5 @@
 import { Mail, Phone, MapPin, Globe } from "lucide-react";
-// Adjust this relative path if ModernTemplate.jsx doesn't live next to the
-// "Home" folder that contains AddSocials.tsx (e.g. components/Templates/ vs components/Home/)
+
 import { SOCIAL_PLATFORMS } from "../Home/AddSocials";
 
 const normalizeUrl = (url) => {
@@ -20,7 +19,7 @@ const ModernTemplate = ({ data, accentColor }) => {
 
     return (
         <div className="max-w-4xl mx-auto bg-white text-gray-800">
-            {/* Header */}
+       
             <header className="p-8 text-white" style={{ backgroundColor: accentColor }}>
                 <h1 className="text-4xl font-light mb-1">
                     {data.personal_info?.full_name || "Your Name"}
@@ -57,7 +56,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                     )}
                 </div>
 
-                {/* Socials */}
+           
                 {data.socials && data.socials.length > 0 && (
                     <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm mt-3 pt-3 border-t border-white/30">
                         {data.socials.map((social, index) => {
@@ -82,7 +81,7 @@ const ModernTemplate = ({ data, accentColor }) => {
             </header>
 
             <div className="p-8">
-                {/* Professional Summary */}
+            
                 {data.professional_summary && (
                     <section className="mb-8">
                         <h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
@@ -143,6 +142,14 @@ const ModernTemplate = ({ data, accentColor }) => {
                                             {p.description}
                                         </div>
                                     )}
+                                      {p.link && (
+                                        <div className="text-blue-500 leading-relaxed text-sm mt-3 text-decoration:underline underline udnerline-
+                                         decoration-blue-800">
+                                              <a href={p.link.startsWith('http') ? p.link : `https://${p.link}`} 
+              target="_blank" rel="noopener noreferrer" >{p.link}</a>
+                                        </div>
+                                    )}
+                                  
                                 </div>
                             ))}
                         </div>

@@ -227,6 +227,9 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                                 {project.description.split("\n").map((line, i) => (
                                                     <li key={i}>{line}</li>
                                                 ))}
+                                                 <a href={project.link.startsWith('http') ? project.link : 
+                                                 `https://${project.link}`} 
+              target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-zinc-500 -mt-2 underline">{project.link}</a>
                                             </ul>
                                         )}
                                     </div>

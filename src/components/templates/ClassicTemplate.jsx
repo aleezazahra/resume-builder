@@ -134,6 +134,8 @@ const ClassicTemplate = ({ data, accentColor }) => {
                                 <div>
                                     <li className="font-semibold text-gray-800 ">{proj.name}</li>
                                     <p className="text-gray-600">{proj.description}</p>
+                                      <a href={proj.link.startsWith('http') ? proj.link : `https://${proj.link}`} 
+              target="_blank" rel="noopener noreferrer" className="underline text-gray-600 " >{proj.link}</a>
                                 </div>
                             </div>
                         ))}

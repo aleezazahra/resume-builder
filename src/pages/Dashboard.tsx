@@ -158,17 +158,17 @@ const Dashboard = () => {
         ) : (
           <div className="grid grid-cols-2 sm:flex flex-wrap gap-4">
             {allResumes.map((resume, index) => {
-              const color = colors[index % colors.length];
+      
               return (
                 <button
                   key={resume._id}
                   onClick={() => navigate(`/app/builder/${resume._id}`)}
                   className="relative w-full sm:w-36 h-48 flex flex-col items-center justify-center
-                    gap-2 border rounded-xl bg-zinc-900 hover:bg-zinc-800 transition"
-                  style={{ borderColor: color + "55" }}
+                    gap-2 border rounded-sm border-slate-600 bg-zinc-900 hover:bg-zinc-800 transition"
+               
                 >
                   <FilePenIcon className="size-6 text-white/40" />
-                  <p className="text-sm font-medium text-center px-2 leading-tight" style={{ color }}>
+                  <p className="text-sm font-medium text-center px-2 leading-tight" >
                     {resume.title}
                   </p>
                   <p className="text-xs text-white/30">

@@ -5,7 +5,7 @@ const ProjectsForm = ({ data = [], onChange }) => {
     const newProject = {
       id: crypto.randomUUID(), 
       name: "",
-      type: "",
+      link: "",
       description: "",
     };
     onChange([...data, newProject]);
@@ -57,9 +57,9 @@ const ProjectsForm = ({ data = [], onChange }) => {
                 type="text" placeholder="Project name" className="border px-3 py-2 text-sm rounded" 
               />
               <input 
-                value={project.type || ""} 
-                onChange={(e) => updateProject(index, "type", e.target.value)} 
-                type="text" placeholder="Project type" className="border px-3 py-2 text-sm rounded" 
+                value={project.link || ""} 
+                onChange={(e) => updateProject(index, "link", e.target.value)} 
+                type="link" placeholder="Project URL" className="border px-3 py-2 text-sm rounded" 
               />
               <textarea 
                 rows={4} 

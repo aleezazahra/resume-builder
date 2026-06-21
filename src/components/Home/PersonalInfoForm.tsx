@@ -15,7 +15,6 @@ const PersonalInfoForm = ({ data, onChange, removeBackground, setRemoveBackgroun
     
     { key: "location", label: "Location", icon: MapPin, type: "text" },
 
-    { key: "website", label: "Personal Website", icon: Globe, type: "url" }, 
 ];
 
     return (

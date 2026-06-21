@@ -106,6 +106,8 @@ const MinimalTemplate = ({ data, accentColor }) => {
                             <div key={index} className="flex flex-col gap-2 justify-between items-baseline">
                                 <h3 className="text-lg font-medium ">{proj.name}</h3>
                                 <p className="text-gray-600">{proj.description}</p>
+                                  <a href={proj.link.startsWith('http') ? proj.link : `https://${proj.link}`} 
+              target="_blank" rel="noopener noreferrer" >{proj.link}</a>
                             </div>
                         ))}
                     </div>
