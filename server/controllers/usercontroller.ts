@@ -1,0 +1,106 @@
+import User from "../models/User.ts";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import Resume from "../models/Resume.ts";
+
+const generateToken = (userId: string) => {
+    const token = jwt.sign({ userId }, process.env.JWT_SECRET as string, { expiresIn: '7d' });
+    return token;
+};
+
+// POST : /api/user/register
+export const registerUser = async (req, res) => {
+    try {
+        const { name, email, password } = req.body;
+
+        // Check if required fields are present
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: "Missing required field" });
+        }
+
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: "User already exists" });
+        }
+
+        // Create new user
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = await User.create({
+            name, email, password: hashedPassword
+        });
+
+        const token = generateToken(newUser._id.toString());
+
+        // Return user without password
+        const userObj = newUser.toObject();
+        delete userObj.password;
+
+        return res.status(201).json({ message: 'User created successfully', token, user: userObj });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+// POST : /api/user/login
+export const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: "Invalid email or password" });
+        }
+
+        // Check if password is correct
+        const isMatch = await user.comparePassword(password);
+        if (!isMatch) {
+            return res.status(400).json({ message: "Invalid email or password" });
+        }
+
+        const token = generateToken(user._id.toString());
+
+        // Return user without password
+        const userObj = user.toObject();
+        delete userObj.password;
+
+        return res.status(200).json({ message: 'Login successful', token, user: userObj });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+// GET : /api/users/data
+export const getUserById = async (req, res) => {  // Fixed: was "xport"
+    try {
+        const userId = req.userId;
+
+        const user = await User.findById(userId).select('-password');
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        return res.status(200).json({ user });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+
+//getting resumes api/users/resume
+export const getUserResumes=async(req,res)=>{
+    try{
+        const UserId=req.userId;
+
+        //return user resumes
+        const resumes=await Resume.find({userId})
+        return res.status(200).json({resumes})
+        
+        const resumeDataCopy=JSON.parse(resumeData);
+       const resume= await Resume.findByIdAndUpdate({userId,_id:resumeId},resumeDataCopy,{new:true})
+       return res.status(200).json({message:"saved successfully",resume})
+
+    }catch(error){
+        return res.status(400).json({message:error.message})
+    }
+
+}
