@@ -1,4 +1,4 @@
-import Resume from "../models/Resume.js";
+import Resume from "../models/Resume.ts";
 
 // POST: /api/resume/create
 export const createResume = async (req, res) => {
@@ -59,7 +59,7 @@ export const updateResume=async(req,res)=>{
     const resume= await Resume.findOneAndUpdate({userId,_id:resumeId},resumeDataCopy,{new:true})
 
     return res.status(200).json({message:"saved successfully",resume})
-    const image=req.file;
+    
   }catch(error){
     return res.status(400).json({message:error.message})
   }
