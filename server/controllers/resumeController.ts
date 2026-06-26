@@ -1,6 +1,6 @@
 import Resume from "../models/Resume.ts";
 
-// POST: /api/resume/create
+
 export const createResume = async (req, res) => {
   try {
     const userId = req.userId;
@@ -14,7 +14,6 @@ export const createResume = async (req, res) => {
   }
 };
 
-// GET: /api/resume/:resumeId
 export const getResumeById = async (req, res) => {
   try {
     const userId = req.userId;
@@ -46,24 +45,63 @@ export const deleteResume = async (req, res) => {
   }
 };
 
-//UPDATE 
-//PUT : /api/resumesupdate
-export const updateResume=async(req,res)=>{
-  try{
-    const userId=req.userId;
-    const {resumeId,resumeData,removeBackground}=req.body
-    const image=req.file;
+export const updateResume = async (req, res) => {
+  try {
+    const userId = req.userId;
 
-    const resumeDataCopy=JSON.parse(resumeData)
+    let resumeId;
+    let updateData = {};
 
-    const resume= await Resume.findOneAndUpdate({userId,_id:resumeId},resumeDataCopy,{new:true})
+    if (req.is("multipart/form-data")) {
+      resumeId = req.body.resumeId;
+      updateData = JSON.parse(req.body.resumeData);
+    } else {
+      resumeId = req.body.resumeId;
+      updateData = req.body.resumeData || req.body;
+    }
 
-    return res.status(200).json({message:"saved successfully",resume})
-    
-  }catch(error){
-    return res.status(400).json({message:error.message})
+    const resume = await Resume.findOneAndUpdate(
+      {
+        _id: resumeId,
+        userId,
+      },
+      updateData,
+      {
+        new: true,
+      }
+    );
+
+    if (!resume) {
+      return res.status(404).json({
+        message: "Resume not found",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Saved successfully",
+      resume,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
   }
+};
 
+export const getUserResumes = async (req, res) => {
+  try {
+    const userId = req.userId;
 
-}
+    const resumes = await Resume.find({ userId }).sort({
+      updatedAt: -1,
+    });
 
+    return res.status(200).json({
+      resumes,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};

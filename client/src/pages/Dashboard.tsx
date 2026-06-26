@@ -8,8 +8,9 @@ import {
   TrashIcon,
   PencilIcon,
 } from "lucide-react";
-
-const STORAGE_KEY = "resumes";
+import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import api from "../configs/api";
 
 type Resume = {
   _id: string;
@@ -26,18 +27,8 @@ type Resume = {
   public: boolean;
 };
 
-const generateId = () => "res_" + Math.random().toString(36).slice(2, 10);
-
-const loadResumes = (): Resume[] => {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
-  catch { return []; }
-};
-
-const saveResumes = (resumes: Resume[]) =>
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(resumes));
-
 const Dashboard = () => {
-  const colors = ["#9333ea", "#d97706", "#dc2626", "#0284c7", "#16a34a"];
+  const { user } = useSelector((state: any) => state.auth);
 
   const [allResumes, setAllResumes] = useState<Resume[]>([]);
   const [showCreateResume, setShowCreateResume] = useState(false);
@@ -49,87 +40,115 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => { setAllResumes(loadResumes()); }, []);
-
-  const createResume = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!title.trim()) return;
-    const newResume: Resume = {
-      _id: generateId(),
-      title: title.trim(),
-      updatedAt: new Date().toISOString(),
-      personal_info: {},
-      professional_summary: "",
-      experience: [],
-      education: [],
-      project: [],
-      skills: [],
-      template: "classic",
-      accent_color: "#3882F6",
-      public: false,
+  useEffect(() => {
+    const fetchResumes = async () => {
+      try {
+        const { data } = await api.get("/api/resume/list");
+        setAllResumes(data.resumes || []);
+      } catch (error: any) {
+        toast.error(
+          error?.response?.data?.message || "Failed to load resumes"
+        );
+      }
     };
-    const updated = [newResume, ...allResumes];
-    setAllResumes(updated);
-    saveResumes(updated);
-    setTitle("");
-    setShowCreateResume(false);
-    navigate(`/app/builder/${newResume._id}`);
+
+    if (user) {
+      fetchResumes();
+    }
+  }, [user]);
+
+  const createResume = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!title.trim()) return;
+
+    try {
+      const { data } = await api.post("/api/resume/create", {
+        title: title.trim(),
+      });
+
+      setAllResumes((prev) => [data.resume, ...prev]);
+
+      setTitle("");
+      setShowCreateResume(false);
+
+      navigate(`/app/builder/${data.resume._id}`);
+    } catch (error: any) {
+      toast.error(
+        error?.response?.data?.message || "Failed to create resume"
+      );
+    }
   };
 
-  const uploadResume = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!title.trim()) return;
-    const newResume: Resume = {
-      _id: generateId(),
-      title: title.trim(),
-      updatedAt: new Date().toISOString(),
-      personal_info: {},
-      professional_summary: "",
-      experience: [],
-      education: [],
-      project: [],
-      skills: [],
-      template: "classic",
-      accent_color: "#3882F6",
-      public: false,
-    };
-    const updated = [newResume, ...allResumes];
-    setAllResumes(updated);
-    saveResumes(updated);
-    setTitle("");
-    setUploadFile(null);
-    setShowUploadResume(false);
-    navigate(`/app/builder/${newResume._id}`);
-  };
+  const uploadResume = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-  const handleEditTitle = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!editTitle.trim()) return;
-    const updated = allResumes.map((r) =>
-      r._id === editResumeId
-        ? { ...r, title: editTitle.trim(), updatedAt: new Date().toISOString() }
-        : r
+  toast.error("Upload feature coming soon");
+};
+
+const handleEditTitle = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!editTitle.trim()) return;
+
+  try {
+    await api.put("/api/resume/update", {
+      resumeId: editResumeId,
+      resumeData: JSON.stringify({
+        title: editTitle.trim(),
+      }),
+      removeBackground: false,
+    });
+
+    setAllResumes((prev) =>
+      prev.map((resume) =>
+        resume._id === editResumeId
+          ? {
+              ...resume,
+              title: editTitle.trim(),
+              updatedAt: new Date().toISOString(),
+            }
+          : resume
+      )
     );
-    setAllResumes(updated);
-    saveResumes(updated);
+
     setEditResumeId("");
     setEditTitle("");
-  };
 
-  const deleteResume = (resumeId: string) => {
-    if (!window.confirm("Delete this resume? This cannot be undone.")) return;
-    const updated = allResumes.filter((r) => r._id !== resumeId);
-    setAllResumes(updated);
-    saveResumes(updated);
-  };
+    toast.success("Resume renamed");
+  } catch (error: any) {
+    toast.error(
+      error?.response?.data?.message ||
+        "Failed to rename resume"
+    );
+  }
+};
 
-  const inputClass = "w-full bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-white/40 transition";
+const deleteResume = async (resumeId: string) => {
+  if (!window.confirm("Delete this resume?")) return;
+
+  try {
+    await api.delete(`/api/resume/delete/${resumeId}`);
+
+    setAllResumes((prev) =>
+      prev.filter((resume) => resume._id !== resumeId)
+    );
+
+    toast.success("Resume deleted");
+  } catch (error: any) {
+    toast.error(
+      error?.response?.data?.message ||
+        "Failed to delete resume"
+    );
+  }
+};
+
+const inputClass =
+  "w-full bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-white/40 transition";
 
   return (
     <div className="min-h-screen bg-black">
       <div className="max-w-7xl mx-auto px-4 py-8">
-
-        <p className="text-xl font-medium text-white mb-8">Welcome, Aleeza Zahra</p>
 
         <div className="flex flex-wrap gap-4 mb-10">
           <button
@@ -157,47 +176,43 @@ const Dashboard = () => {
           <p className="text-white/30 text-sm">No resumes yet — create or upload one above.</p>
         ) : (
           <div className="grid grid-cols-2 sm:flex flex-wrap gap-4">
-            {allResumes.map((resume, index) => {
-      
-              return (
-                <button
-                  key={resume._id}
-                  onClick={() => navigate(`/app/builder/${resume._id}`)}
-                  className="relative w-full sm:w-36 h-48 flex flex-col items-center justify-center
-                    gap-2 border rounded-sm border-slate-600 bg-zinc-900 hover:bg-zinc-800 transition"
-               
+            {allResumes.map((resume) => (
+              <button
+                key={resume._id}
+                onClick={() => navigate(`/app/builder/${resume._id}`)}
+                className="relative w-full sm:w-36 h-48 flex flex-col items-center justify-center
+                  gap-2 border rounded-sm border-slate-600 bg-zinc-900 hover:bg-zinc-800 transition"
+              >
+                <FilePenIcon className="size-6 text-white/40" />
+                <p className="text-sm font-medium text-center px-2 leading-tight">
+                  {resume.title}
+                </p>
+                <p className="text-xs text-white/30">
+                  {resume.updatedAt
+                    ? `Updated ${new Date(resume.updatedAt).toLocaleDateString()}`
+                    : "No date"}
+                </p>
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="absolute top-2 right-2 flex gap-1"
                 >
-                  <FilePenIcon className="size-6 text-white/40" />
-                  <p className="text-sm font-medium text-center px-2 leading-tight" >
-                    {resume.title}
-                  </p>
-                  <p className="text-xs text-white/30">
-                    {resume.updatedAt
-                      ? `Updated ${new Date(resume.updatedAt).toLocaleDateString()}`
-                      : "No date"}
-                  </p>
-                  <div
-                    onClick={(e) => e.stopPropagation()}
-                    className="absolute top-2 right-2 flex gap-1"
+                  <button
+                    onClick={() => deleteResume(resume._id)}
+                    className="p-1 rounded text-white/20 hover:text-red-400 hover:bg-white/5 transition"
+                    title="Delete"
                   >
-                    <button
-                      onClick={() => deleteResume(resume._id)}
-                      className="p-1 rounded text-white/20 hover:text-red-400 hover:bg-white/5 transition"
-                      title="Delete"
-                    >
-                      <TrashIcon className="size-4" />
-                    </button>
-                    <button
-                      onClick={() => { setEditResumeId(resume._id); setEditTitle(resume.title); }}
-                      className="p-1 rounded text-white/20 hover:text-white hover:bg-white/5 transition"
-                      title="Rename"
-                    >
-                      <PencilIcon className="size-4" />
-                    </button>
-                  </div>
-                </button>
-              );
-            })}
+                    <TrashIcon className="size-4" />
+                  </button>
+                  <button
+                    onClick={() => { setEditResumeId(resume._id); setEditTitle(resume.title); }}
+                    className="p-1 rounded text-white/20 hover:text-white hover:bg-white/5 transition"
+                    title="Rename"
+                  >
+                    <PencilIcon className="size-4" />
+                  </button>
+                </div>
+              </button>
+            ))}
           </div>
         )}
       </div>

@@ -7,7 +7,7 @@ import resumeRouter from "./routes/resumeRoutes.ts"
 import aiRouter from "./routes/aiRoutes.ts";
 const app = express();
 
-const PORT: number = Number(process.env.PORT) || 5173;
+const PORT: number = Number(process.env.PORT) || 3000;
 await connectDB()
 app.use(express.json());
 app.use(cors());
@@ -16,7 +16,7 @@ app.get('/', (req: Request, res: Response) => {
     res.send("server is live");
 });
 app.use('/api/users',userRouter)
-app.use('/api/resumes',resumeRouter)
+app.use('/api/resume',resumeRouter)
 app.use('/api/ai',aiRouter)
 
 app.listen(PORT, () => {

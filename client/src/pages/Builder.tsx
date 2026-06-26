@@ -5,8 +5,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
-  Eye,
-  EyeOff,
   FileText,
   FolderIcon,
   GraduationCap,
@@ -17,6 +15,8 @@ import {
   LanguagesIcon,
   Link2,
 } from "lucide-react";
+import toast from "react-hot-toast";
+import api from "../configs/api.ts"; 
 
 import PersonalInfoForm from "../components/Home/PersonalInfoForm";
 import ResumePreviewer from "../components/Home/ResumePreviewer";
@@ -48,6 +48,22 @@ interface ResumeStructure {
   public: boolean;
 }
 
+const EMPTY_RESUME: ResumeStructure = {
+  _id: "",
+  title: "",
+  personal_info: {},
+  professional_summary: "",
+  experience: [],
+  education: [],
+  project: [],
+  skills: [],
+  languages: [],
+  socials: [],
+  template: "classic",
+  accent_color: "#3882F6",
+  public: false,
+};
+
 const sections = [
   { id: "personal",   name: "Personal Info", icon: User          },
   { id: "summary",    name: "Summary",       icon: FileText      },
@@ -61,54 +77,79 @@ const sections = [
 
 const Builder = () => {
   const { resumeID } = useParams();
-  const resumeId = resumeID;
 
-  const [resumeData, setResumeData] = useState<ResumeStructure>({
-    _id: "",
-    title: "",
-    personal_info: {},
-    professional_summary: "",
-    experience: [],
-    education: [],
-    project: [],
-    skills: [],
-    languages: [],
-    socials: [],
-    template: "classic",
-    accent_color: "#3882F6",
-    public: false,
-  });
+  const [resumeData, setResumeData] = useState<ResumeStructure>(EMPTY_RESUME);
+  const [loading, setLoading] = useState(true);
 
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   const [removeBackground, setRemoveBackground] = useState(false);
   const [copied, setCopied] = useState(false);
   const [isPrinting, setIsPrinting] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const resumeRef = useRef<HTMLDivElement>(null);
+  // Track whether the initial load has completed so we don't auto-save on mount
+  const isInitialized = useRef(false);
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // ── Load resume from backend on mount ────────────────────────────────────
   useEffect(() => {
-    try {
-      const all = JSON.parse(localStorage.getItem("resumes") || "[]");
-      const resume = all.find((r: any) => r._id === resumeId);
-      if (resume) {
-        setResumeData((prev) => ({ ...prev, ...resume }));
-        document.title = resume.title || "Resume Builder";
+    if (!resumeID) return;
+    setLoading(true);
+    api
+      .get(`/api/resume/get/${resumeID}`)
+      .then(({ data }) => {
+        setResumeData((prev) => ({ ...prev, ...data.resume }));
+        document.title = data.resume.title || "Resume Builder";
+      })
+      .catch((error) => {
+  console.log(error.response?.data);
+
+  if (error.response?.status === 404) {
+    toast.error("Resume not found");
+  } else {
+    toast.error(
+      error.response?.data?.message ||
+      "Failed to load resume"
+    );
+  }
+})
+      .finally(() => {
+        setLoading(false);
+    
+        setTimeout(() => { isInitialized.current = true; }, 0);
+      });
+  }, [resumeID]);
+
+ 
+  useEffect(() => {
+    if (!isInitialized.current || !resumeData._id) return;
+
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(async () => {
+      try {
+        setIsSaving(true);
+        const formData = new FormData();
+        formData.append("resumeId", resumeData._id);
+        formData.append("resumeData", JSON.stringify(resumeData));
+        formData.append("removeBackground", String(removeBackground));
+        
+        await api.put("/api/resume/update", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+      } catch {
+        toast.error("Auto-save failed");
+      } finally {
+        setIsSaving(false);
       }
-    } catch {}
-  }, [resumeId]);
+    }, 1500);
 
-  useEffect(() => {
-    if (!resumeData._id) return;
-    try {
-      const all: any[] = JSON.parse(localStorage.getItem("resumes") || "[]");
-      const idx = all.findIndex((r) => r._id === resumeData._id);
-      const updated = { ...resumeData, updatedAt: new Date().toISOString() };
-      if (idx >= 0) all[idx] = updated;
-      else all.unshift(updated);
-      localStorage.setItem("resumes", JSON.stringify(all));
-    } catch {}
-  }, [resumeData]);
+    return () => {
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+    };
+  }, [resumeData, removeBackground]);
 
+  // ── Print / download ─────────────────────────────────────────────────────
   const handlePrint = useCallback(() => {
     if (!resumeRef.current) return;
     const styleId = "resume-print-style";
@@ -121,22 +162,15 @@ const Builder = () => {
           #resume-print-portal { display: block !important; }
           @page { size: A4 portrait; margin: 0; }
           html, body {
-            width: 210mm !important;
-            height: 297mm !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            background: white !important;
-            background-color: white !important;
+            width: 210mm !important; height: 297mm !important;
+            margin: 0 !important; padding: 0 !important;
+            background: white !important; background-color: white !important;
             -webkit-print-color-adjust: exact;
-            print-color-adjust: exact;
-            color-adjust: exact;
+            print-color-adjust: exact; color-adjust: exact;
           }
           #resume-print-portal {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            background: white !important;
-            background-color: white !important;
+            position: fixed; inset: 0; z-index: 99999;
+            background: white !important; background-color: white !important;
           }
         }
       `;
@@ -150,7 +184,7 @@ const Builder = () => {
     }
     portal.innerHTML = "";
     const clone = resumeRef.current.cloneNode(true) as HTMLElement;
-    clone.style.cssText = `width:210mm;min-height:297mm;margin:0;padding:0;box-sizing:border-box;background:white;`;
+    clone.style.cssText = "width:210mm;min-height:297mm;margin:0;padding:0;box-sizing:border-box;background:white;";
     portal.appendChild(clone);
     setIsPrinting(true);
     requestAnimationFrame(() => {
@@ -160,8 +194,9 @@ const Builder = () => {
     });
   }, []);
 
+  // ── Share ────────────────────────────────────────────────────────────────
   const handleShare = useCallback(async () => {
-    const url = `${window.location.origin}/view/${resumeId}`;
+    const url = `${window.location.origin}/view/${resumeID}`;
     if (navigator.share) {
       try { await navigator.share({ title: "My Resume", text: "Check out my resume", url }); } catch {}
       return;
@@ -173,14 +208,19 @@ const Builder = () => {
     } catch {
       prompt("Copy this link:", url);
     }
-  }, [resumeId]);
-
-  const changeVisibility = () =>
-    setResumeData((prev) => ({ ...prev, public: !prev.public }));
+  }, [resumeID]);
 
   const activeSection = sections[activeSectionIndex];
   const isFirst = activeSectionIndex === 0;
   const isLast  = activeSectionIndex === sections.length - 1;
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <p className="text-white/40 text-sm animate-pulse">Loading resume…</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black font-sans">
@@ -198,6 +238,10 @@ const Builder = () => {
           <h1 className="text-sm font-semibold text-white/80 truncate">
             {resumeData.title || "Untitled Resume"}
           </h1>
+          {/* Auto-save indicator */}
+          {isSaving && (
+            <span className="ml-auto text-xs text-white/30 animate-pulse">Saving…</span>
+          )}
         </div>
       </header>
 
@@ -304,6 +348,7 @@ const Builder = () => {
             </div>
           </aside>
 
+          {/* ── Right panel: preview ── */}
           <div className="lg:col-span-7 flex flex-col gap-4">
 
             <div className="bg-zinc-900 rounded-xl border border-white/10 px-4 py-3 flex items-center justify-between gap-2 flex-wrap">
@@ -319,16 +364,12 @@ const Builder = () => {
               </div>
 
               <div className="flex items-center gap-2">
-               
-
-              
-                  <button onClick={handleShare} className="btn btn-sm">
-                    {copied
-                      ? <><CheckCircle className="size-4" /> Copied!</>
-                      : <><Share2 className="size-4" /> Share</>
-                    }
-                  </button>
-                
+                <button onClick={handleShare} className="btn btn-sm">
+                  {copied
+                    ? <><CheckCircle className="size-4" /> Copied!</>
+                    : <><Share2 className="size-4" /> Share</>
+                  }
+                </button>
 
                 <button
                   onClick={handlePrint}
