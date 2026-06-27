@@ -2,17 +2,14 @@
 
 
 
-
-
-## Under development right now
-
 # Naqsh Resume نقش
 ---
 Naqsh makes builduing resume straightforward. Put in your information and choose from highly-customizable templates.Export it as PDF or use the link to spam recruiters :3
 
 The code base is open-source under the MIT license, with no ads or hidden costs.
+
 ---
-##Features
+## Features
 - Real-time preview
 - PDF export and shareable link
 - Custom sections for any content type
@@ -34,6 +31,9 @@ The code base is open-source under the MIT license, with no ads or hidden costs.
 | AI model  | gpt-4o-mini  |
 
 ---
+
+
+## Under development right now
 
 
 landing page is something that I have left for the last , I am js currently working on making this work and setting up the backend.
