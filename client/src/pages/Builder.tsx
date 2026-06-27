@@ -11,9 +11,12 @@ import {
   Share2,
   Sparkles,
   User,
+  Award,
   CheckCircle,
   LanguagesIcon,
   Link2,
+  Wrench,
+  Building2Icon,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import api from "../configs/api.ts"; 
@@ -70,13 +73,13 @@ const EMPTY_RESUME: ResumeStructure = {
 const sections = [
   { id: "personal",   name: "Personal Info", icon: User          },
   { id: "summary",    name: "Summary",       icon: FileText      },
-  { id: "experience", name: "Experience",    icon: FileText      },
+  { id: "experience", name: "Experience",    icon: Building2Icon      },
   { id: "education",  name: "Education",     icon: GraduationCap },
   { id: "projects",   name: "Projects",      icon: FolderIcon    },
-  { id: "skills",     name: "Skills",        icon: Sparkles      },
+  { id: "skills",     name: "Skills",        icon: Wrench     },
   { id: "languages",  name: "Languages",     icon: LanguagesIcon },
   { id: "socials",    name: "Socials",       icon: Link2         },
-  {id:"certifications",name:"Certifications and Courses",icon:FileText}
+  {id:"certifications",name:"Certifications and Courses",icon:Award}
 ];
 
 const Builder = () => {
