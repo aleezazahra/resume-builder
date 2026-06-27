@@ -148,18 +148,17 @@ const NexusTemplate = ({ data, accentColor }) => {
       {/* Main Content */}
       <main className="w-2/3 min-w-0 p-8 flex flex-col gap-6 overflow-hidden">
 
-        {/* Professional Summary */}
-        {data.professional_summary && (
+          {data.professional_summary && (
           <section>
             <h2
               className="text-xl font-semibold mb-3"
               style={{ color: accentColor }}
             >
-              PROFESSIONAL SUMMARY
+              SUMMARY
             </h2>
             <div
-              className="text-gray-700 leading-relaxed text-sm break-words min-w-0 w-full"
-              dangerouslySetInnerHTML={{ __html: data.professional_summary }}
+              className="text-gray-700 leading-relaxed text-sm break-words min-w-0 w-full ql-editor !p-0"
+              dangerouslySetInnerHTML={{ __html: data.professional_summary}}
             />
           </section>
         )}

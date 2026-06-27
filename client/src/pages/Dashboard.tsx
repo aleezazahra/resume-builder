@@ -34,9 +34,9 @@ const Dashboard = () => {
 
   const [allResumes, setAllResumes] = useState<Resume[]>([]);
   const [showCreateResume, setShowCreateResume] = useState(false);
-  const [showUploadResume, setShowUploadResume] = useState(false);
+  
   const [title, setTitle] = useState("");
-  const [uploadFile, setUploadFile] = useState<File | null>(null);
+ 
   const [editResumeId, setEditResumeId] = useState("");
   const [editTitle, setEditTitle] = useState("");
 
@@ -163,7 +163,7 @@ const inputClass =
         </div>
 
         {allResumes.length === 0 ? (
-          <p className="text-white/30 text-sm">No resumes yet — create or upload one above.</p>
+          <p className="text-white/30 text-sm">No resumes yet — create one.</p>
         ) : (
           <div className="grid grid-cols-2 sm:flex flex-wrap gap-4">
             {allResumes.map((resume) => (

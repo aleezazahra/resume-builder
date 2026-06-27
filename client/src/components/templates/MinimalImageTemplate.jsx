@@ -159,13 +159,13 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
 
                 <main className="col-span-2 p-8 pt-0">
 
-                    {data.professional_summary && (
+                           {data.professional_summary && (
                         <section className="mb-8">
                             <h2 className="text-sm font-semibold tracking-widest mb-3" style={{ color: accentColor }} >
-                                SUMMARY
+                              SUMMARY
                             </h2>
                             <div
-            className="text-zinc-700 leading-relaxed text-sm [&_strong]:font-semibold [&_em]:italic"
+            className="text-zinc-700 leading-relaxed text-sm [&_strong]:font-semibold [&_em]:italic ql-editor !p-0"
             dangerouslySetInnerHTML={{ __html: data.professional_summary }}
         />
                         </section>

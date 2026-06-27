@@ -88,6 +88,8 @@ export const updateResume = async (req, res) => {
   }
 };
 
+
+
 export const getUserResumes = async (req, res) => {
   try {
     const userId = req.userId;

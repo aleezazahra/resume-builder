@@ -61,7 +61,10 @@ const MinimalTemplate = ({ data, accentColor }) => {
 
             {data.professional_summary && (
                 <section className="mb-10">
-                    <div className=" text-gray-700"
+                    <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
+                        Summary
+                    </h2>
+                    <div className=" text-gray-700 ql-editor !p-0"
                     dangerouslySetInnerHTML={{__html:data.professional_summary}}>
                        
                     </div>

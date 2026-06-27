@@ -1,4 +1,4 @@
-import { Plus, Trash } from "lucide-react";
+import { Plus, Trash ,File2} from "lucide-react";
 
 const ProjectsForm = ({ data = [], onChange }) => {
   const addProject = () => {

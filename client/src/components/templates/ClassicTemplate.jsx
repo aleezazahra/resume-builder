@@ -80,12 +80,12 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 )}
             </header>
 
-            {data.professional_summary && (
+              {data.professional_summary && data.professional_summary > 0 && (
                 <section className="mb-6">
                     <h2 className="text-xl font-semibold mb-3 " style={{ color: accentColor }}>
-                        PROFESSIONAL SUMMARY
+                        Summary
                     </h2>
-                    <div className="text-gray-700 leading-relaxed"
+                    <div className="text-gray-700 leading-relaxed ql-editor !p-0"
                     dangerouslySetInnerHTML={{__html:data.professional_summary}}>
                         
                     </div>

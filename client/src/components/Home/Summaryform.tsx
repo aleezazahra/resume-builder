@@ -90,6 +90,16 @@ const Summaryform = ({ data, onChange }) => {
                 <div id="toolbar">
     <button className="ql-bold" title="Bold" />
     <button className="ql-italic" title="Italic" />
+        <button
+                        className="ql-list"
+                        value="ordered"
+                        title="Ordered List"
+                    />
+                    <button
+                        className="ql-list"
+                        value="bullet"
+                        title="Bullet List"
+                    />
 </div>
 
           
