@@ -46,10 +46,7 @@ const App = () => {
         getUserData();
     },[])
   
-  
-
-
-  return (
+ return (
     <>
     <Toaster />
     <Routes>
@@ -62,6 +59,7 @@ const App = () => {
         <Route index element={<Dashboard />} />
         <Route path="builder/:resumeID" element={<Builder />} />
       </Route>
+      <Route path="/login" element={<Login />} />
 
     
       <Route path="/view/:resumeID" element={<Preview />} />

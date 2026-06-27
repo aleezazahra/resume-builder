@@ -9,26 +9,15 @@ import {
   getUserResumes,
   updateResume,
 } from "../controllers/resumeController.ts";
+import { uploadResume } from "../controllers/aiController.ts";
 
 const resumeRouter = express.Router();
 
 resumeRouter.post("/create", protect, createResume);
-
+resumeRouter.post("/upload", protect, uploadResume);
 resumeRouter.get("/list", protect, getUserResumes);
-
 resumeRouter.get("/get/:resumeId", protect, getResumeById);
-
-resumeRouter.put(
-  "/update",
-  protect,
-  upload.single("image"),
-  updateResume
-);
-
-resumeRouter.delete(
-  "/delete/:resumeId",
-  protect,
-  deleteResume
-);
+resumeRouter.put("/update", protect, upload.single("image"), updateResume);
+resumeRouter.delete("/delete/:resumeId", protect, deleteResume);
 
 export default resumeRouter;

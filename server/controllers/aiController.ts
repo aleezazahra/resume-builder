@@ -1,7 +1,6 @@
 import ai from "../configs/ai.ts";
 import Resume from "../models/Resume.ts";
 
-
 export const enhanceProfessionalSummary = async (req, res) => {
   try {
     const { userContent } = req.body;
@@ -18,21 +17,16 @@ export const enhanceProfessionalSummary = async (req, res) => {
           content:
             "You are an expert in resume writing. Your task is to enhance the professional summary of a resume. The summary should be 1-2 sentences highlighting key skills, experiences and career objectives. Make it compelling and ATS-friendly. Return only the text, no options or anything else.",
         },
-        {
-          role: "user",
-          content: userContent,
-        },
+        { role: "user", content: userContent },
       ],
     });
 
     const enhancedContent = response.choices[0].message.content;
     return res.status(200).json({ enhancedContent });
-
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
-
 
 export const enhanceJobDescription = async (req, res) => {
   try {
@@ -50,21 +44,16 @@ export const enhanceJobDescription = async (req, res) => {
           content:
             "You are an expert in resume writing. Your task is to enhance the job description of a resume. The job description should be no more than 2-3 sentences highlighting key responsibilities and achievements. Use action verbs and quantifiable results where possible. Make it ATS-friendly. Return only the text, no options or anything else.",
         },
-        {
-          role: "user",
-          content: userContent,
-        },
+        { role: "user", content: userContent },
       ],
     });
 
     const enhancedContent = response.choices[0].message.content;
     return res.status(200).json({ enhancedContent });
-
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
-
 
 export const uploadResume = async (req, res) => {
   try {
@@ -150,19 +139,15 @@ Required JSON structure:
     const response = await ai.chat.completions.create({
       model: process.env.OPENAI_MODEL,
       messages: [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content: userPrompt,
-        },
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPrompt },
       ],
-      response_format: { type: "json_object" },
     });
 
-    const extractedData = response.choices[0].message.content;
+    const extractedData = response.choices[0].message.content
+      .replace(/```json|```/g, "")
+      .trim();
+
     const parsedData = JSON.parse(extractedData);
 
     const newResume = await Resume.create({
@@ -172,7 +157,6 @@ Required JSON structure:
     });
 
     return res.status(201).json({ resumeId: newResume._id });
-
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

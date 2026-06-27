@@ -88,11 +88,9 @@ const Builder = () => {
   const [isSaving, setIsSaving] = useState(false);
 
   const resumeRef = useRef<HTMLDivElement>(null);
-  // Track whether the initial load has completed so we don't auto-save on mount
   const isInitialized = useRef(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // ── Load resume from backend on mount ────────────────────────────────────
   useEffect(() => {
     if (!resumeID) return;
     setLoading(true);

@@ -10,3 +10,4 @@ Typescript , ReactJS, TailwindCSS
 ### Backend
 Node, Express, MongoDB
 
+pdfjs-dist

@@ -79,12 +79,40 @@ const Dashboard = () => {
       );
     }
   };
-
-  const uploadResume = async (e: React.FormEvent) => {
+const uploadResume = async (e: React.FormEvent) => {
   e.preventDefault();
 
-  toast.error("Upload feature coming soon");
+  if (!uploadFile || !title.trim()) return;
+
+  try {
+   const pdfjsLib = await import("pdfjs-dist");
+pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
+  "pdfjs-dist/build/pdf.worker.min.mjs",
+  import.meta.url
+).toString();
+
+    const arrayBuffer = await uploadFile.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+    let resumeText = "";
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      resumeText += content.items.map((item: any) => item.str).join(" ") + "\n";
+    }
+
+   const { data } = await api.post("/api/ai/upload-resume", {
+  resumeText,
+  title: title.trim(),
+});
+
+    setShowUploadResume(false);
+    navigate(`/app/builder/${data.resumeId}`);
+  } catch (error: any) {
+    toast.error(error?.response?.data?.message || "Failed to upload resume");
+  }
 };
+  
 
 const handleEditTitle = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -94,9 +122,9 @@ const handleEditTitle = async (e: React.FormEvent) => {
   try {
     await api.put("/api/resume/update", {
       resumeId: editResumeId,
-      resumeData: JSON.stringify({
-        title: editTitle.trim(),
-      }),
+    resumeData: {
+  title: editTitle.trim(),
+},
       removeBackground: false,
     });
 

@@ -1,11 +1,15 @@
-import express from "express"
+import express from "express";
 import protect from "../middleware/authMiddleware.ts";
-import { enhanceProfessionalSummary } from "../controllers/aiController.ts";
-import { updateResume } from "../controllers/resumeController.ts";
+import {
+  enhanceProfessionalSummary,
+  enhanceJobDescription,
+  uploadResume,
+} from "../controllers/aiController.ts";
 
-const aiRouter=express.Router();
+const aiRouter = express.Router();
 
-aiRouter.post('/enhance-pro-sum',protect,enhanceProfessionalSummary)
-aiRouter.post('/enhance-job-des',protect,enhanceProfessionalSummary)
-aiRouter.post('/upload-resume',protect,updateResume)
+aiRouter.post("/enhance-pro-sum", protect, enhanceProfessionalSummary);
+aiRouter.post("/enhance-job-des", protect, enhanceJobDescription);
+aiRouter.post("/upload-resume", protect, uploadResume);
+
 export default aiRouter;
