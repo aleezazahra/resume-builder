@@ -15,7 +15,9 @@ const ColorPicker = ({ onChange, selectedColor }) => {
         { name: "Black",  value: "#1F2937" },
         {name:"hot pink",value:"#c213a2"},
         {name:"black2",value:"#1a1a1a"},
-        {name:"um",value:"#5c9990"}
+        {name:"um",value:"#5c9990"},
+        {name:"darkGreen",value:"#08291D"},
+        {name:"maroon",value:"#800000"}
     ];
 
     const [isOpen, setIsOpen] = useState(false);
@@ -33,7 +35,7 @@ const ColorPicker = ({ onChange, selectedColor }) => {
 
             {isOpen && (
                 <div className="absolute top-full left-0 mt-2 z-10
-                    bg-zinc-900 border border-white/10 rounded-xl shadow-2xl p-3
+                    bg-zinc-600 border border-white/10 rounded-xl shadow-2xl p-3
                     grid grid-cols-5 gap-3 w-52">
                     {colors.map((color) => {
                         const active = selectedColor === color.value;
@@ -58,9 +60,7 @@ const ColorPicker = ({ onChange, selectedColor }) => {
                                         </div>
                                     )}
                                 </div>
-                                <p className="text-[9px] text-white/30 mt-1 truncate w-full text-center">
-                                    {color.name}
-                                </p>
+                                
                             </div>
                         );
                     })}

@@ -23,6 +23,7 @@ interface ResumeStructure {
   project: any[];
   skills: any[];
   certifications:string;
+  interests:string;
   languages: any[];
   socials: any[];
   template: string;

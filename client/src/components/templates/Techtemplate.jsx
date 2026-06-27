@@ -16,7 +16,7 @@ const TechTemplate = ({ data, accentColor }) => {
         <div className="flex flex-wrap gap-x-4 text-gray-600">
           <span className="hover:underline cursor-pointer">{data.personal_info?.email}</span> | 
           <span>{data.personal_info?.phone}</span> | 
-          <span>{data.personal_info?.location}</span> | 
+          <span>{data.personal_info?.location}</span> |
           <a href={data.personal_info?.website} className="underline" style={{ color: accentColor }}>{data.personal_info?.website}</a>
         </div>
       </header>
@@ -90,6 +90,19 @@ const TechTemplate = ({ data, accentColor }) => {
           </div>
         ))}
       </section>
+
+        <section className="mb-6">
+        <h2 className="font-bold border-b border-gray-300 mb-2" style={{ color: accentColor }}>Certificates and Awards</h2>
+        <div className="leading-relaxed ql-editor !p-0" dangerouslySetInnerHTML={{__html:data.certifications}}></div>
+      </section>
+
+       <section className="mb-6">
+        <h2 className="font-bold border-b border-gray-300 mb-2" style={{ color: accentColor }}>Hobbies and Interests</h2>
+        <div className="leading-relaxed ql-editor !p-0" dangerouslySetInnerHTML={{__html:data.interests}}></div>
+      </section>
+
+      
+
 
       {/* Skills */}
       <section className="mb-6">

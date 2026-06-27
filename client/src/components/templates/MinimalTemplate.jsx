@@ -141,6 +141,29 @@ const MinimalTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
+            {data.certifications && (
+                <section className="mb-10">
+                    <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
+                        Certificates and Awards
+                    </h2>
+                    <div className=" text-gray-700 ql-editor !p-0"
+                    dangerouslySetInnerHTML={{__html:data.certifications}}>
+                       
+                    </div>
+                </section>
+            )}
+            {data.interests && (
+                <section className="mb-10">
+                    <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
+                        Hobbies and Interests
+                    </h2>
+                    <div className=" text-gray-700 ql-editor !p-0"
+                    dangerouslySetInnerHTML={{__html:data.interests}}>
+                       
+                    </div>
+                </section>
+            )}
+
             {/* Skills */}
             {data.skills && data.skills.length > 0 && (
                 <section className="mb-10">

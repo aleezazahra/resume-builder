@@ -236,6 +236,37 @@ const NexusTemplate = ({ data, accentColor }) => {
           </section>
         )}
 
+         {data.certifications && (
+          <section>
+            <h2
+              className="text-xl font-semibold mb-3"
+              style={{ color: accentColor }}
+            >
+              CERTIFICATIONS AND AWARDS
+            </h2>
+            <div
+              className="text-gray-700 leading-relaxed text-sm break-words min-w-0 w-full ql-editor !p-0"
+              dangerouslySetInnerHTML={{ __html: data.certifications }}
+            />
+          </section>
+        )}
+
+        {data.interests && (
+          <section>
+            <h2
+              className="text-xl font-semibold mb-3"
+              style={{ color: accentColor }}
+            >
+             INTERESTS AND HOBBIES
+            </h2>
+            <div
+              className="text-gray-700 leading-relaxed text-sm break-words min-w-0 w-full ql-editor !p-0"
+              dangerouslySetInnerHTML={{ __html: data.interests}}
+            />
+          </section>
+        )}
+
+
         {/* Education */}
         {data.education && data.education.length > 0 && (
           <section>

@@ -92,7 +92,6 @@ input:-webkit-autofill:focus {
 }
 
 
-/* Wrap everything in .quill-wrapper to avoid Tailwind conflicts */
 .quill-wrapper .ql-toolbar.ql-snow {
     background-color: white;
     border: 1px solid #d1d5db;
@@ -125,7 +124,7 @@ input:-webkit-autofill:focus {
     left: 16px;
 }
 
-/* B / I buttons */
+
 .quill-wrapper .ql-toolbar button {
     width: 28px;
     height: 28px;
@@ -159,4 +158,18 @@ input:-webkit-autofill:focus {
 
 .quill-wrapper .ql-toolbar button.ql-active .ql-fill {
     fill: #111827;
+}
+
+.ql-content ol {
+  list-style-type: decimal;
+  padding-left: 1.5em;
+}
+
+.ql-content ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+}
+
+.ql-content li {
+  display: list-item;
 }

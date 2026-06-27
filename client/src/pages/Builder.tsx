@@ -17,6 +17,7 @@ import {
   Link2,
   Wrench,
   Building2Icon,
+  Heart,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import api from "../configs/api.ts"; 
@@ -35,6 +36,7 @@ import AddSocials from "../components/Home/AddSocials";
 import Certifications from "../components/Home/Certifications.tsx";
 import type { Social } from "../components/Home/AddSocials";
 import type { Language } from "../components/Home/Languages";
+import Interests from "../components/Home/Interest.tsx";
 
 interface ResumeStructure {
   _id: string;
@@ -46,6 +48,7 @@ interface ResumeStructure {
   project: any[];
   skills: any[];
   certifications:string;
+  interests:string;
   languages: Language[];
   socials: Social[];
   template: string;
@@ -63,6 +66,7 @@ const EMPTY_RESUME: ResumeStructure = {
   project: [],
   skills: [],
   certifications:"",
+  interests:"",
   languages: [],
   socials: [],
   template: "classic",
@@ -79,7 +83,8 @@ const sections = [
   { id: "skills",     name: "Skills",        icon: Wrench     },
   { id: "languages",  name: "Languages",     icon: LanguagesIcon },
   { id: "socials",    name: "Socials",       icon: Link2         },
-  {id:"certifications",name:"Certifications and Courses",icon:Award}
+  {id:"certifications",name:"Certifications and Courses",icon:Award},
+  {id:"interests",name:"Interests",icon:Heart}
 ];
 
 const Builder = () => {
@@ -333,6 +338,13 @@ const Builder = () => {
               )
 
               }
+              {
+                activeSection.id==="interests" &&(
+                  <Interests data={resumeData.interests}
+                  onChange={(data)=>setResumeData((p)=>({...p,interests:data}))} />
+                )
+              }
+
               {activeSection.id === "languages" && (
                 <Languages
                   data={resumeData.languages}

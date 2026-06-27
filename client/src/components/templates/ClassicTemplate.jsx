@@ -193,12 +193,25 @@ const ClassicTemplate = ({ data, accentColor }) => {
                     <h2 className="text-xl font-semibold mb-3 " style={{ color: accentColor }}>
                         Certifications
                     </h2>
-                    <div className="text-gray-700 leading-relaxed"
+                    <div className="text-gray-700 leading-relaxed ql-editor !p-0"
                     dangerouslySetInnerHTML={{__html:data.certifications}}>
                         
                     </div>
                 </section>
             )}
+
+             {data.interests && data.interests.length > 0 && (
+                <section className="mb-6">
+                    <h2 className="text-xl font-semibold mb-3 " style={{ color: accentColor }}>
+                       Interests and Hobbies
+                    </h2>
+                    <div className="text-gray-700 leading-relaxed ql-editor !p-0"
+                    dangerouslySetInnerHTML={{__html:data.interests}}>
+                        
+                    </div>
+                </section>
+            )}
+
 
             {/* Languages */}
             {data.languages && data.languages.length > 0 && (

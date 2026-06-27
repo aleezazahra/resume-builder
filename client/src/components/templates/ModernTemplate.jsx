@@ -85,7 +85,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                 {data.professional_summary && (
                     <section className="mb-8">
                        <div className="text-2xl font-light mb-4 pb-2 border-b border-gray-200"
-                       dangerouslySetInnerHTML={{__html:data.professional_summary}}></div>
+                       >Summary</div>
                         <div className="text-gray-700" dangerouslySetInnerHTML={{__html:data.professional_summary}}></div>
                     </section>
                 )}
@@ -120,6 +120,22 @@ const ModernTemplate = ({ data, accentColor }) => {
                         </div>
                     </section>
                 )}
+
+                 {data.certifications && (
+                    <section className="mb-8">
+                       <div className="text-2xl font-light mb-4 pb-2 border-b border-gray-200"
+                    >Certifications</div>
+                        <div className="text-gray-700 ql-editor !p-0" dangerouslySetInnerHTML={{__html:data.certifications}}></div>
+                    </section>
+                )}
+                 {data.interests && (
+                    <section className="mb-8">
+                       <div className="text-2xl font-light mb-4 pb-2 border-b border-gray-200"
+                    >Hobbies</div>
+                        <div className="text-gray-700 ql-editor !p-0" dangerouslySetInnerHTML={{__html:data.interests}}></div>
+                    </section>
+                )}
+
 
                 {/* Projects */}
                 {data.project && data.project.length > 0 && (

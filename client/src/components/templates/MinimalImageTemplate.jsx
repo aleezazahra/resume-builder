@@ -198,6 +198,8 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                                 ))}
                                             </ul>
                                         )}
+                              
+
                                     </div>
                                 ))}
                             </div>
@@ -230,6 +232,30 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                     </div>
                                 ))}
                             </div>
+                        </section>
+                    )}
+
+                              {data.certifications && (
+                        <section className="mb-8">
+                            <h2 className="text-sm font-semibold tracking-widest mb-3" style={{ color: accentColor }} >
+                              CERTIFICATIONS AND AWARDS
+                            </h2>
+                            <div
+            className="text-zinc-700 leading-relaxed text-sm [&_strong]:font-semibold [&_em]:italic ql-editor !p-0"
+            dangerouslySetInnerHTML={{ __html: data.certifications }}
+        />
+                        </section>
+                    )}
+
+                     {data.interests && (
+                        <section className="mb-8">
+                            <h2 className="text-sm font-semibold tracking-widest mb-3" style={{ color: accentColor }} >
+                             INTERESTS AND HOBBIES
+                            </h2>
+                            <div
+            className="text-zinc-700 leading-relaxed text-sm [&_strong]:font-semibold [&_em]:italic ql-editor !p-0"
+            dangerouslySetInnerHTML={{ __html: data.interests }}
+        />
                         </section>
                     )}
                 </main>

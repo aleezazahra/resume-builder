@@ -42,6 +42,17 @@ const ResumePreviewer: React.FC<ResumePreviewerProps> = ({ data, template, accen
 
    
       <style dangerouslySetInnerHTML={{ __html: `
+        #resume-preview ol {
+  list-style-type: decimal !important;
+  padding-left: 1.5em !important;
+}
+#resume-preview ul {
+  list-style-type: disc !important;
+  padding-left: 1.5em !important;
+}
+#resume-preview li {
+  display: list-item !important;
+}
         @page {
           size: letter;
           margin: 0;
@@ -70,6 +81,7 @@ const ResumePreviewer: React.FC<ResumePreviewerProps> = ({ data, template, accen
             border: none !important;
           }
         }
+          
       `}} />
     </div>
   );
