@@ -4,6 +4,7 @@ import  MinimalImageTemplate  from "../templates/MinimalImageTemplate";
 import  ModernTemplate from "../templates/ModernTemplate";
 import ClassicTemplate from "../templates/ClassicTemplate";
 import TechTemplate from "../templates/Techtemplate";
+import NexusTemplate from "../templates/NexusTemplate"
 interface ResumePreviewerProps {
   data: any;
   template: string;
@@ -22,6 +23,8 @@ const ResumePreviewer: React.FC<ResumePreviewerProps> = ({ data, template, accen
         return <MinimalImageTemplate data={data} accentColor={accentColor} />;
       case "tech":
         return <TechTemplate data={data} accentColor={accentColor} />;
+      case "nexus":
+        return <NexusTemplate data={data} accentColor={accentColor} />
       default:
         return <ClassicTemplate data={data} accentColor={accentColor} />;
         

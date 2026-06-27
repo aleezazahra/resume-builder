@@ -1,6 +1,4 @@
 
-// Adjust this relative path if TechTemplate.jsx doesn't live next to the
-// "Home" folder that contains AddSocials.tsx (e.g. components/Templates/ vs components/Home/)
 import { SOCIAL_PLATFORMS } from "../Home/AddSocials";
 
 const normalizeUrl = (url) => {
@@ -11,7 +9,7 @@ const normalizeUrl = (url) => {
 const TechTemplate = ({ data, accentColor }) => {
   return (
     <div className="max-w-4xl mx-auto p-8 bg-white text-gray-900 font-sans text-sm">
-      {/* Header Section */}
+    
       <header className="border-b-2 border-gray-800 pb-3 mb-4">
         <h1 className="text-3xl font-bold">{data.personal_info?.full_name}</h1>
         <p className="text-gray-700 font-medium mb-3">{data.personal_info?.headline || data.personal_info?.title}</p>

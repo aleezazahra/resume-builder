@@ -1,6 +1,4 @@
 import { Mail, Phone, MapPin } from "lucide-react";
-// Adjust this relative path if MinimalImageTemplate.jsx doesn't live next to the
-// "Home" folder that contains AddSocials.tsx (e.g. components/Templates/ vs components/Home/)
 import { SOCIAL_PLATFORMS } from "../Home/AddSocials";
 
 const normalizeUrl = (url) => {

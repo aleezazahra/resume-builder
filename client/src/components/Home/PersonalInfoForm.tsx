@@ -1,6 +1,6 @@
 import { User, UserIcon, Mail, PhoneIcon, MapPin, BriefcaseBusiness, Globe, Icon } from "lucide-react";
 
-const PersonalInfoForm = ({ data, onChange, removeBackground, setRemoveBackground }) => {
+const PersonalInfoForm = ({ data, onChange}) => {
     const handleChange = (field, value) => {
         onChange({ ...data, [field]: value });
     };
@@ -40,16 +40,7 @@ const PersonalInfoForm = ({ data, onChange, removeBackground, setRemoveBackgroun
                     <input type="file" accept="image/jpeg, image/png" hidden onChange={(e) => handleChange("image", e.target.files[0])} />
                 </label>
                 
-                {typeof data.image === 'object' && (
-                    <div className="flex flex-col gap-1 pl-4 text-sm">
-                        <p>Remove bg</p>
-                        <label className="relative inline-flex items-center cursor-pointer text-gray-900 gap-3">
-                            <input type="checkbox" className="sr-only peer" onChange={() => setRemoveBackground(prev => !prev)} checked={removeBackground} />
-                            <div className="w-9 h-5 bg-slate-500 rounded-full peer peer-checked:bg-slate-800 transition-colors duration-200"></div>
-                            <span className="dot absolute left-1 top-1 w-3 h-3 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-4"></span>
-                        </label>
-                    </div>
-                )}
+             
             </div>
 
             {fields.map((field) => {

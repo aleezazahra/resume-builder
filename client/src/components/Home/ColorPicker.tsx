@@ -13,6 +13,9 @@ const ColorPicker = ({ onChange, selectedColor }) => {
         { name: "Pink",   value: "#EC4899" },
         { name: "Gray",   value: "#6B7280" },
         { name: "Black",  value: "#1F2937" },
+        {name:"hot pink",value:"#c213a2"},
+        {name:"black2",value:"#1a1a1a"},
+        {name:"um",value:"#5c9990"}
     ];
 
     const [isOpen, setIsOpen] = useState(false);

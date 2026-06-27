@@ -19,7 +19,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
 
     return (
         <div className="max-w-4xl mx-auto p-8 bg-white text-gray-800 leading-relaxed">
-            {/* Header */}
+        
             <header className="text-center mb-8 pb-6 border-b-2" style={{ borderColor: accentColor }}>
                 <h1 className="text-3xl font-bold mb-2" style={{ color: accentColor }}>
                     {data.personal_info?.full_name || "Your Name"}
@@ -92,7 +92,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            {/* Experience */}
+         
             {data.experience && data.experience.length > 0 && (
                 <section className="mb-6">
                     <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
@@ -135,7 +135,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                                 <div>
                                     <li className="font-semibold text-gray-800 ">{proj.name}</li>
                                     <p className="text-gray-600">{proj.description}</p>
-                                      <a href={proj.link.startsWith('http') ? proj.link : `https://${proj.link}`} 
+                                    <a href={proj.link ? (proj.link.startsWith('http') ? proj.link : `https://${proj.link}`) : '#'} 
               target="_blank" rel="noopener noreferrer" className="underline text-gray-600 " >{proj.link}</a>
                                 </div>
                             </div>
@@ -183,6 +183,19 @@ const ClassicTemplate = ({ data, accentColor }) => {
                                 • {skill}
                             </div>
                         ))}
+                    </div>
+                </section>
+            )}
+
+            
+            {data.certifications && data.certifications.length > 0 && (
+                <section className="mb-6">
+                    <h2 className="text-xl font-semibold mb-3 " style={{ color: accentColor }}>
+                        Certifications
+                    </h2>
+                    <div className="text-gray-700 leading-relaxed"
+                    dangerouslySetInnerHTML={{__html:data.certifications}}>
+                        
                     </div>
                 </section>
             )}

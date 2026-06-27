@@ -22,6 +22,7 @@ type Resume = {
   education: any[];
   project: any[];
   skills: any[];
+  certifications:string;
   template: string;
   accent_color: string;
   public: boolean;

@@ -22,6 +22,7 @@ interface ResumeStructure {
   education: any[];
   project: any[];
   skills: any[];
+  certifications:string;
   languages: any[];
   socials: any[];
   template: string;
@@ -31,8 +32,8 @@ interface ResumeStructure {
 
 type Status = "loading" | "not_found" | "ready";
 
-const PAGE_WIDTH_PX = 794; // 210mm @ 96dpi
-const PAGE_HEIGHT_PX = 1123; // 297mm @ 96dpi
+const PAGE_WIDTH_PX = 794; 
+const PAGE_HEIGHT_PX = 1123; 
 
 const Preview = () => {
   const { resumeID } = useParams();
@@ -64,10 +65,10 @@ const Preview = () => {
     }
   }, [resumeID]);
 
-  // Scale the page down to fit small screens without horizontal scrolling
+
   useEffect(() => {
     const updateScale = () => {
-      const available = window.innerWidth - 32; // account for outer padding
+      const available = window.innerWidth - 32; 
       setScale(Math.min(1, available / PAGE_WIDTH_PX));
     };
     updateScale();

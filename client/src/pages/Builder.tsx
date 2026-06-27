@@ -29,6 +29,7 @@ import ProjectsForm from "../components/Home/ProjectsForm";
 import Languages from "../components/Home/Languages";
 import SkillsForm from "../components/Home/SkillsForm";
 import AddSocials from "../components/Home/AddSocials";
+import Certifications from "../components/Home/Certifications.tsx";
 import type { Social } from "../components/Home/AddSocials";
 import type { Language } from "../components/Home/Languages";
 
@@ -41,6 +42,7 @@ interface ResumeStructure {
   education: any[];
   project: any[];
   skills: any[];
+  certifications:string;
   languages: Language[];
   socials: Social[];
   template: string;
@@ -57,6 +59,7 @@ const EMPTY_RESUME: ResumeStructure = {
   education: [],
   project: [],
   skills: [],
+  certifications:"",
   languages: [],
   socials: [],
   template: "classic",
@@ -73,6 +76,7 @@ const sections = [
   { id: "skills",     name: "Skills",        icon: Sparkles      },
   { id: "languages",  name: "Languages",     icon: LanguagesIcon },
   { id: "socials",    name: "Socials",       icon: Link2         },
+  {id:"certifications",name:"Certifications and Courses",icon:FileText}
 ];
 
 const Builder = () => {
@@ -130,13 +134,12 @@ const Builder = () => {
         const formData = new FormData();
         formData.append("resumeId", resumeData._id);
         formData.append("resumeData", JSON.stringify(resumeData));
-        formData.append("removeBackground", String(removeBackground));
-        
+     
         await api.put("/api/resume/update", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
       } catch {
-        toast.error("Auto-save failed");
+        
       } finally {
         setIsSaving(false);
       }
@@ -254,18 +257,24 @@ const Builder = () => {
                   const Icon = s.icon;
                   const active = i === activeSectionIndex;
                   return (
-                    <button
-                      key={s.id}
-                      onClick={() => setActiveSectionIndex(i)}
-                      title={s.name}
-                      className={`flex flex-col items-center gap-1 py-3 text-[11px] font-medium transition-colors border-b-2
-                        ${active
-                          ? "border-white text-white bg-white/5"
-                          : "border-transparent text-white/30 hover:text-white/60 hover:bg-white/5"
-                        }`}
-                    >
-                      <Icon className="size-4" />
-                    </button>
+                  <button
+  key={s.id}
+  onClick={() => setActiveSectionIndex(i)}
+  title={s.name}
+  className={`relative group flex flex-col items-center gap-1 py-3 text-[11px] font-medium transition-colors border-b-2
+    ${active
+      ? "border-white text-white bg-white/5"
+      : "border-transparent text-white/30 hover:text-white/60 hover:bg-white/5"
+    }`}
+>
+  <Icon className="size-4" />
+       <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 text-[10px] font-medium bg-zinc-700 text-white rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-75 delay-0 pointer-events-none z-50"
+  style={{ transitionDelay: '0ms' }}
+>
+  {s.name}
+</span>
+</button>
+                
                   );
                 })}
               </div>
@@ -314,6 +323,13 @@ const Builder = () => {
                   onChange={(data) => setResumeData((p) => ({ ...p, skills: data }))}
                 />
               )}
+              {activeSection.id==="certifications" &&(
+                <Certifications data={resumeData.certifications}
+                 onChange={(data) => setResumeData((p) => ({ ...p, certifications: data }))}
+                />
+              )
+
+              }
               {activeSection.id === "languages" && (
                 <Languages
                   data={resumeData.languages}
@@ -346,7 +362,6 @@ const Builder = () => {
             </div>
           </aside>
 
-          {/* ── Right panel: preview ── */}
           <div className="lg:col-span-7 flex flex-col gap-4">
 
             <div className="bg-zinc-900 rounded-xl border border-white/10 px-4 py-3 flex items-center justify-between gap-2 flex-wrap">

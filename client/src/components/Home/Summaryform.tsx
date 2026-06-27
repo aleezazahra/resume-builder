@@ -9,7 +9,6 @@ const Summaryform = ({ data, onChange }) => {
     const editorRef = useRef(null);
     const isInternalChange = useRef(false);
 
-    // Initialize Quill once on mount
     useEffect(() => {
         if (editorRef.current && !quillRef.current) {
             quillRef.current = new Quill(editorRef.current, {
@@ -97,7 +96,7 @@ const Summaryform = ({ data, onChange }) => {
                 <div
                     ref={editorRef}
                     className="border border-gray-300 rounded-b-lg"
-                    style={{ minHeight: "168px" }} // ~7 rows
+                    style={{ minHeight: "168px" }} 
                 />
 
                 <p className="text-xs text-gray-500 max-w-[80%] mx-auto text-center mt-2">

@@ -21,6 +21,7 @@ const TemplateSelector = ({ selectedTemplate, onChange }) => {
         { id: "minimal-image", name: "Minimal Image", preview: "Minimal design with a single image." },
         { id: "minimal", name: "Minimal", preview: "Ultra-clean, content-focused layout." },
         { id: "tech", name: "Tech", preview: "High-density layout designed for developers." },
+        {id:"nexus",name:"Nexus",preview:"A clean formatted commonly used format with image"}
     ];
 
     return (
