@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { ReactEventHandler, useState } from "react";
 import api from "../configs/api";
 import { useDispatch } from "react-redux";
 import { login } from "../app/features/authSlice";
@@ -18,7 +18,7 @@ const Login = () => {
         password: "",
     });
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e:React.FormEvent) => {
         e.preventDefault();
 
         try {
@@ -34,7 +34,7 @@ const Login = () => {
         }
     };
 
-    const handleChange = (e) => {
+    const handleChange = (e:React.ChangeEventHandler) => {
         const { name, value } = e.target;
 
         setFormData((prev) => ({
@@ -45,7 +45,7 @@ const Login = () => {
 
 
     const inputContainerStyle = "flex items-center rounded-xl px-4 h-12 mb-8 bg-black border border-gray-500  border-1.4"; 
-    const inputStyle = "w-full outline-none bg-transparent text-white placeholder:text-gray-500 ";
+    const inputStyle = "w-full outline-none bg-black text-white placeholder:text-gray-500 ";
 
     return (
         <div className="min-h-screen bg-black flex items-center justify-center px-4">

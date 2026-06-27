@@ -147,7 +147,7 @@ const Builder = () => {
     };
   }, [resumeData, removeBackground]);
 
-  // ── Print / download ─────────────────────────────────────────────────────
+
   const handlePrint = useCallback(() => {
     if (!resumeRef.current) return;
     const styleId = "resume-print-style";
@@ -192,7 +192,7 @@ const Builder = () => {
     });
   }, []);
 
-  // ── Share ────────────────────────────────────────────────────────────────
+
   const handleShare = useCallback(async () => {
     const url = `${window.location.origin}/view/${resumeID}`;
     if (navigator.share) {
@@ -236,7 +236,7 @@ const Builder = () => {
           <h1 className="text-sm font-semibold text-white/80 truncate">
             {resumeData.title || "Untitled Resume"}
           </h1>
-          {/* Auto-save indicator */}
+     
           {isSaving && (
             <span className="ml-auto text-xs text-white/30 animate-pulse">Saving…</span>
           )}

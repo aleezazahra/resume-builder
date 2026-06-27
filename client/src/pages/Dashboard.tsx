@@ -79,39 +79,7 @@ const Dashboard = () => {
       );
     }
   };
-const uploadResume = async (e: React.FormEvent) => {
-  e.preventDefault();
 
-  if (!uploadFile || !title.trim()) return;
-
-  try {
-   const pdfjsLib = await import("pdfjs-dist");
-pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url
-).toString();
-
-    const arrayBuffer = await uploadFile.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-
-    let resumeText = "";
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i);
-      const content = await page.getTextContent();
-      resumeText += content.items.map((item: any) => item.str).join(" ") + "\n";
-    }
-
-   const { data } = await api.post("/api/ai/upload-resume", {
-  resumeText,
-  title: title.trim(),
-});
-
-    setShowUploadResume(false);
-    navigate(`/app/builder/${data.resumeId}`);
-  } catch (error: any) {
-    toast.error(error?.response?.data?.message || "Failed to upload resume");
-  }
-};
   
 
 const handleEditTitle = async (e: React.FormEvent) => {
@@ -189,15 +157,7 @@ const inputClass =
             Create Resume
           </button>
 
-          <button
-            onClick={() => { setTitle(""); setUploadFile(null); setShowUploadResume(true); }}
-            className="w-full sm:w-36 h-48 flex flex-col items-center justify-center gap-3
-              border border-dashed border-white/20 rounded-xl text-sm text-white/40
-              hover:border-white/60 hover:text-white hover:bg-white/5 transition"
-          >
-            <UploadIcon className="size-6" />
-            Upload Resume
-          </button>
+        
         </div>
 
         {allResumes.length === 0 ? (
@@ -267,36 +227,7 @@ const inputClass =
         </div>
       )}
 
-      {showUploadResume && (
-        <div
-          onClick={() => setShowUploadResume(false)}
-          className="fixed inset-0 flex items-center justify-center bg-black/80 z-50"
-        >
-          <form
-            onSubmit={uploadResume}
-            onClick={(e) => e.stopPropagation()}
-            className="bg-zinc-900 border border-white/10 rounded-xl p-6 w-full max-w-sm shadow-2xl relative"
-          >
-            <button type="button" onClick={() => setShowUploadResume(false)}
-              className="absolute top-3 right-3 text-white/30 hover:text-white transition">
-              <XIcon className="size-5" />
-            </button>
-            <h2 className="text-lg font-semibold text-white mb-4">Upload Resume</h2>
-            <input value={title} onChange={(e) => setTitle(e.target.value)}
-              placeholder="Resume title" required className={inputClass + " mb-3"} />
-            <label className="flex flex-col items-center justify-center border border-dashed
-              border-white/20 rounded-lg p-4 mb-4 cursor-pointer hover:border-white/40 transition">
-              <UploadIcon className="size-5 text-white/30 mb-1" />
-              <span className="text-sm text-white/40">
-                {uploadFile ? uploadFile.name : "Select PDF"}
-              </span>
-              <input type="file" hidden accept=".pdf"
-                onChange={(e) => setUploadFile(e.target.files?.[0] || null)} />
-            </label>
-            <button type="submit" className="btn-filled w-full justify-center">Upload</button>
-          </form>
-        </div>
-      )}
+      
 
       {editResumeId && (
         <div

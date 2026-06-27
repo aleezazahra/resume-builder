@@ -19,6 +19,9 @@ app.use('/api/users',userRouter)
 app.use('/api/resume',resumeRouter)
 app.use('/api/ai',aiRouter)
 
+console.log("BASE_URL:", process.env.OPENAI_BASE_URL);
+console.log("MODEL:", process.env.OPENAI_MODEL);
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
