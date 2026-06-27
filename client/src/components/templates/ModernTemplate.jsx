@@ -84,9 +84,8 @@ const ModernTemplate = ({ data, accentColor }) => {
             
                 {data.professional_summary && (
                     <section className="mb-8">
-                        <h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
-                            Professional Summary
-                        </h2>
+                       <div className="text-2xl font-light mb-4 pb-2 border-b border-gray-200"
+                       dangerouslySetInnerHTML={{__html:data.professional_summary}}></div>
                         <p className="text-gray-700 ">{data.professional_summary}</p>
                     </section>
                 )}

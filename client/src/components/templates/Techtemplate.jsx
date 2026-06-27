@@ -48,7 +48,7 @@ const TechTemplate = ({ data, accentColor }) => {
 
       <section className="mb-6">
         <h2 className="font-bold border-b border-gray-300 mb-2" style={{ color: accentColor }}>Summary</h2>
-        <p className="leading-relaxed">{data.professional_summary}</p>
+        <div className="leading-relaxed" dangerouslySetInnerHTML={{__html:data.professional_summary}}></div>
       </section>
 
       <section className="mb-6">

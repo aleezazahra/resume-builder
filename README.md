@@ -11,3 +11,5 @@ Typescript , ReactJS, TailwindCSS
 Node, Express, MongoDB
 
 pdfjs-dist
+
+used quill in SummarForm.tsx

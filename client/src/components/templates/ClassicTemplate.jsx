@@ -1,6 +1,5 @@
 import { Mail, Phone, MapPin, Globe } from "lucide-react";
-// Adjust this relative path if ClassicTemplate.jsx doesn't live next to the
-// "Home" folder that contains AddSocials.tsx (e.g. components/Templates/ vs components/Home/)
+
 import { SOCIAL_PLATFORMS } from "../Home/AddSocials";
 
 const normalizeUrl = (url) => {
@@ -81,13 +80,15 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 )}
             </header>
 
-            {/* Professional Summary */}
             {data.professional_summary && (
                 <section className="mb-6">
-                    <h2 className="text-xl font-semibold mb-3" style={{ color: accentColor }}>
+                    <h2 className="text-xl font-semibold mb-3 " style={{ color: accentColor }}>
                         PROFESSIONAL SUMMARY
                     </h2>
-                    <p className="text-gray-700 leading-relaxed">{data.professional_summary}</p>
+                    <div className="text-gray-700 leading-relaxed"
+                    dangerouslySetInnerHTML={{__html:data.professional_summary}}>
+                        
+                    </div>
                 </section>
             )}
 

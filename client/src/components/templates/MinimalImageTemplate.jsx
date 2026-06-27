@@ -37,7 +37,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     )}
                 </div>
 
-                {/* Name + Title */}
+             
                 <div className="col-span-2 flex flex-col justify-center py-10 px-8">
                     <h1 className="text-4xl font-bold text-zinc-700 tracking-widest">
                         {data.personal_info?.full_name || "Your Name"}
@@ -45,11 +45,10 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                    
                 </div>
 
-                {/* Left Sidebar */}
+   
                 <aside className="col-span-1 border-r border-zinc-400 p-6 pt-0">
 
 
-                    {/* Contact */}
                     <section className="mb-8">
                         <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
                             CONTACT
@@ -82,7 +81,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                         </div>
                     </section>
 
-                    {/* Socials */}
+            
                     {data.socials && data.socials.length > 0 && (
                         <section className="mb-8">
                             <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
@@ -108,7 +107,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                         </section>
                     )}
 
-                    {/* Education */}
+             
                     {data.education && data.education.length > 0 && (
                         <section className="mb-8">
                             <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
@@ -128,7 +127,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                         </section>
                     )}
 
-                    {/* Skills */}
+           
                     {data.skills && data.skills.length > 0 && (
                         <section className="mb-8">
                             <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
@@ -142,7 +141,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                         </section>
                     )}
 
-                    {/* Languages */}
+           
                     {data.languages && data.languages.length > 0 && (
                         <section>
                             <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
@@ -160,22 +159,20 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     )}
                 </aside>
 
-                {/* Right Content */}
                 <main className="col-span-2 p-8 pt-0">
 
-                    {/* Summary */}
                     {data.professional_summary && (
                         <section className="mb-8">
                             <h2 className="text-sm font-semibold tracking-widest mb-3" style={{ color: accentColor }} >
                                 SUMMARY
                             </h2>
-                            <p className="text-zinc-700 leading-relaxed">
-                                {data.professional_summary}
-                            </p>
+                            <div
+            className="text-zinc-700 leading-relaxed text-sm [&_strong]:font-semibold [&_em]:italic"
+            dangerouslySetInnerHTML={{ __html: data.professional_summary }}
+        />
                         </section>
                     )}
 
-                    {/* Experience */}
                     {data.experience && data.experience.length > 0 && (
                         <section>
                             <h2 className="text-sm font-semibold tracking-widest mb-4" style={{ color: accentColor }} >
