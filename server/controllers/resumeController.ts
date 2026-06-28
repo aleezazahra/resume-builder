@@ -19,7 +19,7 @@ export const getResumeById = async (req, res) => {
     const userId = req.userId;
     const { resumeId } = req.params;
 
-    const resume = await Resume.findOne({ _id: resumeId, userId });
+    const resume = await Resume.findById(resumeId);
     if (!resume) return res.status(404).json({ message: "Resume not found" });
 
     return res.status(200).json({ resume });
