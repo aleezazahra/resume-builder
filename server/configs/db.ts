@@ -1,20 +1,20 @@
 import mongoose from "mongoose";
-const connectDB=async()=>{
-    try{
-        mongoose.connection.on("connected",()=>{console.log("db is connected")})
-        const mongodbURI=process.env.MONGODB_URI
+import "dotenv/config";
 
-        const projectName="resume-builder"
-        if(!mongodbURI){
-            throw new Error("Mongodb uri env not set")
+let isConnected = false;
 
-        }
-        await mongoose.connect(`${mongodbURI}/${projectName}`)
-
-    }catch(error){
-        console.error("error connecting to data base",error)
-
-
+const connectDB = async () => {
+    if (isConnected) return;
+    
+    const mongodbURI = process.env.MONGODB_URI;
+    
+    if (!mongodbURI) {
+        throw new Error("MONGODB_URI env not set");
     }
-}
+
+    await mongoose.connect(`${mongodbURI}/resume-builder`);
+    isConnected = true;
+    console.log("DB connected");
+};
+
 export default connectDB;

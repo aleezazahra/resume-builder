@@ -1,4 +1,4 @@
-import express, { type Request, type Response } from "express";
+import express, { type Request, type Response, type NextFunction } from "express";
 import cors from "cors";
 import "dotenv/config";
 import connectDB from "./configs/db.js";
@@ -21,6 +21,15 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 app.use(express.json());
 
+app.use(async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    res.status(500).json({ message: "DB connection failed" });
+  }
+});
+
 app.get('/', (req: Request, res: Response) => {
   res.send("server is live");
 });
@@ -28,7 +37,5 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/api/users', userRouter);
 app.use('/api/resume', resumeRouter);
 app.use('/api/ai', aiRouter);
-
-connectDB();
 
 export default app;
