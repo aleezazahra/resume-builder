@@ -15,7 +15,8 @@ app.use(express.json());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://resume-builder-1v7l.vercel.app"
+    "https://resume-builder-1v7l.vercel.app",
+    "https://resume-builder-pied-mu.vercel.app"
   ],
   credentials: true
 }));
