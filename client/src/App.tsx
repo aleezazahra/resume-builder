@@ -57,12 +57,12 @@ const App = () => {
      
       <Route path="/app" element={<Layout />}>
         <Route index element={<Dashboard />} />
-        <Route path="builder/:resumeID" element={<Builder />} />
+        <Route path="builder/:resumeId" element={<Builder />} />
       </Route>
       <Route path="/login" element={<Login />} />
 
     
-      <Route path="/view/:resumeID" element={<Preview />} />
+      <Route path="/view/:resumeId" element={<Preview />} />
     </Routes>
     </>
   );

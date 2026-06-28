@@ -1,17 +1,13 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeft,
-  Download,
-  Share2,
-  CheckCircle,
-  Lock,
   FileX,
   Loader2,
-  Pencil,
 } from "lucide-react";
 
 import ResumePreviewer from "../components/Home/ResumePreviewer";
+import api from "../configs/api";
 
 interface ResumeStructure {
   _id: string;
@@ -22,8 +18,8 @@ interface ResumeStructure {
   education: any[];
   project: any[];
   skills: any[];
-  certifications:string;
-  interests:string;
+  certifications: string;
+  interests: string;
   languages: any[];
   socials: any[];
   template: string;
@@ -33,51 +29,42 @@ interface ResumeStructure {
 
 type Status = "loading" | "not_found" | "ready";
 
-const PAGE_WIDTH_PX = 794; 
-const PAGE_HEIGHT_PX = 1123; 
+const PAGE_WIDTH_PX = 794;
+const PAGE_HEIGHT_PX = 1123;
 
 const Preview = () => {
-  const { resumeID } = useParams();
+  const { resumeId } = useParams();
 
   const [resumeData, setResumeData] = useState<ResumeStructure | null>(null);
   const [status, setStatus] = useState<Status>("loading");
-  const [isPrinting, setIsPrinting] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [scale, setScale] = useState(1);
 
   const resumeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    try {
-      const all = JSON.parse(localStorage.getItem("resumes") || "[]");
-      const resume = all.find((r: any) => r._id === resumeID);
-
-      if (!resume) {
-        setStatus("not_found");
-        return;
-      }
-   
-
-      setResumeData(resume);
-      document.title = resume.title ? `${resume.title} — Resume` : "Resume Preview";
-      setStatus("ready");
-    } catch {
-      setStatus("not_found");
-    }
-  }, [resumeID]);
-
+    if (!resumeId) return;
+    setStatus("loading");
+    api
+      .get(`/api/resume/get/${resumeId}`)
+      .then(({ data }) => {
+        setResumeData(data.resume);
+        document.title = data.resume.title
+          ? `${data.resume.title} — Resume`
+          : "Resume Preview";
+        setStatus("ready");
+      })
+      .catch(() => setStatus("not_found"));
+  }, [resumeId]);
 
   useEffect(() => {
     const updateScale = () => {
-      const available = window.innerWidth - 32; 
+      const available = window.innerWidth - 32;
       setScale(Math.min(1, available / PAGE_WIDTH_PX));
     };
     updateScale();
     window.addEventListener("resize", updateScale);
     return () => window.removeEventListener("resize", updateScale);
   }, []);
-
-
 
   if (status === "loading") {
     return (
@@ -96,7 +83,6 @@ const Preview = () => {
       />
     );
   }
-
 
   if (!resumeData) return null;
 
@@ -117,8 +103,6 @@ const Preview = () => {
               {resumeData.title || "Untitled Resume"}
             </h1>
           </div>
-
-          
         </div>
       </header>
 
