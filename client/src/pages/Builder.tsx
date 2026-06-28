@@ -159,7 +159,7 @@ const Builder = () => {
   }, [resumeData, removeBackground]);
 
 
- const handlePrint = useCallback(() => {
+const handlePrint = useCallback(() => {
     if (!resumeRef.current) return;
     
     const styleId = "resume-print-style";
@@ -183,14 +183,11 @@ const Builder = () => {
           print-color-adjust: exact;
         }
         #resume-print-portal {
-          position: fixed;
-          inset: 0;
-          z-index: 99999;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 210mm;
           background: white !important;
-        }
-        #resume-print-portal > * {
-          width: 210mm !important;
-          transform: none !important;
         }
       }
     `;
@@ -203,7 +200,7 @@ const Builder = () => {
     }
     portal.innerHTML = "";
     const clone = resumeRef.current.cloneNode(true) as HTMLElement;
-    clone.style.cssText = "width:210mm;margin:0;padding:0;box-sizing:border-box;background:white;transform:none;";
+    clone.style.cssText = "width:210mm;margin:0;padding:0;box-sizing:border-box;background:white;";
     portal.appendChild(clone);
     
     setIsPrinting(true);
