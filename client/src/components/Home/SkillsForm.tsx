@@ -56,15 +56,15 @@ const SkillsForm=({data,onChange})=>{
                 </div>
             ):
             (
-                <div className="text-center py-6 text-gray-300">
-                    <Sparkles className="w-10 h-10 mx-auto mb-2 text-gray-300" />
+                <div className="text-center py-6 text-gray-300 border border-dashed rounded-lg mt-7">
+                    <Sparkles className="w-10 h-10 mx-auto mb-2 mt-7 text-gray-300" />
                     <p>No skills added yet</p>
-                    <p className="text-sm">Add your technical skills and soft skills</p>
+                    <p className="text-sm mt-4 text-gray-400">Add your technical skills e.g Javascript (Intermediate) or just Javascript</p>
 
                 </div>
             ) }
             <div>
-                <p className="text-sm text-gray-500 text-center"> <strong>Tip: </strong>
+                <p className="text-sm text-gray-500 text-center mt-7"> <strong>Tip: </strong>
                     Add 8-12 relevant skills, include both tecnical skills(programming , languages, tools ) andd skills (leadership, communication)</p>
 
             </div>

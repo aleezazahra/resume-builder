@@ -5,7 +5,7 @@ import Loader from "../components/Loader.tsx";
 import Login from "./Login.tsx";
 
 const Layout=()=>{
-    const {user,loading}=useSelector(state=>state.auth)
+    const { user, loading } = useSelector((state: any) => state.auth)
 
     if(loading){
         return <Loader />

@@ -87,7 +87,7 @@ const Summaryform = ({ data, onChange }) => {
 
             <div className="mt-6">
                
-                <div id="toolbar">
+                <div id="toolbar" className="bg-gray-100">
     <button className="ql-bold" title="Bold" />
     <button className="ql-italic" title="Italic" />
         <button
@@ -105,7 +105,7 @@ const Summaryform = ({ data, onChange }) => {
           
                 <div
                     ref={editorRef}
-                    className="border border-gray-300 rounded-b-lg"
+                    className="border border-gray-300 rounded-b-lg "
                     style={{ minHeight: "168px" }} 
                 />
 

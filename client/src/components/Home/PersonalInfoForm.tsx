@@ -1,6 +1,16 @@
 import { User, UserIcon, Mail, PhoneIcon, MapPin, BriefcaseBusiness, Globe, Icon } from "lucide-react";
+import { Dispatch, SetStateAction } from "react";
 
-const PersonalInfoForm = ({ data, onChange}) => {
+interface Props {
+  data: any;
+  onChange: (data: any) => void;
+  removeBackground: boolean;
+  setRemoveBackground: Dispatch<SetStateAction<boolean>>;
+}
+
+const PersonalInfoForm = ({ data, onChange, removeBackground, setRemoveBackground }: Props) => {
+
+
     const handleChange = (field, value) => {
         onChange({ ...data, [field]: value });
     };

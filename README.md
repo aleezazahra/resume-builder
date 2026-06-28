@@ -36,4 +36,4 @@ The code base is open-source under the MIT license, with no ads or hidden costs.
 ## Under development right now
 
 
-landing page is something that I have left for the last , I am js currently working on making this work and setting up the backend.
+landing page is something that I have left for the last , I am js currently working on making this work and setting up the backend( it is sloppy for now)

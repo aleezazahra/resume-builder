@@ -36,6 +36,20 @@ const MinimalTemplate = ({ data, accentColor }) => {
                     )}
                 </div>
 
+
+
+                 {data.professional_summary &&(
+                <section className="mb-10">
+                    <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
+                        Summary
+                    </h2>
+                    <div className=" text-gray-700 ql-editor !p-0"
+                    dangerouslySetInnerHTML={{__html:data.professional_summary}}>
+                       
+                    </div>
+                </section>
+            )}
+
                 {/* Socials */}
                 {data.socials && data.socials.length > 0 && (
                     <div className="flex flex-wrap gap-6 text-sm text-gray-600 mt-3">
@@ -59,17 +73,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
                 )}
             </header>
 
-            {data.professional_summary && (
-                <section className="mb-10">
-                    <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
-                        Summary
-                    </h2>
-                    <div className=" text-gray-700 ql-editor !p-0"
-                    dangerouslySetInnerHTML={{__html:data.professional_summary}}>
-                       
-                    </div>
-                </section>
-            )}
+           
 
             {data.experience && data.experience.length > 0 && (
                 <section className="mb-10">
@@ -118,7 +122,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            {/* Education */}
+        
             {data.education && data.education.length > 0 && (
                 <section className="mb-10">
                     <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
@@ -168,7 +172,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
             )}
 
             {/* Skills */}
-            {data.skills && data.skills.length > 0 && (
+            {data.skills &&  (
                 <section className="mb-10">
                     <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
                         Skills
@@ -181,7 +185,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
             )}
 
             {/* Languages */}
-            {data.languages && data.languages.length > 0 && (
+            {data.languages &&  (
                 <section>
                     <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
                         Languages

@@ -88,7 +88,7 @@ const sections = [
 ];
 
 const Builder = () => {
-  const { resumeID } = useParams();
+  const { resumeId } = useParams();
 
   const [resumeData, setResumeData] = useState<ResumeStructure>(EMPTY_RESUME);
   const [loading, setLoading] = useState(true);
@@ -104,10 +104,10 @@ const Builder = () => {
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    if (!resumeID) return;
+    if (!resumeId) return;
     setLoading(true);
     api
-      .get(`/api/resume/get/${resumeID}`)
+      .get(`/api/resume/get/${resumeId}`)
       .then(({ data }) => {
         setResumeData((prev) => ({ ...prev, ...data.resume }));
         document.title = data.resume.title || "Resume Builder";
@@ -129,7 +129,7 @@ const Builder = () => {
     
         setTimeout(() => { isInitialized.current = true; }, 0);
       });
-  }, [resumeID]);
+  }, [resumeId]);
 
  
   useEffect(() => {
@@ -205,7 +205,7 @@ const Builder = () => {
 
 
   const handleShare = useCallback(async () => {
-    const url = `${window.location.origin}/view/${resumeID}`;
+    const url = `${window.location.origin}/view/${resumeId}`;
     if (navigator.share) {
       try { await navigator.share({ title: "My Resume", text: "Check out my resume", url }); } catch {}
       return;
@@ -217,7 +217,7 @@ const Builder = () => {
     } catch {
       prompt("Copy this link:", url);
     }
-  }, [resumeID]);
+  }, [resumeId]);
 
   const activeSection = sections[activeSectionIndex];
   const isFirst = activeSectionIndex === 0;

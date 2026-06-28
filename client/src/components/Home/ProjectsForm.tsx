@@ -1,4 +1,4 @@
-import { Plus, Trash ,File2} from "lucide-react";
+import { Plus, Trash ,Wrench} from "lucide-react";
 
 const ProjectsForm = ({ data = [], onChange }) => {
   const addProject = () => {
@@ -29,14 +29,15 @@ const ProjectsForm = ({ data = [], onChange }) => {
         <button 
           type="button" 
           onClick={addProject} 
-          className="btn"
+          className="btn px-8 flex"
         >
           <Plus className="size-4" />
           Add your projects
         </button>
       </div>
-
-      <div className="space-y-4 mt-4">
+      {data.length>0 ?(
+      
+          <div className="space-y-4 mt-4 ">
         {data.map((project, index) => (
   
           <div key={project.id || index} className="p-4 border border-gray-200 rounded-lg space-y-3">
@@ -70,7 +71,19 @@ const ProjectsForm = ({ data = [], onChange }) => {
             </div>
           </div>
         ))}
-      </div>
+      </div>):
+      (
+               <div className="text-center py-6  border border-dashed rounded-lg mt-6">
+                    <Wrench className="w-10 h-10 mx-auto mb-2 mt-7 text-gray-300" />
+                    <p>No projects added yet</p>
+                    <p className="text-sm mt-4 text-gray-400">Add your technical skills e.g Javascript (Intermediate) or just Javascript</p>
+
+                </div>
+      
+          
+
+      )}
+      
     </div>
   );
 };

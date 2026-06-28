@@ -98,7 +98,7 @@ const ExperienceForm = ({ data = [], onChange }) => {
       </div>
 
       {data.length === 0 ? (
-        <div className="text-center py-12 border-2 border-dashed border-gray-200 rounded-lg text-gray-500">
+        <div className="text-center py-12 border-2 border-dashed  rounded-lg text-gray-500">
           <Briefcase className="w-10 h-10 mx-auto mb-3 text-gray-300" />
           <p className="text-sm font-medium">
             No work experience added yet

@@ -80,7 +80,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 )}
             </header>
 
-              {data.professional_summary && data.professional_summary > 0 && (
+              {data.professional_summary && (
                 <section className="mb-6">
                     <h2 className="text-xl font-semibold mb-3 " style={{ color: accentColor }}>
                         Summary

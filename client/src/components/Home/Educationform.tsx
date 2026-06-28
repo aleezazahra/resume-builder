@@ -26,20 +26,20 @@ const updateEducation=(index,field,value)=>{
 
     return(
         <div>
-             <div className="space-y-6">
-                <div className="flex items-center justify-between">
+             <div className="space-y-6 ">
+                <div className="flex items-center justify-between ">
                   
-                    <button onClick={addEducatione} className="btn">
+                    <button onClick={addEducatione} className="btn px-8 flex">
                         <Plus className="size-4"/>
                         Add Education
                     </button>
                 </div>
 
                 { data.length === 0 ? (
-                    <div className="text-center py-8 text-gray-500">
-                        <GraduationCap className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+                    <div className="text-center py-8 text-gray-500 border border-dashed  rounded-lg">
+                        <GraduationCap className="w-12 h-12 mx-auto mb-3 text-gray-300 mt-4" />
                         <p className="text-sm">No education added yet</p>
-                        <p>Add education to get started</p>
+                        <p className="mt-3">Add education to get started</p>
                     </div>
                 ) : (
                     <div className="space-y-4">

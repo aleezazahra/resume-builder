@@ -2,7 +2,7 @@ import { Plus, X } from "lucide-react";
 import { useState } from "react";
 
 type Language = { name: string; level: string };
-
+export type {Language};
 type LanguagesProps = {
   data: Language[];
   onChange: (langs: Language[]) => void;
