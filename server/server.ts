@@ -8,7 +8,11 @@ import aiRouter from "./routes/aiRoutes.ts";
 const app = express();
 
 const PORT: number = Number(process.env.PORT) || 3000;
-await connectDB()
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
+
 app.use(express.json());
 app.use(cors());
 
