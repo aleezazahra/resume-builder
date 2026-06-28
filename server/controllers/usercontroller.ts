@@ -87,20 +87,12 @@ export const getUserById = async (req, res) => {  // Fixed: was "xport"
 
 
 //getting resumes api/users/resume
-export const getUserResumes=async(req,res)=>{
-    try{
-        const UserId=req.userId;
-
-        //return user resumes
-        const resumes=await Resume.find({userId})
-        return res.status(200).json({resumes})
-        
-        const resumeDataCopy=JSON.parse(resumeData);
-       const resume= await Resume.findByIdAndUpdate({userId,_id:resumeId},resumeDataCopy,{new:true})
-       return res.status(200).json({message:"saved successfully",resume})
-
-    }catch(error){
-        return res.status(400).json({message:error.message})
+export const getUserResumes = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const resumes = await Resume.find({ userId });
+        return res.status(200).json({ resumes });
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
     }
-
 }
