@@ -6,50 +6,32 @@ import {
   Loader2,
 } from "lucide-react";
 import { useState } from "react";
+ import api from "../../configs/api";
 
 const ExperienceForm = ({ data = [], onChange }) => {
   const [loadingIndex, setLoadingIndex] = useState(null);
 
-  const handleEnhanceDesc = async (index) => {
+
+
+const handleEnhanceDesc = async (index) => {
     const description = data[index]?.description || "";
-
     if (!description.trim()) return;
-
     setLoadingIndex(index);
-
     try {
-      const response = await fetch("/api/ai/enhance-job-des", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userContent: description,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to enhance");
-      }
-
-      const result = await response.json();
-
-      if (result.enhancedContent) {
-        const updated = [...data];
-
-        updated[index] = {
-          ...updated[index],
-          description: result.enhancedContent,
-        };
-
-        onChange(updated);
-      }
+        const { data: result } = await api.post("/api/ai/enhance-job-des", {
+            userContent: description,
+        });
+        if (result.enhancedContent) {
+            const updated = [...data];
+            updated[index] = { ...updated[index], description: result.enhancedContent };
+            onChange(updated);
+        }
     } catch (error) {
-      console.error("Failed to enhance:", error);
+        console.error("Failed to enhance:", error);
     } finally {
-      setLoadingIndex(null);
+        setLoadingIndex(null);
     }
-  };
+};
 
   const addExperience = () => {
     const newExperience = {
