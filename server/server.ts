@@ -1,10 +1,10 @@
 import express, { type Request, type Response } from "express";
 import cors from "cors";
 import "dotenv/config";
-import connectDB from "./configs/db.ts";
-import userRouter from "./routes/userRoutes.ts";
-import resumeRouter from "./routes/resumeRoutes.ts";
-import aiRouter from "./routes/aiRoutes.ts";
+import connectDB from "./configs/db";
+import userRouter from "./routes/userRoutes";
+import resumeRouter from "./routes/resumeRoutes";
+import aiRouter from "./routes/aiRoutes";
 
 const app = express();
 
