@@ -29,13 +29,6 @@ app.use('/api/users', userRouter);
 app.use('/api/resume', resumeRouter);
 app.use('/api/ai', aiRouter);
 
-const start = async () => {
-  await connectDB();
-  app.listen(Number(process.env.PORT) || 3000, () => {
-    console.log(`Server is running on port ${process.env.PORT || 3000}`);
-  });
-};
-
-start();
+connectDB();
 
 export default app;
