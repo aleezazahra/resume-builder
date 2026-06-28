@@ -1,5 +1,5 @@
-import ai from "../configs/ai";
-import Resume from "../models/Resume";
+import ai from "../configs/ai.js";
+import Resume from "../models/Resume.js";
 
 export const enhanceProfessionalSummary = async (req, res) => {
   try {
