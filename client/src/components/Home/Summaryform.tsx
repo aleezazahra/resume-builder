@@ -2,6 +2,7 @@ import { Sparkles, Loader2 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
+import api from "../../configs/api";
 
 const Summaryform = ({ data, onChange }) => {
     const [loading, setLoading] = useState(false);
@@ -46,29 +47,20 @@ const Summaryform = ({ data, onChange }) => {
         }
     }, [data]);
 
-    const handleEnhance = async () => {
-        if (!data) return;
-        setLoading(true);
-        try {
-            const response = await fetch("/api/ai/enhance-pro-sum", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ userContent: data }),
-            });
-
-            if (!response.ok) throw new Error("Failed to enhance");
-
-            const result = await response.json();
-            if (result.enhancedContent) {
-                onChange(result.enhancedContent);
-            }
-        } catch (error) {
-            console.error("Failed to enhance:", error);
-        } finally {
-            setLoading(false);
+   const handleEnhance = async () => {
+    if (!data) return;
+    setLoading(true);
+    try {
+        const { data: result } = await api.post("/api/ai/enhance-pro-sum", { userContent: data });
+        if (result.enhancedContent) {
+            onChange(result.enhancedContent);
         }
-    };
-
+    } catch (error) {
+        console.error("Failed to enhance:", error);
+    } finally {
+        setLoading(false);
+    }
+};
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between">
