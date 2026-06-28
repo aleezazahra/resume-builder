@@ -159,32 +159,42 @@ const Builder = () => {
   }, [resumeData, removeBackground]);
 
 
-  const handlePrint = useCallback(() => {
+ const handlePrint = useCallback(() => {
     if (!resumeRef.current) return;
+    
     const styleId = "resume-print-style";
-    if (!document.getElementById(styleId)) {
-      const style = document.createElement("style");
-      style.id = styleId;
-      style.innerHTML = `
-        @media print {
-          body > * { display: none !important; }
-          #resume-print-portal { display: block !important; }
-          @page { size: A4 portrait; margin: 0; }
-          html, body {
-            width: 210mm !important; height: 297mm !important;
-            margin: 0 !important; padding: 0 !important;
-            background: white !important; background-color: white !important;
-            -webkit-print-color-adjust: exact;
-            print-color-adjust: exact; color-adjust: exact;
-          }
-          #resume-print-portal {
-            position: fixed; inset: 0; z-index: 99999;
-            background: white !important; background-color: white !important;
-          }
-        }
-      `;
-      document.head.appendChild(style);
+    let styleEl = document.getElementById(styleId);
+    if (!styleEl) {
+      styleEl = document.createElement("style");
+      styleEl.id = styleId;
+      document.head.appendChild(styleEl);
     }
+    styleEl.innerHTML = `
+      @media print {
+        body > * { display: none !important; }
+        #resume-print-portal { display: block !important; }
+        @page { size: A4 portrait; margin: 0; }
+        html, body {
+          width: 210mm !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          background: white !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        #resume-print-portal {
+          position: fixed;
+          inset: 0;
+          z-index: 99999;
+          background: white !important;
+        }
+        #resume-print-portal > * {
+          width: 210mm !important;
+          transform: none !important;
+        }
+      }
+    `;
+
     let portal = document.getElementById("resume-print-portal");
     if (!portal) {
       portal = document.createElement("div");
@@ -193,8 +203,9 @@ const Builder = () => {
     }
     portal.innerHTML = "";
     const clone = resumeRef.current.cloneNode(true) as HTMLElement;
-    clone.style.cssText = "width:210mm;min-height:297mm;margin:0;padding:0;box-sizing:border-box;background:white;";
+    clone.style.cssText = "width:210mm;margin:0;padding:0;box-sizing:border-box;background:white;transform:none;";
     portal.appendChild(clone);
+    
     setIsPrinting(true);
     requestAnimationFrame(() => {
       window.print();
@@ -419,7 +430,7 @@ const Builder = () => {
                   background: "white",
                   boxShadow: "0 4px 32px rgba(0,0,0,0.5)",
                   boxSizing: "border-box",
-                  overflow: "hidden",
+                  overflow: "visible",
                 }}
               >
                 <ResumePreviewer
