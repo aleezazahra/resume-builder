@@ -1,10 +1,10 @@
 import express from "express";
-import protect from "../middleware/authMiddleware.ts";
+import protect from "../middleware/authMiddleware";
 import {
   enhanceProfessionalSummary,
   enhanceJobDescription,
 
-} from "../controllers/aiController.ts";
+} from "../controllers/aiController";
 
 const aiRouter = express.Router();
 

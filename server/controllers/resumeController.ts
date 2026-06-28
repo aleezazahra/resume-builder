@@ -1,4 +1,4 @@
-import Resume from "../models/Resume.ts";
+import Resume from "../models/Resume";
 
 
 export const createResume = async (req, res) => {

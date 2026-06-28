@@ -1,7 +1,7 @@
-import User from "../models/User.ts";
+import User from "../models/User";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import Resume from "../models/Resume.ts";
+import Resume from "../models/Resume";
 
 const generateToken = (userId: string) => {
     const token = jwt.sign({ userId }, process.env.JWT_SECRET as string, { expiresIn: '7d' });
