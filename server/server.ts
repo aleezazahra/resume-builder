@@ -7,9 +7,6 @@ import resumeRouter from "./routes/resumeRoutes.ts";
 import aiRouter from "./routes/aiRoutes.ts";
 
 const app = express();
-const PORT: number = Number(process.env.PORT) || 3000;
-
-await connectDB();
 
 const corsOptions = {
   origin: [
@@ -32,6 +29,13 @@ app.use('/api/users', userRouter);
 app.use('/api/resume', resumeRouter);
 app.use('/api/ai', aiRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+const start = async () => {
+  await connectDB();
+  app.listen(Number(process.env.PORT) || 3000, () => {
+    console.log(`Server is running on port ${process.env.PORT || 3000}`);
+  });
+};
+
+start();
+
+export default app;
