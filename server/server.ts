@@ -37,5 +37,11 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/api/users', userRouter);
 app.use('/api/resume', resumeRouter);
 app.use('/api/ai', aiRouter);
+if (process.env.NODE_ENV !== "production") {
+  app.listen(Number(process.env.PORT) || 3000, () => {
+    console.log(`Server running on port ${process.env.PORT || 3000}`);
+  });
+}
+
 
 export default app;

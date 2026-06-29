@@ -170,27 +170,39 @@ const handlePrint = useCallback(() => {
       document.head.appendChild(styleEl);
     }
     styleEl.innerHTML = `
-      @media print {
-        body > * { display: none !important; }
-        #resume-print-portal { display: block !important; }
-        @page { size: A4 portrait; margin: 0; }
-        html, body {
-          width: 210mm !important;
-          margin: 0 !important;
-          padding: 0 !important;
-          background: white !important;
-          -webkit-print-color-adjust: exact;
-          print-color-adjust: exact;
-        }
-        #resume-print-portal {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 210mm;
-          background: white !important;
-        }
-      }
-    `;
+  @media print {
+    body > * { display: none !important; }
+    #resume-print-portal { display: block !important; }
+    @page { size: A4 portrait; margin: 0; }
+    html, body {
+      width: 210mm !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: white !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    #resume-print-portal {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 210mm;
+      background: white !important;
+    }
+    #resume-print-portal section {
+      page-break-inside: avoid;
+      break-inside: avoid;
+      padding-top: 15mm;
+    }
+    #resume-print-portal h2 {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    #resume-print-portal section:first-of-type {
+      padding-top: 0;
+    }
+  }
+`;
 
     let portal = document.getElementById("resume-print-portal");
     if (!portal) {

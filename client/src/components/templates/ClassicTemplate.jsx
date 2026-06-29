@@ -1,5 +1,4 @@
 import { Mail, Phone, MapPin, Globe } from "lucide-react";
-
 import { SOCIAL_PLATFORMS } from "../Home/AddSocials";
 
 const normalizeUrl = (url) => {
@@ -7,24 +6,24 @@ const normalizeUrl = (url) => {
     return /^https?:\/\//i.test(url) ? url : `https://${url}`;
 };
 
+const hasContent = (html) => html && html.replace(/<[^>]*>/g, "").trim().length > 0;
+
 const ClassicTemplate = ({ data, accentColor }) => {
     const formatDate = (dateStr) => {
         if (!dateStr) return "";
         const [year, month] = dateStr.split("-");
         return new Date(year, month - 1).toLocaleDateString("en-US", {
             year: "numeric",
-            month: "short"
+            month: "short",
         });
     };
 
     return (
         <div className="max-w-4xl mx-auto p-8 bg-white text-gray-800 leading-relaxed">
-        
             <header className="text-center mb-8 pb-6 border-b-2" style={{ borderColor: accentColor }}>
                 <h1 className="text-3xl font-bold mb-2" style={{ color: accentColor }}>
                     {data.personal_info?.full_name || "Your Name"}
                 </h1>
-
                 <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
                     {data.personal_info?.email && (
                         <div className="flex items-center gap-1">
@@ -51,13 +50,9 @@ const ClassicTemplate = ({ data, accentColor }) => {
                         </div>
                     )}
                     {data.personal_info?.title && (
-                        <p className="flex items-center gap-1">
-                            {data.personal_info.title}
-                        </p>
+                        <p className="flex items-center gap-1">{data.personal_info.title}</p>
                     )}
                 </div>
-
-                {/* Socials */}
                 {data.socials && data.socials.length > 0 && (
                     <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600 mt-3">
                         {data.socials.map((social, index) => {
@@ -80,35 +75,36 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 )}
             </header>
 
-              {data.professional_summary && (
+            {hasContent(data.professional_summary) && (
                 <section className="mb-6">
-                    <h2 className="text-xl font-semibold mb-3 " style={{ color: accentColor }}>
-                        Summary
+                    <h2 className="text-xl font-semibold mb-3" style={{ color: accentColor }}>
+                        SUMMARY
                     </h2>
-                    <div className="text-gray-700 leading-relaxed ql-editor !p-0"
-                    dangerouslySetInnerHTML={{__html:data.professional_summary}}>
-                        
-                    </div>
+                    <div
+                        className="text-gray-700 leading-relaxed ql-editor !p-0"
+                        dangerouslySetInnerHTML={{ __html: data.professional_summary }}
+                    />
                 </section>
             )}
 
-         
             {data.experience && data.experience.length > 0 && (
                 <section className="mb-6">
                     <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
                         PROFESSIONAL EXPERIENCE
                     </h2>
-
                     <div className="space-y-4">
                         {data.experience.map((exp, index) => (
-                            <div key={index} className="border-l-3 pl-4" style={{ borderColor: accentColor }}>
+                            <div key={index} className="border-l-2 pl-4" style={{ borderColor: accentColor }}>
                                 <div className="flex justify-between items-start mb-2">
                                     <div>
                                         <h3 className="font-semibold text-gray-900">{exp.position}</h3>
                                         <p className="text-gray-700 font-medium">{exp.company}</p>
                                     </div>
                                     <div className="text-right text-sm text-gray-600">
-                                        <p>{formatDate(exp.start_date)} - {exp.is_current ? "Present" : formatDate(exp.end_date)}</p>
+                                        <p>
+                                            {formatDate(exp.start_date)} -{" "}
+                                            {exp.is_current ? "Present" : formatDate(exp.end_date)}
+                                        </p>
                                     </div>
                                 </div>
                                 {exp.description && (
@@ -122,21 +118,27 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            {/* Projects */}
             {data.project && data.project.length > 0 && (
                 <section className="mb-6">
                     <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
                         PROJECTS
                     </h2>
-
-                    <ul className="space-y-3 ">
+                    <ul className="space-y-3">
                         {data.project.map((proj, index) => (
-                            <div key={index} className="flex justify-between items-start border-l-3 border-gray-300 pl-6">
+                            <div key={index} className="flex justify-between items-start border-l-2 border-gray-300 pl-4">
                                 <div>
-                                    <li className="font-semibold text-gray-800 ">{proj.name}</li>
+                                    <li className="font-semibold text-gray-800">{proj.name}</li>
                                     <p className="text-gray-600">{proj.description}</p>
-                                    <a href={proj.link ? (proj.link.startsWith('http') ? proj.link : `https://${proj.link}`) : '#'} 
-              target="_blank" rel="noopener noreferrer" className="underline text-gray-600 " >{proj.link}</a>
+                                    {proj.link && (
+                                        <a
+                                            href={proj.link.startsWith("http") ? proj.link : `https://${proj.link}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="underline text-gray-600"
+                                        >
+                                            {proj.link}
+                                        </a>
+                                    )}
                                 </div>
                             </div>
                         ))}
@@ -144,13 +146,11 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            {/* Education */}
             {data.education && data.education.length > 0 && (
                 <section className="mb-6">
                     <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
                         EDUCATION
                     </h2>
-
                     <div className="space-y-3">
                         {data.education.map((edu, index) => (
                             <div key={index} className="flex justify-between items-start">
@@ -170,13 +170,11 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            {/* Skills */}
             {data.skills && data.skills.length > 0 && (
                 <section className="mb-6">
-                    <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
+                    <h2 className="text-xl font-semibold mb-3" style={{ color: accentColor }}>
                         CORE SKILLS
                     </h2>
-
                     <div className="flex gap-4 flex-wrap">
                         {data.skills.map((skill, index) => (
                             <div key={index} className="text-gray-700">
@@ -187,33 +185,30 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            
-            {data.certifications && data.certifications.length > 0 && (
+            {hasContent(data.certifications) && (
                 <section className="mb-6">
-                    <h2 className="text-xl font-semibold mb-3 " style={{ color: accentColor }}>
-                        Certifications
+                    <h2 className="text-xl font-semibold mb-3" style={{ color: accentColor }}>
+                        CERTIFICATIONS
                     </h2>
-                    <div className="text-gray-700 leading-relaxed ql-editor !p-0"
-                    dangerouslySetInnerHTML={{__html:data.certifications}}>
-                        
-                    </div>
+                    <div
+                        className="text-gray-700 leading-relaxed ql-editor !p-0"
+                        dangerouslySetInnerHTML={{ __html: data.certifications }}
+                    />
                 </section>
             )}
 
-             {data.interests && data.interests.length > 0 && (
+            {hasContent(data.interests) && (
                 <section className="mb-6">
-                    <h2 className="text-xl font-semibold mb-3 " style={{ color: accentColor }}>
-                       Interests and Hobbies
+                    <h2 className="text-xl font-semibold mb-3" style={{ color: accentColor }}>
+                        INTERESTS AND HOBBIES
                     </h2>
-                    <div className="text-gray-700 leading-relaxed ql-editor !p-0"
-                    dangerouslySetInnerHTML={{__html:data.interests}}>
-                        
-                    </div>
+                    <div
+                        className="text-gray-700 leading-relaxed ql-editor !p-0"
+                        dangerouslySetInnerHTML={{ __html: data.interests }}
+                    />
                 </section>
             )}
 
-
-            {/* Languages */}
             {data.languages && data.languages.length > 0 && (
                 <section className="mb-6">
                     <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
@@ -231,6 +226,6 @@ const ClassicTemplate = ({ data, accentColor }) => {
             )}
         </div>
     );
-}
+};
 
 export default ClassicTemplate;
