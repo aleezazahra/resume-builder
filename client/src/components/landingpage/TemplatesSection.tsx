@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+=import { motion } from "framer-motion";
 
 import minimal from "../../assets/minimal.png";
 import modern from "../../assets/modern.png";
@@ -34,46 +34,18 @@ const templates = [
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.12,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: {
-    opacity: 0,
-    y: 40,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.7,
-      ease: "easeOut",
-    },
-  },
-};
-
 const TemplatesSection = () => {
   return (
     <section className="relative overflow-hidden bg-black py-28 px-6">
-      
       <div className="absolute left-1/2 top-0 h-[450px] w-[450px] -translate-x-1/2 rounded-full bg-white/5 blur-[150px]" />
 
       <div className="relative mx-auto max-w-7xl">
-        
+        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{
-            duration: 0.7,
-            ease: "easeOut",
-          }}
+          transition={{ duration: 0.7 }}
           className="mb-16 flex flex-col items-center gap-4 text-center"
         >
           <h1 className="text-5xl font-semibold text-white md:text-6xl">
@@ -86,43 +58,38 @@ const TemplatesSection = () => {
           </p>
         </motion.div>
 
-        
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
-        >
+        {/* Templates */}
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {templates.map((template, index) => (
             <motion.div
               key={index}
-              variants={cardVariants}
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                duration: 0.6,
+                delay: index * 0.08,
+              }}
               whileHover={{
                 y: -10,
                 transition: {
                   duration: 0.25,
-                  ease: "easeOut",
                 },
               }}
               className="group relative cursor-pointer overflow-hidden rounded-xl border border-white/10 bg-white/[0.02]"
             >
-              
               <img
                 src={template.image}
                 alt={template.name}
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
 
-              
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
 
-          
               <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                <div className="absolute left-1/2 bottom-0 h-40 w-40 -translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
+                <div className="absolute bottom-0 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
               </div>
 
-             
               <div className="absolute bottom-0 left-0 w-full p-6">
                 <h3 className="text-xl font-semibold text-white">
                   {template.name}
@@ -134,7 +101,7 @@ const TemplatesSection = () => {
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
