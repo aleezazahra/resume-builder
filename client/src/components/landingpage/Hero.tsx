@@ -1,33 +1,101 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Upload } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const Hero=()=>{
-  return(
-    <>
-    <div className="items-center justify-center background ">
-      <div className="flex flex-col justify-center text-center items-center mt-20">
-        <div className="flex flex-row mt-10">
-          <h1 className="text-[100px]" style={{fontFamily:"League Spartan"}}>Naqsh</h1>
-           <h1 className="text-[100px]" style={{fontFamily:"Noto Nastaliq Urdu"}}>نقش</h1>
+const scripts = [
+
+                 
+  { text: "نقش", font: "Noto Nastaliq Urdu" },              
+  { text: "नक़्श", font: "Noto Sans Devanagari" },         
+  { text: "模様", font: "Noto Sans JP" },                   
+  { text: "图案", font: "Noto Sans SC" },                   
+  { text: "Motif", font: "Poppins" },      
+  { text: "Disegnio", font: "Poppins" },     
+{ text: "Diseño", font: "Poppins" },       
+{ text: "Дизайн", font: "Poppins" },       
+{ text: "디자인", font: "Noto Sans KR" },   
+                  
+];
+const Hero = () => {
+  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisible(false);
+
+      setTimeout(() => {
+        setIndex((prev) => (prev + 1) % scripts.length);
+        setVisible(true);
+      }, 300);
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <section className="background min-h-screen flex items-center justify-center px-6">
+      <div className="max-w-6xl w-full text-center">
+
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-4">
+          <h1
+            className="text-6xl sm:text-7xl md:text-8xl lg:text-[100px] leading-none font-bold"
+            style={{ fontFamily: "League Spartan" }}
+          >
+            Naqsh
+          </h1>
+
+          <div className="relative h-[80px] sm:h-[95px] lg:h-[110px] flex items-center justify-center">
+            <h1
+              style={{ fontFamily: scripts[index].font }}
+              className={`text-5xl sm:text-6xl md:text-7xl lg:text-[90px] leading-none transition-opacity duration-300 ease-in-out ${
+                visible ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              {scripts[index].text}
+            </h1>
+          </div>
         </div>
-           
-      <h2 className="mt-10 text-4xl font-sans">Create your Resume in Minutes</h2>
+
+        <h2
+          className="mt-10 text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/80 max-w-3xl mx-auto leading-relaxed"
+          style={{ fontFamily: "Poppins" }}
+        >
+          Free & Open-Source Resume Builder that helps you create a
+          professional resume in just a few minutes.
+        </h2>
+
+        <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
+          <Link to="/app">
+            <button className="relative overflow-hidden btn group">
+              <span className="absolute inset-x-0 bottom-0 h-0 bg-white transition-all duration-300 ease-out group-hover:h-full"></span>
+
+              <span className="relative z-10 flex items-center justify-center gap-2 transition-colors duration-300 group-hover:text-black">
+                <ArrowRight size={20} />
+                Get Started
+              </span>
+            </button>
+          </Link>
+
+          <Link to="/app">
+            <button className="relative overflow-hidden btn group">
+              <span className="absolute inset-x-0 bottom-0 h-0 bg-white transition-all duration-300 ease-out group-hover:h-full"></span>
+
+              <span className="relative z-10 flex items-center justify-center gap-2 transition-colors duration-300 group-hover:text-black">
+                <Upload size={20} />
+                Upload Resume
+              </span>
+            </button>
+          </Link>
+        </div>
+
+        <p className="mt-8 text-sm sm:text-base text-white/50">
+          Customizable Templates • Free • Open Source
+        </p>
+
       </div>
+    </section>
+  );
+};
 
-      <div className="justify-center mt-5">
-        <Link to="/app" className="flex flex-row gap-10 justify-center">
-         <button className="btn flex flex-row">
-          <ArrowRight />
-          Get started</button>
-        <button className="btn">Upload Resume</button>
-        </Link>
-
-       
-
-      </div>
-     
-    </div>
-    </>
-  )
-}
 export default Hero;

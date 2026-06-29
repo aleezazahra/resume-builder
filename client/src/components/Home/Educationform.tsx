@@ -44,19 +44,19 @@ const updateEducation=(index,field,value)=>{
                 ) : (
                     <div className="space-y-4">
                         {data.map((education,index)=> (
-                            <div key={index} className="p-4 border border-gray-200 rounded-lg space-y-3">
+                            <div key={index} className="p-4 border border-gray-400 rounded-lg space-y-3">
                                 <div className="flex justify-between items-start">
                                     <h4>Education #{index+1}</h4>
                                     <button onClick={()=>removeEducation(index)} className="text-red-500 hover:text-red-700 transition-colors">
                                         <Trash className="size-4"/>
                                     </button>
                                 </div>
-                                <div className="grid md:grid-cols-2 gap-3">
-                                    <input value={education.institution || ""} onChange={(e)=>updateEducation(index,"institution",e.target.value)} type="text" placeholder="Institute name" className="px-3 py-2 text-sm" />
-                                    <input value={education.degree || ""} onChange={(e)=>updateEducation(index,"degree",e.target.value)} type="text" placeholder="Degree name" className="px-3 py-2 text-sm " />
-                                    <input value={education.field|| ""} onChange={(e)=>updateEducation(index,"field",e.target.value)} type="text" placeholder="Field of study" className="px-3 py-2 text-sm rounded-lg" />
-                                    <input value={education.graduation_date || ""} onChange={(e)=>updateEducation(index,"graduation_date",e.target.value)} type="month" className="px-3 py-2 text-sm " />
-                                    <input value={education.gpa || ""} onChange={(e)=>updateEducation(index,"gpa",e.target.value)} type="text" placeholder="GPA/Grade (optional)" className="px-3 py-2 text-sm " />
+                                <div className="grid md:grid-cols-2 gap-3 ">
+                                    <input value={education.institution || ""} onChange={(e)=>updateEducation(index,"institution",e.target.value)} type="text" placeholder="Institute name" className="px-3 border border-white/30 py-2 text-sm border-dashed" />
+                                    <input value={education.degree || ""} onChange={(e)=>updateEducation(index,"degree",e.target.value)} type="text" placeholder="Degree name" className="px-3 py-2 text-sm border border-dashed  border-white/30" />
+                                    <input value={education.field|| ""} onChange={(e)=>updateEducation(index,"field",e.target.value)} type="text" placeholder="Field of study" className="px-3 py-2 text-sm rounded-lg border-dashed border-white/30 border" />
+                                    <input value={education.graduation_date || ""} onChange={(e)=>updateEducation(index,"graduation_date",e.target.value)} type="month" className="px-3 py-2 text-sm border border-dashed border-white/30 " />
+                                    <input value={education.gpa || ""} onChange={(e)=>updateEducation(index,"gpa",e.target.value)} type="text" placeholder="GPA/Grade (optional)" className="px-3 py-2 text-sm border border-dashed border-white/30" />
                                 </div>
                             </div>
                         ))}

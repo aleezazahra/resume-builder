@@ -173,6 +173,27 @@ input:-webkit-autofill:focus {
 .ql-content li {
   display: list-item;
 }
+@keyframes fade {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.animate-fade {
+  animation: fade 2.5s ease-in-out infinite;
+}
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400..700&family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap','https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Noto+Nastaliq+Urdu:wght@400..700&family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap',
 'https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&family=League+Spartan:wght@100..900&family=Noto+Nastaliq+Urdu:wght@400..700&family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap','https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap')

@@ -40,9 +40,9 @@ const ProjectsForm = ({ data = [], onChange }) => {
           <div className="space-y-4 mt-4 ">
         {data.map((project, index) => (
   
-          <div key={project.id || index} className="p-4 border border-gray-200 rounded-lg space-y-3">
+          <div key={project.id || index} className="p-4 border border-gray-400 rounded-lg space-y-3">
             <div className="flex justify-between items-start">
-              <h4>Project #{index + 1}</h4>
+              <h4>Project # {index + 1}</h4>
               <button 
                 type="button"
                 onClick={() => removeProject(index)} 
@@ -55,18 +55,21 @@ const ProjectsForm = ({ data = [], onChange }) => {
               <input 
                 value={project.name || ""} 
                 onChange={(e) => updateProject(index, "name", e.target.value)} 
-                type="text" placeholder="Project name" className="border px-3 py-2 text-sm rounded" 
+                type="text" placeholder="Project name" className="border px-3 py-2
+                 border-dashed border-white/30 text-sm rounded" 
               />
               <input 
                 value={project.link || ""} 
                 onChange={(e) => updateProject(index, "link", e.target.value)} 
-                type="link" placeholder="Project URL" className="border px-3 py-2 text-sm rounded" 
+                type="link" placeholder="Project URL" className="border
+                border-dashed border-white/30 px-3 py-2 text-sm rounded" 
               />
               <textarea 
                 rows={4} 
                 value={project.description || ""} 
                 onChange={(e) => updateProject(index, "description", e.target.value)} 
-                placeholder="Description" className="border px-3 py-2 text-sm rounded-lg col-span-full" 
+                placeholder="Description" className="border
+                border-dashed border-white/30 px-3 py-2 text-sm rounded-lg col-span-full" 
               />
             </div>
           </div>

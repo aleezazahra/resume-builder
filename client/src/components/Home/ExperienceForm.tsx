@@ -118,7 +118,7 @@ const handleEnhanceDesc = async (index) => {
                   onChange={(e) =>
                     updateExperience(index, "company", e.target.value)
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full px-3 py-2 border border-dashed border-white/30 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                 />
 
                 <input
@@ -128,7 +128,8 @@ const handleEnhanceDesc = async (index) => {
                   onChange={(e) =>
                     updateExperience(index, "position", e.target.value)
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full px-3 py-2 border border-dashed
+                  border-white/30 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                 />
 
                 <input
@@ -137,7 +138,8 @@ const handleEnhanceDesc = async (index) => {
                   onChange={(e) =>
                     updateExperience(index, "start_date", e.target.value)
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full px-3 py-2 border border-dashed
+                  border-white/30 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                 />
 
                 <input
@@ -147,7 +149,8 @@ const handleEnhanceDesc = async (index) => {
                   onChange={(e) =>
                     updateExperience(index, "end_date", e.target.value)
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full px-3 py-2 border border-dashed
+                  border-white/30 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                 />
               </div>
 
@@ -205,7 +208,7 @@ const handleEnhanceDesc = async (index) => {
                     )
                   }
                   placeholder="Describe your responsibilities and achievements"
-                  className="w-full text-sm px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none"
+                  className="w-full text-sm px-3 py-2 border border-dashed border-white/30 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none"
                 />
               </div>
             </div>
