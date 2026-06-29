@@ -163,7 +163,7 @@ const inputClass =
         </div>
 
         {allResumes.length === 0 ? (
-          <p className="text-white/30 text-sm">No resumes yet — create one.</p>
+          <p className="text-white/30 text-sm">Click on create resume to create a new resume</p>
         ) : (
           <div className="grid grid-cols-2 sm:flex flex-wrap gap-4">
             {allResumes.map((resume) => (
@@ -171,7 +171,7 @@ const inputClass =
                 key={resume._id}
                 onClick={() => navigate(`/app/builder/${resume._id}`)}
                 className="relative w-full sm:w-36 h-48 flex flex-col items-center justify-center
-                  gap-2 border rounded-sm border-slate-600 bg-zinc-900 hover:bg-zinc-800 transition"
+                  gap-2 border rounded-sm border-zinc-700 bg-zinc-900 hover:bg-zinc-800 transition"
               >
                 <FilePenIcon className="size-6 text-white/40" />
                 <p className="text-sm font-medium text-center px-2 leading-tight">

@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/logo3.png";
-import { ArrowLeft, ArrowLeftSquare, LucideGithub } from "lucide-react";
+import { LucideGithub } from "lucide-react";
 
-const Navbar = () => {
+const NavbarHome = () => {
     const navigate = useNavigate();
 
     const LogoutUser = () => {
-        navigate("/");
+        navigate("/app");
     };
 
     return (
@@ -20,11 +20,11 @@ const Navbar = () => {
                 </Link>
                 <div className="flex flex-row gap-9">
                  <button onClick={LogoutUser} className="btn">
-                 <ArrowLeft />
+                 Get Started
                 </button>
                 <Link to="https://github.com/aleezazahra/resume-builder">
                 <button>
-                    <LucideGithub className="mt-3" />
+                    <LucideGithub className="mt-2" />
                 </button>
                 </Link>
 
@@ -35,4 +35,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default NavbarHome;

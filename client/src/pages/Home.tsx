@@ -1,11 +1,12 @@
-import Banner from "../components/Home/Banner";
+
 import Footer from "../components/Home/Footer";
-import Hero from "../components/Home/Hero";
+import Hero from "../components/landingpage/Hero";
+import NavbarHome from "../components/landingpage/NavbarHome";
 
 const Home=()=>{
     return(
         <div>
-            <Banner />
+            <NavbarHome />
             <Hero />
             <Footer />
             
