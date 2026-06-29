@@ -1,4 +1,4 @@
-=import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 import minimal from "../../assets/minimal.png";
 import modern from "../../assets/modern.png";
@@ -40,7 +40,7 @@ const TemplatesSection = () => {
       <div className="absolute left-1/2 top-0 h-[450px] w-[450px] -translate-x-1/2 rounded-full bg-white/5 blur-[150px]" />
 
       <div className="relative mx-auto max-w-7xl">
-        {/* Heading */}
+        
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -58,7 +58,7 @@ const TemplatesSection = () => {
           </p>
         </motion.div>
 
-        {/* Templates */}
+    
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {templates.map((template, index) => (
             <motion.div
