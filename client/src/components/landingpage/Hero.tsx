@@ -1,7 +1,7 @@
 import { ArrowRight, Upload } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import lotus from "../../assets/lotus-nobg.png"
 const scripts = [
 
                  
@@ -37,7 +37,12 @@ const Hero = () => {
     <section className="background min-h-screen flex items-center justify-center px-6">
       <div className="max-w-6xl w-full text-center">
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center sm:gap-4">
+         <img
+  src={lotus}
+  alt="Lotus"
+  className="w-24 sm:w-28 lg:w-32 h-auto -mt-3 sm:-mt-2 flex-shrink-0"
+/>
           <h1
             className="text-6xl sm:text-7xl md:text-8xl lg:text-[100px] leading-none font-bold"
             style={{ fontFamily: "League Spartan" }}

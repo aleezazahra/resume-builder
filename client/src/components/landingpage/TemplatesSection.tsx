@@ -53,7 +53,7 @@ const cardVariants = {
     y: 0,
     transition: {
       duration: 0.7,
-      ease: [0.22, 1, 0.36, 1],
+      ease: "easeOut",
     },
   },
 };
@@ -61,18 +61,18 @@ const cardVariants = {
 const TemplatesSection = () => {
   return (
     <section className="relative overflow-hidden bg-black py-28 px-6">
-      {/* Background Glow */}
+      
       <div className="absolute left-1/2 top-0 h-[450px] w-[450px] -translate-x-1/2 rounded-full bg-white/5 blur-[150px]" />
 
       <div className="relative mx-auto max-w-7xl">
-        {/* Heading */}
+        
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{
             duration: 0.7,
-            ease: [0.22, 1, 0.36, 1],
+            ease: "easeOut",
           }}
           className="mb-16 flex flex-col items-center gap-4 text-center"
         >
@@ -86,7 +86,7 @@ const TemplatesSection = () => {
           </p>
         </motion.div>
 
-        {/* Templates */}
+        
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -102,32 +102,33 @@ const TemplatesSection = () => {
                 y: -10,
                 transition: {
                   duration: 0.25,
+                  ease: "easeOut",
                 },
               }}
               className="group relative cursor-pointer overflow-hidden rounded-xl border border-white/10 bg-white/[0.02]"
             >
-              {/* Image */}
+              
               <img
                 src={template.image}
                 alt={template.name}
-                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
 
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/35 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
+              
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
 
-              {/* Hover Glow */}
-              <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                <div className="absolute -bottom-16 left-1/2 h-40 w-40 -translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
+          
+              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                <div className="absolute left-1/2 bottom-0 h-40 w-40 -translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
               </div>
 
-              {/* Name */}
-              <div className="absolute bottom-0 left-0 w-full translate-y-4 p-6 transition-all duration-500 group-hover:translate-y-0">
+             
+              <div className="absolute bottom-0 left-0 w-full p-6">
                 <h3 className="text-xl font-semibold text-white">
                   {template.name}
                 </h3>
 
-                <p className="mt-2 text-sm text-white/70 opacity-0 transition-all duration-500 delay-100 group-hover:opacity-100">
+                <p className="mt-2 translate-y-2 text-sm text-white/70 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
                   Fully customizable • ATS Friendly
                 </p>
               </div>
