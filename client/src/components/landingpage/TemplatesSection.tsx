@@ -36,7 +36,7 @@ const templates = [
 
 const TemplatesSection = () => {
   return (
-    <section className="relative overflow-hidden bg-black py-28 px-6">
+    <section id="templates" className="relative overflow-hidden bg-black py-28 px-6">
       <div className="absolute left-1/2 top-0 h-[450px] w-[450px] -translate-x-1/2 rounded-full bg-white/5 blur-[150px]" />
 
       <div className="relative mx-auto max-w-7xl">

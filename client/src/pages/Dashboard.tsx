@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import api from "../configs/api";
 
+
 type Resume = {
   _id: string;
   title: string;
@@ -253,6 +254,7 @@ const inputClass =
         </div>
       )}
     </div>
+
   );
 };
 

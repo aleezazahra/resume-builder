@@ -1,5 +1,7 @@
 
 import Footer from "../components/Home/Footer";
+import ATS from "../components/landingpage/ATS";
+import Faqs from "../components/landingpage/FAQS";
 import Features from "../components/landingpage/Features";
 import Hero from "../components/landingpage/Hero";
 import NavbarHome from "../components/landingpage/NavbarHome";
@@ -15,6 +17,8 @@ const Home=()=>{
             <Showcase />
             <Features />
             <TemplatesSection />
+            <ATS />
+            <Faqs />
           
             <Footer />
             

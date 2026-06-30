@@ -3,6 +3,7 @@ import Navbar from "../components/Home/Navbar";
 import {useSelector} from 'react-redux'
 import Loader from "../components/Loader.tsx";
 import Login from "./Login.tsx";
+import Footer from "../components/Home/Footer.tsx";
 
 const Layout=()=>{
     const { user, loading } = useSelector((state: any) => state.auth)
@@ -22,7 +23,7 @@ const Layout=()=>{
             }
          
           
-
+                <Footer />
         </div>
     )
 }

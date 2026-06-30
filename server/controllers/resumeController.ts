@@ -107,3 +107,8 @@ export const getUserResumes = async (req, res) => {
     });
   }
 };
+
+
+//upload resume
+//POST --> api/resumes/upload-resume
+

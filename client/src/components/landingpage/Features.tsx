@@ -1,7 +1,10 @@
+"use client";
+
+import { motion } from "framer-motion";
 import {
   BadgeCheck,
   Sparkles,
- FileText,
+  FileText,
   Globe,
   Palette,
   Infinity,
@@ -10,97 +13,116 @@ import {
   Ban,
 } from "lucide-react";
 
+const features = [
+  {
+    name: "Free Forever",
+    desc: "No paywalls, no trials, no credit card. Every feature, every time.",
+    icon: BadgeCheck,
+  },
+  {
+    name: "AI Enhancements",
+    desc: "Rewrite weak bullet points into outcomes recruiters actually notice.",
+    icon: BrainCircuit,
+  },
+  {
+    name: "ATS Friendly",
+    desc: "Clean markup that parses correctly in every tracking system.",
+    icon: ShieldCheck,
+  },
+  {
+    name: "No Ads",
+    desc: "A quiet, focused workspace. Nothing competing for your attention.",
+    icon: Ban,
+  },
+  {
+    name: "Open Source",
+    desc: "Inspect the code, fork it, or contribute back.",
+    icon: Globe,
+  },
+  {
+    name: "PDF Export",
+    desc: "Print-ready exports in seconds, no formatting drift.",
+    icon: FileText,
+  },
+  {
+    name: "Unlimited Resumes",
+    desc: "Tailor a version for every role without losing track.",
+    icon: Infinity,
+  },
+  {
+    name: "Flexible Templates",
+    desc: "Swap layouts and palettes without rebuilding content.",
+    icon: Palette,
+  },
+  {
+    name: "Share Anywhere",
+    desc: "One public link, always up to date.",
+    icon: Sparkles,
+  },
+];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0 },
+};
+
 const Features = () => {
-  const features = [
-    {
-      name: "Free Forever",
-      desc: "Completely free with no hidden costs.",
-      icon: <BadgeCheck size={28} />,
-    },
-    {
-      name: "No Ads",
-      desc: "Enjoy a clean, distraction-free experience.",
-      icon: <Ban size={28} />,
-    },
-    {
-      name: "Open Source",
-      desc: "Built for the community and open to everyone.",
-      icon: <Globe size={28} />,
-    },
-    {
-      name: "PDF Export",
-      desc: "Generate beautiful PDF resumes instantly.",
-      icon: <FileText size={28} />,
-    },
-    {
-      name: "Unlimited Resumes",
-      desc: "Create and manage as many resumes as you like.",
-      icon: <Infinity size={28} />,
-    },
-    {
-      name: "Flexible Templates",
-      desc: "Customize layouts and colors effortlessly.",
-      icon: <Palette size={28} />,
-    },
-    {
-      name: "ATS Friendly",
-      desc: "Optimized for Applicant Tracking Systems.",
-      icon: <ShieldCheck size={28} />,
-    },
-    {
-      name: "AI Enhancements",
-      desc: "Improve summaries and job descriptions instantly.",
-      icon: <BrainCircuit size={28} />,
-    },
-    {
-      name: "Share Anywhere",
-      desc: "Share your resume with a simple public link.",
-      icon: <Sparkles size={28} />,
-    },
-  ];
-
   return (
-    <section className="relative overflow-hidden bg-black py-28 px-6">
-
-      <div className="absolute left-1/2 top-0 h-[450px] w-[450px]  rounded-full bg-white/5 blur-[140px]" />
-
-      <div className="relative mx-auto max-w-7xl">
-        <div className="mb-20 text-center">
-          <p className="mb-3 text-sm uppercase tracking-[0.35em] text-white/40">
-            Everything you need
+    <section id="features" className="bg-black px-6 py-32">
+      <div className="mx-auto max-w-6xl">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.6 }}
+          variants={fadeUp}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="mb-16"
+        >
+          <p className="mb-5 text-xs font-medium uppercase tracking-[0.3em] text-white/40">
+            Capabilities
           </p>
-
-          <h2 className="text-5xl font-semibold text-white md:text-6xl">
-            Features built for
-            <span className="block text-white/50">modern resumes.</span>
+          <h2 className="max-w-2xl text-4xl font-medium leading-[1.15] text-white md:text-5xl">
+            Everything a modern resume needs. Nothing it doesn&apos;t.
           </h2>
-        </div>
+        </motion.div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature, i) => (
-            <div
-              key={i}
-              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-xl transition-all duration-300 hover:-translate-y-2 hover:border-white/20 hover:bg-white/[0.05]"
-            >
-              <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-white/5 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        <div className="divide-y divide-white/10 border-t border-white/10">
+          {features.map((feature, i) => {
+            const Icon = feature.icon;
+            return (
+              <motion.div
+                key={i}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.6 }}
+                variants={fadeUp}
+                transition={{
+                  duration: 0.5,
+                  ease: "easeOut",
+                  delay: i * 0.05,
+                }}
+                className="group grid grid-cols-[3rem_2.5rem_1fr] items-start gap-6 py-8 transition-colors duration-300 hover:bg-white/[0.02] md:grid-cols-[3rem_2.5rem_16rem_1fr] md:items-center"
+              >
+                <span className="font-mono text-sm text-white/25">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
 
-              <div className="relative">
-                <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white transition-all duration-300 ">
-                  {feature.icon}
-                </div>
+                <Icon
+                  size={20}
+                  strokeWidth={1.5}
+                  className="text-white/50 transition-colors duration-300 group-hover:text-white"
+                />
 
-                <h3 className="mb-3 text-2xl font-semibold text-white">
+                <h3 className="text-lg font-medium text-white">
                   {feature.name}
                 </h3>
 
-                <p className="leading-7 text-white/55">
+                <p className="text-sm leading-relaxed text-white/40 md:text-right">
                   {feature.desc}
                 </p>
-              </div>
-
-              <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-white transition-all duration-500 group-hover:w-full" />
-            </div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
