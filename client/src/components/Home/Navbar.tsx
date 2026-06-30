@@ -1,38 +1,41 @@
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/logo3.png";
-import { ArrowLeft, ArrowLeftSquare, LucideGithub } from "lucide-react";
+import { ArrowLeft, Github } from "lucide-react";
 
 const Navbar = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const LogoutUser = () => {
-        navigate("/");
-    };
+  return (
+    <header className="w-full border-b border-white/10 bg-black/20 backdrop-blur-2xl">
+      <nav className="flex h-20 w-full items-center justify-between px-6 md:px-10 lg:px-16">
+        <Link to="/">
+          <img
+            src={Logo}
+            alt="Naqsh"
+            className="h-14 w-auto transition-opacity duration-300 hover:opacity-80"
+          />
+        </Link>
 
-    return (
-        <div className="bg-transparent">
-            <nav
-                className="w-full py-1 px-8 flex items-center justify-between
-                bg-zinc-900 backdrop-blur-md sticky top-0 z-50"
-            >
-                <Link to="/">
-                    <img src={Logo} alt="logo" className="h-19 w-auto ml-15" />
-                </Link>
-                <div className="flex flex-row gap-9">
-                 <button onClick={LogoutUser} className="btn">
-                 <ArrowLeft />
-                </button>
-                <Link to="https://github.com/aleezazahra/resume-builder">
-                <button>
-                    <LucideGithub className="mt-3" />
-                </button>
-                </Link>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate("/")}
+            className="flex btn items-center justify-center rounded-full border  text-white transition-all duration-300 hover:border-white/20 0"
+          >
+            <ArrowLeft size={18} />
+          </button>
 
-                </div>
-                
-            </nav>
+          <a
+            href="https://github.com/aleezazahra/resume-builder"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex btn items-center justify-center rounded-full border  text-white transition-all duration-300 hover:border-white/20 "
+          >
+            <Github size={18} />
+          </a>
         </div>
-    );
+      </nav>
+    </header>
+  );
 };
 
 export default Navbar;

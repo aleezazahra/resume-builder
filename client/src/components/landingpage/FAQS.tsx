@@ -54,7 +54,7 @@ const Faqs = () => {
           {questions.map((item, index) => (
             <div
               key={index}
-              className="group border-b border-r border-white/10 p-10 transition-all duration-300 hover:bg-white/[0.03]"
+              className="group border-b border-r border-white/10 p-10 transition-all duration-300 "
             >
               
               <span className="inline-block border border-white/15 px-2 py-1 text-[10px] tracking-[0.25em] text-white/40">

@@ -11,6 +11,7 @@ import {
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import api from "../configs/api";
+import Navbar from "../components/Home/Navbar";
 
 
 type Resume = {
@@ -146,15 +147,17 @@ const inputClass =
   "w-full bg-zinc-900 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-white/40 transition";
 
   return (
+    
     <div className="min-h-screen bg-black">
-      <div className="max-w-7xl mx-auto px-4 py-8">
+      <Navbar />
+      <div className="max-w-7xl mx-auto px-4 py-8 mt-20">
 
         <div className="flex flex-wrap gap-4 mb-10">
           <button
             onClick={() => { setTitle(""); setShowCreateResume(true); }}
             className="w-full sm:w-36 h-48 flex flex-col items-center justify-center gap-3
               border border-dashed border-white/20 rounded-xl text-sm text-white/40
-              hover:border-white/60 hover:text-white hover:bg-white/5 transition"
+              hover:border-white/60 hover:text-white  transition"
           >
             <PlusIcon className="size-6" />
             Create Resume

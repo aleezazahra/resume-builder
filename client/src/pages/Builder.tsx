@@ -252,7 +252,7 @@ const handlePrint = useCallback(() => {
   }
 
   return (
-    <div className="min-h-screen bg-black font-sans">
+    <div className="min-h-screen bg-black font-sans ">
 
       <header className="sticky top-0 z-20 bg-black border-b border-white/10 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center gap-4">
