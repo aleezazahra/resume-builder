@@ -1,13 +1,14 @@
 import express, { type Request, type Response, type NextFunction } from "express";
 import cors from "cors";
 import "dotenv/config";
+import passport from "passport"; // Import passport
 import connectDB from "./configs/db.js";
 import userRouter from "./routes/userRoutes.js";
 import resumeRouter from "./routes/resumeRoutes.js";
 import aiRouter from "./routes/aiRoutes.js";
-import passport from 'passport';
-import './services/passport'; 
-import authRouter from './routes/authRoutes.js';
+import authRouter from "./routes/authRoutes.js";
+import "./services/passport.js"; // Ensure this runs to configure strategies
+
 const app = express();
 
 const corsOptions = {
@@ -24,6 +25,7 @@ app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 app.use(express.json());
 
+// DB Connection Middleware
 app.use(async (req: Request, res: Response, next: NextFunction) => {
   try {
     await connectDB();
@@ -36,16 +38,17 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
 app.get('/', (req: Request, res: Response) => {
   res.send("server is live");
 });
+
 app.use(passport.initialize());
 app.use('/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/resume', resumeRouter);
 app.use('/api/ai', aiRouter);
+
 if (process.env.NODE_ENV !== "production") {
   app.listen(Number(process.env.PORT) || 3000, () => {
     console.log(`Server running on port ${process.env.PORT || 3000}`);
   });
 }
-
 
 export default app;
