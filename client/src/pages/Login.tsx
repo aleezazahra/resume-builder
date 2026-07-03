@@ -1,8 +1,9 @@
-import React, { ReactEventHandler, useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../configs/api";
 import { useDispatch } from "react-redux";
 import { login } from "../app/features/authSlice";
 import toast from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Login = () => {
         password: "",
     });
 
-    const handleSubmit = async (e:React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
@@ -29,13 +30,13 @@ const Login = () => {
             localStorage.setItem("token", data.token);
 
             toast.success(data.message);
-        } catch (error) {
+        } catch (error: any) {
             toast.error(error?.response?.data?.message || error.message);
         }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+        const { name, value } = e.target;
 
         setFormData((prev) => ({
             ...prev,
@@ -43,9 +44,25 @@ const Login = () => {
         }));
     };
 
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get("token");
 
-    const inputContainerStyle = "flex items-center rounded-xl px-4 h-12 mb-8 bg-black border border-gray-500  border-1.4"; 
-    const inputStyle = "w-full outline-none bg-black text-white placeholder:text-gray-500 ";
+        if (token) {
+            localStorage.setItem("token", token);
+            window.location.href = "/dashboard";
+        }
+    }, []);
+
+    const handleGoogleLogin = () => {
+        window.location.href = `${import.meta.env.VITE_BASE_URL}/auth/google`;
+    };
+
+    const inputContainerStyle =
+        "flex items-center rounded-xl px-4 h-12 mb-8 bg-black border border-gray-500";
+
+    const inputStyle =
+        "w-full outline-none bg-black text-white placeholder:text-gray-500";
 
     return (
         <div className="min-h-screen bg-black flex items-center justify-center px-4">
@@ -112,9 +129,18 @@ const Login = () => {
 
                 <button
                     type="submit"
-                    className="w-full mt-2 h-12 rounded-xl btn  text-center items-center transition text-white font-semibold"
+                    className="w-full mt-2 h-12  btn font-semibold hover:border-gray-400"
                 >
                     {state === "login" ? "Login" : "Sign Up"}
+                </button>
+
+                <button
+                    type="button"
+                    onClick={handleGoogleLogin}
+                    className="w-full mt-2 h-12  btn font-semibold hover:border-gray-400 flex flex-row justify-center"
+                >
+                    <FcGoogle size={20} />
+                    Continue with Google
                 </button>
 
                 <p className="text-center items-center text-gray-500 mt-6">

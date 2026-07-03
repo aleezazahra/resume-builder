@@ -5,10 +5,10 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-  "dev": "tsx watch server.ts",
-  "build": "tsc",
-  "start": "node dist/server.js"
-},
+    "dev": "tsx watch server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -18,16 +18,21 @@
     "cors": "^2.8.5",
     "dotenv": "^17.4.2",
     "express": "^4.21.0",
+    "express-session": "^1.19.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.7.1",
     "multer": "^2.2.0",
-    "openai": "^6.45.0"
+    "openai": "^6.45.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^26.0.0",
     "@types/nodemon": "^1.19.6",
+    "@types/passport-google-oauth20": "^2.0.17",
     "ts-node": "^10.9.2",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3"

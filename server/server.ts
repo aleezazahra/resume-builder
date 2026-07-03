@@ -5,7 +5,9 @@ import connectDB from "./configs/db.js";
 import userRouter from "./routes/userRoutes.js";
 import resumeRouter from "./routes/resumeRoutes.js";
 import aiRouter from "./routes/aiRoutes.js";
-
+import passport from 'passport';
+import './services/passport'; 
+import authRouter from './routes/authRoutes.js';
 const app = express();
 
 const corsOptions = {
@@ -34,7 +36,8 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
 app.get('/', (req: Request, res: Response) => {
   res.send("server is live");
 });
-
+app.use(passport.initialize());
+app.use('/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/resume', resumeRouter);
 app.use('/api/ai', aiRouter);

@@ -9,11 +9,11 @@ interface IUser extends mongoose.Document {
 }
 
 const UserSchema = new mongoose.Schema({
-    name:     { type: String, required: true },    
-    email:    { type: String, required: true, unique: true }, 
-    password: { type: String, required: true },     
+    name: { type: String, required: true },    
+    email: { type: String, required: true, unique: true }, 
+    password: { type: String }, 
+    googleId: { type: String }, 
 }, { timestamps: true });
-
 UserSchema.methods.comparePassword = async function (password: string): Promise<boolean> {
     return bcrypt.compare(password, this.password);   
 }
