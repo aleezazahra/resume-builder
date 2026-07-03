@@ -11,7 +11,7 @@ import api from "./configs/api";
 import { login, setLoading } from "./app/features/authSlice";
 import {Toaster} from 'react-hot-toast'
 import { MoonIcon } from "lucide-react";
-
+import LoginSuccess from "./pages/LoginSucess";
 
 
 const App = () => {
@@ -63,6 +63,7 @@ const App = () => {
         <Route path="builder/:resumeId" element={<Builder />} />
       </Route>
       <Route path="/login" element={<Login />} />
+      <Route path="/login-success" element={<LoginSuccess />} />
 
     
       <Route path="/view/:resumeId" element={<Preview />} />

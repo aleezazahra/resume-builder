@@ -8,6 +8,8 @@ import resumeRouter from "./routes/resumeRoutes.js";
 import aiRouter from "./routes/aiRoutes.js";
 import authRouter from "./routes/authRoutes.js";
 import "./services/passport.js"; // Ensure this runs to configure strategies
+import cookieParser from "cookie-parser";
+
 
 const app = express();
 
@@ -24,6 +26,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser())
 
 // DB Connection Middleware
 app.use(async (req: Request, res: Response, next: NextFunction) => {
