@@ -38,6 +38,8 @@ The code base is open-source under the MIT license, with no ads or hidden costs.
 4. Push to the Branch (git push origin feature/AmazingFeature)
 5. Open a Pull Request
 
+Also consider starring repo :3 
+
 ## Local Development
 
 To get a local copy up and running, follow these simple steps.
@@ -55,12 +57,13 @@ To get a local copy up and running, follow these simple steps.
    cd naqshresume```
 
 2. Install dependencies
-  -> Client
+
+For Client,
     ```bash
     cd client
     npm install ```
 
- --> Server
+For Server
 ```bash
     cd ../server
     npm install
@@ -74,3 +77,9 @@ To get a local copy up and running, follow these simple steps.
 ```
 
 The application should now be accessible via your browser at the development URL provided in your terminal (usually http://localhost:5173 or http://localhost:3000).
+
+### License
+MIT — do whatever you want with it.
+
+### Developer Note
+I will add more templates in future btw this project is made for horizons.hackclub.com
