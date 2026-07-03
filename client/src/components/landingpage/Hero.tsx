@@ -11,7 +11,7 @@ const scripts = [
   { text: "图案", font: "Noto Sans SC" },                   
   { text: "Motif", font: "Poppins" },      
   { text: "Disegnio", font: "Poppins" },     
-{ text: "Diseño", font: "Poppins" },       
+  { text: "Diseño", font: "Poppins" },       
 { text: "Дизайн", font: "Poppins" },       
 { text: "디자인", font: "Noto Sans KR" },   
                   
@@ -57,6 +57,7 @@ const Hero = () => {
                 visible ? "opacity-100" : "opacity-0"
               }`}
             >
+             
               {scripts[index].text}
             </h1>
           </div>
@@ -82,16 +83,7 @@ const Hero = () => {
             </button>
           </Link>
 
-          <Link to="/app">
-            <button className="relative overflow-hidden btn group">
-              <span className="absolute inset-x-0 bottom-0 h-0 bg-white transition-all duration-300 ease-out group-hover:h-full"></span>
-
-              <span className="relative z-10 flex items-center justify-center gap-2 transition-colors duration-300 group-hover:text-black">
-                <Upload size={20} />
-                Upload Resume
-              </span>
-            </button>
-          </Link>
+          
         </div>
 
         <p className="mt-8 text-sm sm:text-base text-white/50">

@@ -1,11 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/logo3.png";
 import { ArrowLeft, Github } from "lucide-react";
+import { Moon,Sun } from "lucide-react";
 
 const Navbar = () => {
   const navigate = useNavigate();
 
   return (
+
     <header className="w-full border-b border-white/10 bg-black/20 backdrop-blur-2xl">
       <nav className="flex h-20 w-full items-center justify-between px-6 md:px-10 lg:px-16">
         <Link to="/">
@@ -23,6 +25,8 @@ const Navbar = () => {
           >
             <ArrowLeft size={18} />
           </button>
+
+       
 
           <a
             href="https://github.com/aleezazahra/resume-builder"

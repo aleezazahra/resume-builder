@@ -7,10 +7,17 @@
     --color-muted: #a1a1aa;
     --color-border: #27272a;
   }
+  html.light{
+    --color-bg:#ffffff;
+    --color-text:#000000;
+    --color-muted:#52525b;
+    --color-border:#e5e7eb;
+  }
 
   html, body, #root {
-    background-color: #000000;
-    color: #ffffff;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    transition:background-color ,25 ease, color .25 ease;
   }
 
   ::-webkit-scrollbar { width: 6px; }
@@ -25,8 +32,8 @@
     gap: 0.5rem;
     padding: 0.625rem 1.75rem;
     border-radius: 9999px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    color: #ffffff;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
     font-size: 0.75rem;
     font-weight: 300;
     letter-spacing: 0.2em;
@@ -38,7 +45,7 @@
 
   .btn:hover {
     border-color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: color-mix(in srgb,var(--color-text) 8% ,transparent);
   }
 
   .btn:active {
@@ -51,8 +58,8 @@
     gap: 0.5rem;
     padding: 0.625rem 1.75rem;
     border-radius: 9999px;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: var(--color-text);
+    color: var(--color-bg);
     font-size: 0.75rem;
     font-weight: 300;
     letter-spacing: 0.2em;
