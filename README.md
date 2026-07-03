@@ -31,9 +31,46 @@ The code base is open-source under the MIT license, with no ads or hidden costs.
 | AI model  | gpt-4o-mini  |
 
 ---
+## Contributing
+1. Fork the Project
+2. Create your Feature Branch (git checkout -b feature/AmazingFeature)
+3. Commit your Changes (git commit -m 'Add some AmazingFeature')
+4. Push to the Branch (git push origin feature/AmazingFeature)
+5. Open a Pull Request
 
+## Local Development
 
-## Under development right now
+To get a local copy up and running, follow these simple steps.
 
+### Prerequisites
 
-landing page is something that I have left for the last , I am js currently working on making this work and setting up the backend( it is sloppy for now)
+* [Node.js](https://nodejs.org/) installed on your machine.
+* npm, yarn, or pnpm.
+
+### Installation & Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone [https://github.com/aleezazahra/naqshresume.git](https://github.com/aleezazahra/naqshresume.git)
+   cd naqshresume```
+
+2. Install dependencies
+  -> Client
+    ```bash
+    cd client
+    npm install ```
+
+ --> Server
+```bash
+    cd ../server
+    npm install
+```
+
+3. Running the application
+  For both client and server
+
+```bash
+    npm run dev
+```
+
+The application should now be accessible via your browser at the development URL provided in your terminal (usually http://localhost:5173 or http://localhost:3000).
