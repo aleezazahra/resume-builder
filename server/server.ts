@@ -1,13 +1,13 @@
 import express, { type Request, type Response, type NextFunction } from "express";
 import cors from "cors";
 import "dotenv/config";
-import passport from "passport"; // Import passport
+import passport from "passport"; 
 import connectDB from "./configs/db.js";
 import userRouter from "./routes/userRoutes.js";
 import resumeRouter from "./routes/resumeRoutes.js";
 import aiRouter from "./routes/aiRoutes.js";
 import authRouter from "./routes/authRoutes.js";
-import "./services/passport.js"; // Ensure this runs to configure strategies
+import "./services/passport.js"; 
 import cookieParser from "cookie-parser";
 
 
