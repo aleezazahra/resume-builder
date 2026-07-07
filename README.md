@@ -58,10 +58,12 @@ To get a local copy up and running, follow these simple steps.
 
 2. Install dependencies
 
-For Client,
-    ```bash
+For Client
+
+```bash
     cd client
-    npm install ```
+    npm install 
+```
 
 For Server
 ```bash
