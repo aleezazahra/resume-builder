@@ -16,6 +16,7 @@ The code base is open-source under the MIT license, with no ads or hidden costs.
 - Formatting support (bold , italics)
 - AI Integration for enhancing summary and job Description,gpt-4o-mini (yes I paid for it)
 - Professionally designed and ATS-friendly templates
+- dark mode and light mode to be added soon
 
 ---
 
@@ -84,4 +85,4 @@ The application should now be accessible via your browser at the development URL
 MIT — do whatever you want with it.
 
 ### Developer Note
-I will add more templates in future btw this project is made for horizons.hackclub.com
+I will add more templates in future 
