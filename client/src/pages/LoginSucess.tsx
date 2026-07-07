@@ -9,7 +9,7 @@ export default function LoginSuccess() {
     const token = params.get("token");
     if (token) {
       localStorage.setItem("token", token);
-      navigate("/dashboard"); // Or wherever your resumes are
+      navigate("/app"); 
     }
   }, [params, navigate]);
 
