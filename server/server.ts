@@ -39,17 +39,14 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
 });
 
 app.get('/', (req: Request, res: Response) => {
-  res.send("server is live");
-});
-app.get('/',(req:Request,res:Response)=>{
   res.json({
-    message:"server is alive",
-    clientIdExists:!!process.env.GOOGLE_CLIENT_ID,
-    clientIdLength:process.env.GOOGLE_CLIENT_ID?.length||0,
-    clientSecretExists:  !!process.env.GOOGLE_CLIENT_SECRET,
-    nodeEnv:process.env.NODE_ENV
-  })
-})
+    message: "server is alive",
+    clientIdExists: !!process.env.GOOGLE_CLIENT_ID,
+    clientIdLength: process.env.GOOGLE_CLIENT_ID?.length || 0,
+    clientSecretExists: !!process.env.GOOGLE_CLIENT_SECRET,
+    nodeEnv: process.env.NODE_ENV
+  });
+});
 
 app.use(passport.initialize());
 app.use('/auth', authRouter);
