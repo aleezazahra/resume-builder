@@ -71,7 +71,7 @@ const Summaryform = ({ data, onChange }) => {
                 type="button"
                 onClick={handleEnhance}
                 disabled={loading}
-                className="btn py-2 px-6 flex items-center gap-2 border rounded-md hover:bg-gray-50 transition-colors"
+                className="btn py-2 px-6 flex items-center gap-2 border rounded-md hover:border-gray-50 transition-colors"
             >
                 {loading ? <Loader2 className="animate-spin" size={17} /> : <Sparkles size={17} />}
                 {loading ? "Enhancing..." : "AI enhance"}

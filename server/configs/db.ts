@@ -11,8 +11,9 @@ const connectDB = async () => {
     }
 
     await mongoose.connect(`${mongodbURI}/resume-builder`, {
-        serverSelectionTimeoutMS: 5000, 
-    });
+    serverSelectionTimeoutMS: 10000,
+    bufferCommands: false, 
+});
 
     console.log("DB connected");
 };

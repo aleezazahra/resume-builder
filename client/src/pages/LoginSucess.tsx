@@ -5,7 +5,7 @@ export default function LoginSuccess() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useEffect(() => { 
     const token = params.get("token");
     if (token) {
       localStorage.setItem("token", token);
