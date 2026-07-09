@@ -50,7 +50,7 @@ const Login = () => {
 
         if (token) {
             localStorage.setItem("token", token);
-            window.location.href = "/dashboard";
+            window.location.href = "/app";
         }
     }, []);
 

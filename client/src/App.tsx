@@ -10,7 +10,6 @@ import { useEffect } from "react";
 import api from "./configs/api";
 import { login, setLoading } from "./app/features/authSlice";
 import {Toaster} from 'react-hot-toast'
-import { MoonIcon } from "lucide-react";
 import LoginSuccess from "./pages/LoginSucess";
 
 
