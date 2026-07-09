@@ -1,19 +1,19 @@
 import mongoose from "mongoose";
 import "dotenv/config";
 
-let isConnected = false;
-
 const connectDB = async () => {
-    if (isConnected) return;
-    
+    if (mongoose.connection.readyState === 1) return; 
+
     const mongodbURI = process.env.MONGODB_URI;
-    
+
     if (!mongodbURI) {
         throw new Error("MONGODB_URI env not set");
     }
 
-    await mongoose.connect(`${mongodbURI}/resume-builder`);
-    isConnected = true;
+    await mongoose.connect(`${mongodbURI}/resume-builder`, {
+        serverSelectionTimeoutMS: 5000, 
+    });
+
     console.log("DB connected");
 };
 
