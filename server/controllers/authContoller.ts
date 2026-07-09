@@ -14,8 +14,13 @@ export const googleCallback = async (req: Request, res: Response) => {
     );
 
     res.redirect(`${FRONTEND_URL}/login-success?token=${token}`);
-  } catch (err) {
-    console.error('googleCallback error:', err);
-    res.redirect(`${FRONTEND_URL}/login?error=server_error=${encodeURIComponent(message)}`);
-  }
-};
+  }catch (err) {
+  console.error("googleCallback error:", err);
+
+  const message =
+    err instanceof Error ? err.message : "Unknown error";
+
+  return res.redirect(
+    `${FRONTEND_URL}/login?error=${encodeURIComponent(message)}`
+  );
+}
