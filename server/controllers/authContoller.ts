@@ -1,3 +1,5 @@
+import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
 const FRONTEND_URL = process.env.NODE_ENV === "production"
   ? "https://naqshresume.vercel.app"
   : "http://localhost:5173";
