@@ -16,7 +16,11 @@ The code base is open-source under the MIT license, with no ads or hidden costs.
 - Formatting support (bold , italics)
 - AI Integration for enhancing summary and job Description,gpt-4o-mini (yes I paid for it)
 - Professionally designed and ATS-friendly templates
-- dark mode and light mode to be added soon
+- Fully responsive, works on mobile too
+- No paywalls, no premium tier 
+- Multiple resumes per account, build as many as you want 
+
+
 
 ---
 
@@ -30,6 +34,7 @@ The code base is open-source under the MIT license, with no ads or hidden costs.
 | Runtime              |    Node.js             |
 | Styling          | TailwindCSS         |
 | AI model  | gpt-4o-mini  |
+| Deployment | Vercel
 
 ---
 ## Contributing
@@ -39,6 +44,8 @@ The code base is open-source under the MIT license, with no ads or hidden costs.
 4. Push to the Branch (git push origin feature/AmazingFeature)
 5. Open a Pull Request
 
+Bug reports and feature requests are welcome too 
+just open an issue
 Also consider starring repo :3 
 
 ## Local Development
@@ -49,6 +56,7 @@ To get a local copy up and running, follow these simple steps.
 
 * [Node.js](https://nodejs.org/) installed on your machine.
 * npm, yarn, or pnpm.
+
 
 ### Installation & Setup
 
