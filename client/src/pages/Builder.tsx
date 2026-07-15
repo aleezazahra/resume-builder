@@ -89,6 +89,7 @@ const sections = [
 
 const Builder = () => {
   const { resumeId } = useParams();
+  const isGuest = !resumeId;
 
   const [resumeData, setResumeData] = useState<ResumeStructure>(EMPTY_RESUME);
   const [loading, setLoading] = useState(true);
@@ -103,37 +104,35 @@ const Builder = () => {
   const isInitialized = useRef(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    if (!resumeId) return;
-    setLoading(true);
-    api
-      .get(`/api/resume/get/${resumeId}`)
-      .then(({ data }) => {
-        setResumeData((prev) => ({ ...prev, ...data.resume }));
-        document.title = data.resume.title || "Resume Builder";
-      })
-      .catch((error) => {
-  console.log(error.response?.data);
-
-  if (error.response?.status === 404) {
-    toast.error("Resume not found");
-  } else {
-    toast.error(
-      error.response?.data?.message ||
-      "Failed to load resume"
-    );
+useEffect(() => {
+  if (!resumeId) {
+    setLoading(false);
+    isInitialized.current = true;
+    return;
   }
-})
-      .finally(() => {
-        setLoading(false);
-    
-        setTimeout(() => { isInitialized.current = true; }, 0);
-      });
-  }, [resumeId]);
-
+  setLoading(true);
+  api
+    .get(`/api/resume/get/${resumeId}`)
+    .then(({ data }) => {
+      setResumeData((prev) => ({ ...prev, ...data.resume }));
+      document.title = data.resume.title || "Resume Builder";
+    })
+    .catch((error) => {
+      console.log(error.response?.data);
+      if (error.response?.status === 404) {
+        toast.error("Resume not found");
+      } else {
+        toast.error(error.response?.data?.message || "Failed to load resume");
+      }
+    })
+    .finally(() => {
+      setLoading(false);
+      setTimeout(() => { isInitialized.current = true; }, 0);
+    });
+}, [resumeId]);
  
   useEffect(() => {
-    if (!isInitialized.current || !resumeData._id) return;
+     if (isGuest || !isInitialized.current || !resumeData._id) return;
 
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = setTimeout(async () => {
@@ -229,6 +228,11 @@ const handlePrint = useCallback(() => {
     if (navigator.share) {
       try { await navigator.share({ title: "My Resume", text: "Check out my resume", url }); } catch {}
       return;
+    }
+    if(isGuest){
+      toast.error("login to get a shareable link")
+      return;
+
     }
     try {
       await navigator.clipboard.writeText(url);

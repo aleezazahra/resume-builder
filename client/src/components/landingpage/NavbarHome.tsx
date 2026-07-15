@@ -23,13 +23,8 @@ const NavbarHome = () => {
     <header className="fixed inset-x-0 top-0 z-50 px-4 md:px-8 pt-4">
       <nav
         className={`mx-auto flex max-w-7xl items-center justify-between rounded-md 
-          border transition-all duration-300
-        ${
-          scrolled
-            ? "border-white/15 bg-black/70 shadow-2xl backdrop-blur-2xl"
-            : "border-white/10 bg-white/5 backdrop-blur-xl"
-        }
-        px-6 py-3`}
+          transition-all duration-300 bg-black border-none
+       `}
       >
       
         <Link to="/" className="flex items-center">

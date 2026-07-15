@@ -53,7 +53,7 @@ const Hero = () => {
           <div className="relative h-[80px] sm:h-[95px] lg:h-[110px] flex items-center justify-center">
             <h1
               style={{ fontFamily: scripts[index].font }}
-              className={`text-5xl sm:text-6xl md:text-7xl lg:text-[90px] leading-none transition-opacity duration-300 ease-in-out ${
+              className={`text-5xl sm:text-6xlclassName="btn" md:text-7xl lg:text-[90px] leading-none transition-opacity duration-300 ease-in-out ${
                 visible ? "opacity-100" : "opacity-0"
               }`}
             >
@@ -71,17 +71,33 @@ const Hero = () => {
           professional resume in just a few minutes.
         </h2>
 
-        <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
+        <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4 ml-10">
           <Link to="/app">
             <button className="relative overflow-hidden btn group">
-              <span className="absolute inset-x-0 bottom-0 h-0 bg-white transition-all duration-300 ease-out group-hover:h-full"></span>
+              <span className="absolute inset-x-0 bottom-0 h-0 bg-white transition-all duration-300
+               ease-out group-hover:h-full"></span>
 
-              <span className="relative z-10 flex items-center justify-center gap-2 transition-colors duration-300 group-hover:text-black">
+              <span className="relative z-10 flex items-center justify-center gap-2 transition-colors 
+              duration-300 group-hover:text-black">
                 <ArrowRight size={20} />
                 Get Started
               </span>
             </button>
           </Link>
+              <span style={{fontFamily:"League Spartan"}}>or</span>
+             <Link to="/try">
+            <button className="relative overflow-hidden btn group">
+              <span className="absolute inset-x-0 bottom-0 h-0 bg-white transition-all duration-300
+               ease-out group-hover:h-full"></span>
+
+              <span className="relative z-10 flex items-center justify-center gap-2 transition-colors 
+              duration-300 group-hover:text-black">
+              
+                Create w/o creating an account
+              </span>
+            </button>
+          </Link>
+         
 
           
         </div>

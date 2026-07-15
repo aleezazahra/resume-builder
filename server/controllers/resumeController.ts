@@ -14,6 +14,14 @@ export const createResume = async (req, res) => {
   }
 };
 
+export const CreateResume_noacc= async(req, res)=>{
+  try{
+
+  }catch(error){
+    
+  }
+}
+
 export const getResumeById = async (req, res) => {
   try {
     const userId = req.userId;

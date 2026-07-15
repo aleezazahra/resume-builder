@@ -6,7 +6,7 @@ const router = express.Router();
 
 const FRONTEND_URL = process.env.NODE_ENV === "production"
   ? "https://naqshresume.vercel.app"
-  : "http://localhost:5173";
+  : "http://localhost:51733";
 
 
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));

@@ -11,6 +11,7 @@ import api from "./configs/api";
 import { login, setLoading } from "./app/features/authSlice";
 import {Toaster} from 'react-hot-toast'
 import LoginSuccess from "./pages/LoginSucess";
+import GuestBuilder from "./pages/GuestBuilder";
 
 
 const App = () => {
@@ -53,13 +54,14 @@ const App = () => {
     <Routes>
    
       <Route path="/" element={<Home />} />
+      <Route path="/try" element={<Builder/>} />
       
       
 
      
       <Route path="/app" element={<Layout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="builder/:resumeId" element={<Builder />} />
+      <Route index element={<Dashboard />} />
+       <Route path="builder/:resumeId" element={<Builder />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/login-success" element={<LoginSuccess />} />
