@@ -31,7 +31,7 @@ const NavbarHome = () => {
           <img
             src={Logo}
             alt="Naqsh"
-            className="h-14 w-auto object-contain"
+            className="h-14 ml-10 w-auto object-contain"
           />
         </Link>
 
