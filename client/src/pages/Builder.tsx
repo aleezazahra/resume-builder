@@ -18,6 +18,7 @@ import {
   Wrench,
   Building2Icon,
   Heart,
+  Home,
 } from "lucide-react";
 import toast from "react-hot-toast";
 import api from "../configs/api.ts"; 
@@ -260,22 +261,29 @@ const handlePrint = useCallback(() => {
 
       <header className="sticky top-0 z-20 bg-black border-b border-white/10 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center gap-4">
-          <Link
-            to="/app"
-            className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white transition-colors"
-          >
-            <ArrowLeft className="size-4" />
-            Dashboard
-          </Link>
-          <span className="text-white/20 select-none">|</span>
-          <h1 className="text-sm font-semibold text-white/80 truncate">
-            {resumeData.title || "Untitled Resume"}
-          </h1>
-     
-          {isSaving && (
-            <span className="ml-auto text-xs text-white/30 animate-pulse">Saving…</span>
-          )}
-        </div>
+  <Link
+    to="/app"
+    className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white transition-colors"
+  >
+    <ArrowLeft className="size-4" />
+    Dashboard
+  </Link>
+
+  <span className="text-white/20 select-none">|</span>
+  <h1 className="text-sm font-semibold text-white/80 truncate">
+    {resumeData.title || "Untitled Resume"}
+  </h1>
+
+  <div className="ml-auto flex items-center gap-4">
+    {isSaving && (
+      <span className="text-xs text-white/30 animate-pulse">Saving…</span>
+    )}
+    <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white transition-colors">
+      <Home size={20} />
+      <span>Home</span>
+    </Link>
+  </div>
+</div>
       </header>
 
       <div className="max-w-7xl mx-auto px-4 py-6">

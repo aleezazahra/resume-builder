@@ -12,6 +12,7 @@ The code base is open-source under the MIT license, with no ads or hidden costs.
 ## Features
 - Real-time preview
 - PDF export and shareable link
+- Mode for creating resume without sign-up
 - Custom sections for any content type
 - Formatting support (bold , italics)
 - AI Integration for enhancing summary and job Description,gpt-4o-mini (yes I paid for it)
