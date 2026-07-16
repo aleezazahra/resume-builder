@@ -121,14 +121,15 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                         </section>
                     )}
 
-                    {data.skills && data.skills.length > 0 && (
+                  {hasContent(data.skills) && (
                         <section className="mb-8">
-                            <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">SKILLS</h2>
-                            <ul className="space-y-1 text-sm">
-                                {data.skills.map((skill, index) => (
-                                    <li key={index}>{skill}</li>
-                                ))}
-                            </ul>
+                            <h2 className="text-sm font-semibold tracking-widest mb-3" style={{ color: accentColor }}>
+                                SKILLS
+                            </h2>
+                            <div
+                                className="text-zinc-700 leading-relaxed text-sm ql-editor !p-0"
+                                dangerouslySetInnerHTML={{ __html: data.professional_summary }}
+                            />
                         </section>
                     )}
 

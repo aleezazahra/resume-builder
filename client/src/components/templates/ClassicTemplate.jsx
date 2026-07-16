@@ -170,18 +170,15 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 </section>
             )}
 
-            {data.skills && data.skills.length > 0 && (
+             {hasContent(data.skills) && (
                 <section className="mb-6">
                     <h2 className="text-xl font-semibold mb-3" style={{ color: accentColor }}>
-                        CORE SKILLS
+                        SKILLS
                     </h2>
-                    <div className="flex gap-4 flex-wrap">
-                        {data.skills.map((skill, index) => (
-                            <div key={index} className="text-gray-700">
-                                • {skill}
-                            </div>
-                        ))}
-                    </div>
+                    <div
+                        className="text-gray-700 leading-relaxed ql-editor !p-0"
+                        dangerouslySetInnerHTML={{ __html: data.certifications }}
+                    />
                 </section>
             )}
 

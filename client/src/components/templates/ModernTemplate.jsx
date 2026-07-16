@@ -184,22 +184,15 @@ const ModernTemplate = ({ data, accentColor }) => {
                     )}
 
                     <div className="space-y-8">
-                        {data.skills && data.skills.length > 0 && (
-                            <section>
-                                <h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">Skills</h2>
-                                <div className="flex flex-wrap gap-2">
-                                    {data.skills.map((skill, index) => (
-                                        <span
-                                            key={index}
-                                            className="px-3 py-1 text-sm text-white rounded-full"
-                                            style={{ backgroundColor: accentColor }}
-                                        >
-                                            {skill}
-                                        </span>
-                                    ))}
-                                </div>
-                            </section>
-                        )}
+                       {hasContent(data.interests) && (
+                    <section className="mb-8">
+                        <div className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">Hobbies</div>
+                        <div
+                            className="text-gray-700 ql-editor !p-0"
+                            dangerouslySetInnerHTML={{ __html: data.interests }}
+                        />
+                    </section>
+                )}
 
                         {data.languages && data.languages.length > 0 && (
                             <section>

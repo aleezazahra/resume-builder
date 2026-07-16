@@ -113,16 +113,15 @@ const NexusTemplate = ({ data, accentColor }) => {
                     </section>
                 )}
 
-                {data.skills && data.skills.length > 0 && (
+                {hasContent(data.skills) && (
                     <section>
-                        <h2 className="text-sm uppercase tracking-wider font-bold mb-4 opacity-80">Skills</h2>
-                        <div className="flex flex-wrap gap-2">
-                            {data.skills.map((skill, i) => (
-                                <span key={i} className="text-xs px-2 py-1 rounded-full bg-white/20">
-                                    {skill}
-                                </span>
-                            ))}
-                        </div>
+                        <h2 className="text-xl font-semibold mb-3" style={{ color: accentColor }}>
+                            SKILLS
+                        </h2>
+                        <div
+                            className="text-gray-700 leading-relaxed text-sm break-words min-w-0 w-full ql-editor !p-0"
+                            dangerouslySetInnerHTML={{ __html: data.professional_summary }}
+                        />
                     </section>
                 )}
             </aside>

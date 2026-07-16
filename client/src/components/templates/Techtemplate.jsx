@@ -232,33 +232,23 @@ const TechTemplate = ({ data, accentColor }) => {
         </section>
       )}
 
-      {data.skills?.length > 0 && (
+       {hasContent(data.skills) && (
         <section className="mb-6">
           <h2
-            className="font-bold border-b border-gray-300 mb-3"
+            className="font-bold border-b border-gray-300 mb-2"
             style={{ color: accentColor }}
           >
             Skills
           </h2>
 
-          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-            {data.skills.map((cat, i) => (
-              <div key={i}>
-                <h3 className="font-semibold text-gray-800">
-                  {cat.name}
-                </h3>
-
-                <p className="text-gray-700 leading-tight">
-                  {Array.isArray(cat.items)
-                    ? cat.items.join(", ")
-                    : cat.items}
-                </p>
-              </div>
-            ))}
-          </div>
+          <div
+            className="leading-relaxed ql-editor !p-0"
+            dangerouslySetInnerHTML={{
+              __html: data.interests,
+            }}
+          />
         </section>
       )}
-
       {data.languages?.length > 0 && (
         <section>
           <h2

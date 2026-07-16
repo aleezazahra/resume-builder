@@ -182,14 +182,15 @@ const MinimalTemplate = ({ data, accentColor }) => {
             )}
 
             {/* Fixed: Mapping skill objects instead of joining directly */}
-            {data.skills && data.skills.length > 0 && (
+           {hasContent(data.skills) && (
                 <section className="mb-10">
                     <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
                         Skills
                     </h2>
-                    <div className="text-gray-700">
-                        {data.skills.map(s => (typeof s === 'string' ? s : s.name)).join(" • ")}
-                    </div>
+                    <div
+                        className="text-gray-700 ql-editor !p-0"
+                        dangerouslySetInnerHTML={{ __html: data.certifications }}
+                    />
                 </section>
             )}
 
