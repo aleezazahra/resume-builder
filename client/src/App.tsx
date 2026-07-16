@@ -11,7 +11,6 @@ import api from "./configs/api";
 import { login, setLoading } from "./app/features/authSlice";
 import {Toaster} from 'react-hot-toast'
 import LoginSuccess from "./pages/LoginSucess";
-import GuestBuilder from "./pages/GuestBuilder";
 
 
 const App = () => {
