@@ -6,9 +6,15 @@ const normalizeUrl = (url) => {
     return /^https?:\/\//i.test(url) ? url : `https://${url}`;
 };
 
-const hasContent = (html) => html && html.replace(/<[^>]*>/g, "").trim().length > 0;
+// Safe content check
+const hasContent = (html) => {
+    if (typeof html !== "string") return false;
+    return html.replace(/<[^>]*>/g, "").trim().length > 0;
+};
 
 const ModernTemplate = ({ data, accentColor }) => {
+    if (!data) return <div className="p-10 text-center">Loading...</div>;
+
     const formatDate = (dateStr) => {
         if (!dateStr) return "";
         const [year, month] = dateStr.split("-");
@@ -21,75 +27,39 @@ const ModernTemplate = ({ data, accentColor }) => {
     return (
         <div className="max-w-4xl mx-auto bg-white text-gray-800">
             <header className="p-8 text-white" style={{ backgroundColor: accentColor }}>
-                <h1 className="text-4xl font-light mb-1">
-                    {data.personal_info?.full_name || "Your Name"}
-                </h1>
-                {data.personal_info?.title && (
-                    <p className="text-white/90 mb-3">{data.personal_info.title}</p>
-                )}
+                <h1 className="text-4xl font-light mb-1">{data.personal_info?.full_name || "Your Name"}</h1>
+                {data.personal_info?.title && <p className="text-white/90 mb-3">{data.personal_info.title}</p>}
+                
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
                     {data.personal_info?.email && (
-                        <div className="flex items-center gap-2">
-                            <Mail className="size-4 shrink-0" />
-                            <span>{data.personal_info.email}</span>
-                        </div>
+                        <div className="flex items-center gap-2"><Mail className="size-4 shrink-0" /><span>{data.personal_info.email}</span></div>
                     )}
                     {data.personal_info?.phone && (
-                        <div className="flex items-center gap-2">
-                            <Phone className="size-4 shrink-0" />
-                            <span>{data.personal_info.phone}</span>
-                        </div>
+                        <div className="flex items-center gap-2"><Phone className="size-4 shrink-0" /><span>{data.personal_info.phone}</span></div>
                     )}
                     {data.personal_info?.location && (
-                        <div className="flex items-center gap-2">
-                            <MapPin className="size-4 shrink-0" />
-                            <span>{data.personal_info.location}</span>
-                        </div>
+                        <div className="flex items-center gap-2"><MapPin className="size-4 shrink-0" /><span>{data.personal_info.location}</span></div>
                     )}
                     {data.personal_info?.website && (
-                        <a target="_blank" href={data.personal_info.website} className="flex items-center gap-2">
+                        <a target="_blank" href={normalizeUrl(data.personal_info.website)} className="flex items-center gap-2">
                             <Globe className="size-4 shrink-0" />
-                            <span className="break-all text-xs">
-                                {data.personal_info.website.replace(/^https?:\/\//, "")}
-                            </span>
+                            <span className="break-all text-xs">{data.personal_info.website.replace(/^https?:\/\//, "")}</span>
                         </a>
                     )}
                 </div>
-                {data.socials && data.socials.length > 0 && (
-                    <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm mt-3 pt-3 border-t border-white/30">
-                        {data.socials.map((social, index) => {
-                            const platform = SOCIAL_PLATFORMS.find((p) => p.id === social.platform);
-                            return (
-                                <a
-                                    key={index}
-                                    href={normalizeUrl(social.url)}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center gap-2 hover:underline"
-                                >
-                                    <span className="flex items-center justify-center shrink-0 size-4 [&>svg]:w-full [&>svg]:h-full">
-                                        {platform?.icon}
-                                    </span>
-                                    <span>{social.label}</span>
-                                </a>
-                            );
-                        })}
-                    </div>
-                )}
             </header>
 
             <div className="p-8">
+                {/* Summary */}
                 {hasContent(data.professional_summary) && (
                     <section className="mb-8">
                         <div className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">Summary</div>
-                        <div
-                            className="text-gray-700 ql-editor !p-0"
-                            dangerouslySetInnerHTML={{ __html: data.professional_summary }}
-                        />
+                        <div className="text-gray-700 ql-editor !p-0" dangerouslySetInnerHTML={{ __html: data.professional_summary }} />
                     </section>
                 )}
 
-                {data.experience && data.experience.length > 0 && (
+                {/* Experience */}
+                {data.experience?.length > 0 && (
                     <section className="mb-8">
                         <h2 className="text-2xl font-light mb-6 pb-2 border-b border-gray-200">Experience</h2>
                         <div className="space-y-6">
@@ -101,107 +71,53 @@ const ModernTemplate = ({ data, accentColor }) => {
                                             <p className="font-medium" style={{ color: accentColor }}>{exp.company}</p>
                                         </div>
                                         <div className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded">
-                                            {formatDate(exp.start_date)} -{" "}
-                                            {exp.is_current ? "Present" : formatDate(exp.end_date)}
+                                            {formatDate(exp.start_date)} - {exp.is_current ? "Present" : formatDate(exp.end_date)}
                                         </div>
                                     </div>
-                                    {exp.description && (
-                                        <div className="text-gray-700 leading-relaxed mt-3 whitespace-pre-line">
-                                            {exp.description}
-                                        </div>
-                                    )}
+                                    {exp.description && <div className="text-gray-700 mt-3 whitespace-pre-line">{exp.description}</div>}
                                 </div>
                             ))}
                         </div>
                     </section>
                 )}
 
-                {data.project && data.project.length > 0 && (
+                {/* Skills */}
+                {hasContent(data.skills) && (
                     <section className="mb-8">
-                        <h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">Projects</h2>
-                        <div className="space-y-6">
-                            {data.project.map((p, index) => (
-                                <div key={index} className="relative pl-6 border-l border-gray-200" style={{ borderLeftColor: accentColor }}>
-                                    <h3 className="text-lg font-medium text-gray-900">{p.name}</h3>
-                                    {p.description && (
-                                        <div className="text-gray-700 leading-relaxed text-sm mt-2">{p.description}</div>
-                                    )}
-                                    {p.link && (
-                                        <a
-                                            href={p.link.startsWith("http") ? p.link : `https://${p.link}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-blue-500 underline text-sm mt-2 block"
-                                        >
-                                            {p.link}
-                                        </a>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
+                        <div className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">Skills</div>
+                        <div className="text-gray-700 ql-editor !p-0" dangerouslySetInnerHTML={{ __html: data.skills }} />
                     </section>
                 )}
 
-                {hasContent(data.certifications) && (
-                    <section className="mb-8">
-                        <div className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">Certifications</div>
-                        <div
-                            className="text-gray-700 ql-editor !p-0"
-                            dangerouslySetInnerHTML={{ __html: data.certifications }}
-                        />
-                    </section>
-                )}
-
-                {hasContent(data.interests) && (
-                    <section className="mb-8">
-                        <div className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">Hobbies</div>
-                        <div
-                            className="text-gray-700 ql-editor !p-0"
-                            dangerouslySetInnerHTML={{ __html: data.interests }}
-                        />
-                    </section>
-                )}
-
+                {/* Footer Grid */}
                 <div className="grid sm:grid-cols-2 gap-8">
-                    {data.education && data.education.length > 0 && (
+                    {data.education?.length > 0 && (
                         <section>
                             <h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">Education</h2>
-                            <div className="space-y-4">
-                                {data.education.map((edu, index) => (
-                                    <div key={index}>
-                                        <h3 className="font-semibold text-gray-900">
-                                            {edu.degree} {edu.field && `in ${edu.field}`}
-                                        </h3>
-                                        <p style={{ color: accentColor }}>{edu.institution}</p>
-                                        <div className="flex justify-between items-center text-sm text-gray-600">
-                                            <span>{formatDate(edu.graduation_date)}</span>
-                                            {edu.gpa && <span>GPA: {edu.gpa}</span>}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+                            {data.education.map((edu, index) => (
+                                <div key={index} className="mb-4">
+                                    <h3 className="font-semibold text-gray-900">{edu.degree}</h3>
+                                    <p style={{ color: accentColor }}>{edu.institution}</p>
+                                    <span className="text-sm text-gray-500">{formatDate(edu.graduation_date)}</span>
+                                </div>
+                            ))}
                         </section>
                     )}
 
                     <div className="space-y-8">
-                       {hasContent(data.interests) && (
-                    <section className="mb-8">
-                        <div className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">Hobbies</div>
-                        <div
-                            className="text-gray-700 ql-editor !p-0"
-                            dangerouslySetInnerHTML={{ __html: data.interests }}
-                        />
-                    </section>
-                )}
-
-                        {data.languages && data.languages.length > 0 && (
+                        {hasContent(data.certifications) && (
+                            <section>
+                                <h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">Certifications</h2>
+                                <div className="text-sm text-gray-700" dangerouslySetInnerHTML={{ __html: data.certifications }} />
+                            </section>
+                        )}
+                        {data.languages?.length > 0 && (
                             <section>
                                 <h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">Languages</h2>
                                 <div className="flex flex-wrap gap-2">
                                     {data.languages.map((lang, index) => (
                                         <span key={index} className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full">
-                                            {lang.name}
-                                            {lang.level && <span className="text-gray-500"> · {lang.level}</span>}
+                                            {lang.name} {lang.level && `· ${lang.level}`}
                                         </span>
                                     ))}
                                 </div>
