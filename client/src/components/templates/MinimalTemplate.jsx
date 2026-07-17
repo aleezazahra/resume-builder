@@ -31,10 +31,10 @@ const MinimalTemplate = ({ data, accentColor }) => {
           {data.personal_info?.full_name || "Your Name"}
         </h1>
         <div className="flex flex-wrap gap-6 text-sm text-gray-600">
+          {data.personal_info?.title && <span>{data.personal_info.title}</span>}
           {data.personal_info?.email && <span>{data.personal_info.email}</span>}
           {data.personal_info?.phone && <span>{data.personal_info.phone}</span>}
           {data.personal_info?.location && <span>{data.personal_info.location}</span>}
-          {data.personal_info?.title && <span>{data.personal_info.title}</span>}
           {data.personal_info?.website && (
             
             <a  href={normalizeUrl(data.personal_info.website)}
@@ -47,12 +47,11 @@ const MinimalTemplate = ({ data, accentColor }) => {
           )}
         </div>
 
-        {data.personal_info?.socials?.length > 0 && (
+        {data.socials?.length > 0 && (
           <div className="flex flex-wrap gap-4 text-sm text-gray-600 mt-2">
-            {data.personal_info.socials.map((social, index) => {
-              const platform = SOCIAL_PLATFORMS.find((p) => p.key === social.platform);
+            {data.socials.map((social, index) => {
+              const platform = SOCIAL_PLATFORMS.find((p) => p.id === social.platform);
               if (!platform || !social.url) return null;
-              const Icon = platform.icon;
               return (
                 
                 <a  key={index}
@@ -61,8 +60,8 @@ const MinimalTemplate = ({ data, accentColor }) => {
                   rel="noopener noreferrer"
                   className="flex items-center gap-1 hover:underline"
                 >
-                  {Icon && <Icon size={14} style={{ color: accentColor }} />}
-                  {social.url}
+                  <span style={{ color: accentColor }}>{platform.icon}</span>
+                  {social.label}
                 </a>
               );
             })}
@@ -71,10 +70,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
 
         {hasContent(data.professional_summary) && (
           <section className="mt-8 mb-4">
-            <h2
-              className="text-sm uppercase tracking-widest mb-4 font-medium"
-              style={{ color: accentColor }}
-            >
+            <h2 className="text-sm uppercase tracking-widest mb-4 font-medium" style={{ color: accentColor }}>
               Summary
             </h2>
             <div
@@ -87,10 +83,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
 
       {data.experience?.length > 0 && (
         <section className="mb-10">
-          <h2
-            className="text-sm uppercase tracking-widest mb-6 font-medium"
-            style={{ color: accentColor }}
-          >
+          <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
             Experience
           </h2>
           <div className="space-y-6">
@@ -115,10 +108,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
 
       {data.education?.length > 0 && (
         <section className="mb-10">
-          <h2
-            className="text-sm uppercase tracking-widest mb-6 font-medium"
-            style={{ color: accentColor }}
-          >
+          <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
             Education
           </h2>
           <div className="space-y-6">
@@ -142,38 +132,26 @@ const MinimalTemplate = ({ data, accentColor }) => {
         </section>
       )}
 
-      {data.projects?.length > 0 && (
+      {data.project?.length > 0 && (
         <section className="mb-10">
-          <h2
-            className="text-sm uppercase tracking-widest mb-6 font-medium"
-            style={{ color: accentColor }}
-          >
+          <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
             Projects
           </h2>
           <div className="space-y-6">
-            {data.projects.map((proj, index) => (
+            {data.project.map((proj, index) => (
               <div key={index}>
                 <div className="flex justify-between items-baseline mb-1">
                   <h3 className="text-lg font-medium">{proj.name}</h3>
                   {proj.link && (
-                    
-                   <a  href={normalizeUrl(proj.link)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm hover:underline"
-                    >
+                    <a href={normalizeUrl(proj.link)} target="_blank" rel="noopener noreferrer" className="text-sm hover:underline">
                       Link
                     </a>
                   )}
                 </div>
-                {proj.description && (
-                  <p className="text-gray-700">{proj.description}</p>
-                )}
+                {proj.description && <p className="text-gray-700">{proj.description}</p>}
                 {proj.technologies && (
                   <p className="text-sm text-gray-500 mt-1">
-                    {Array.isArray(proj.technologies)
-                      ? proj.technologies.join(", ")
-                      : proj.technologies}
+                    {Array.isArray(proj.technologies) ? proj.technologies.join(", ") : proj.technologies}
                   </p>
                 )}
               </div>
@@ -184,10 +162,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
 
       {hasContent(data.skills) && (
         <section className="mb-10">
-          <h2
-            className="text-sm uppercase tracking-widest mb-6 font-medium"
-            style={{ color: accentColor }}
-          >
+          <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
             Skills
           </h2>
           <div
@@ -197,12 +172,25 @@ const MinimalTemplate = ({ data, accentColor }) => {
         </section>
       )}
 
+      {data.languages?.length > 0 && (
+        <section className="mb-10">
+          <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
+            Languages
+          </h2>
+          <div className="flex flex-wrap gap-x-6 gap-y-1 text-gray-700">
+            {data.languages.map((lang, index) => (
+              <span key={index}>
+                {lang.name}
+                {lang.level ? ` — ${lang.level}` : ""}
+              </span>
+            ))}
+          </div>
+        </section>
+      )}
+
       {hasContent(data.certifications) && (
         <section className="mb-10">
-          <h2
-            className="text-sm uppercase tracking-widest mb-6 font-medium"
-            style={{ color: accentColor }}
-          >
+          <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
             Certificates and Awards
           </h2>
           <div
@@ -214,10 +202,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
 
       {hasContent(data.interests) && (
         <section className="mb-10">
-          <h2
-            className="text-sm uppercase tracking-widest mb-6 font-medium"
-            style={{ color: accentColor }}
-          >
+          <h2 className="text-sm uppercase tracking-widest mb-6 font-medium" style={{ color: accentColor }}>
             Hobbies and Interests
           </h2>
           <div

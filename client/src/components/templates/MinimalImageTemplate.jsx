@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Globe } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { SOCIAL_PLATFORMS } from "../Home/AddSocials";
 
 const normalizeUrl = (url) => {
@@ -18,10 +18,10 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
     if (!dateStr) return "";
     const parts = dateStr.split("-");
     if (parts.length < 2) return dateStr;
-    return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1).toLocaleDateString(
-      "en-US",
-      { year: "numeric", month: "short" }
-    );
+    return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+    });
   };
 
   return (
@@ -48,17 +48,13 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
             {data.personal_info?.full_name || "Your Name"}
           </h1>
           {data.personal_info?.title && (
-            <p className="text-zinc-500 tracking-wide mt-2">
-              {data.personal_info.title}
-            </p>
+            <p className="text-zinc-500 tracking-wide mt-2">{data.personal_info.title}</p>
           )}
         </div>
 
         <aside className="col-span-1 border-r border-zinc-400 p-6 pt-0">
           <section className="mb-8">
-            <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
-              CONTACT
-            </h2>
+            <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">CONTACT</h2>
             <div className="space-y-2 text-sm">
               {data.personal_info?.phone && (
                 <div className="flex items-center gap-2">
@@ -80,28 +76,24 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
               )}
               {data.personal_info?.website && (
                 
-               <a   href={normalizeUrl(data.personal_info.website)}
+                <a  href={normalizeUrl(data.personal_info.website)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2"
+                  className="break-all"
                 >
-                  <Globe size={14} style={{ color: accentColor }} />
-                  <span className="break-all">{data.personal_info.website}</span>
+                  {data.personal_info.website}
                 </a>
               )}
             </div>
           </section>
 
-          {data.personal_info?.socials?.length > 0 && (
+          {data.socials?.length > 0 && (
             <section className="mb-8">
-              <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
-                SOCIALS
-              </h2>
+              <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">SOCIALS</h2>
               <div className="space-y-2 text-sm">
-                {data.personal_info.socials.map((social, index) => {
-                  const platform = SOCIAL_PLATFORMS.find((p) => p.key === social.platform);
+                {data.socials.map((social, index) => {
+                  const platform = SOCIAL_PLATFORMS.find((p) => p.id === social.platform);
                   if (!platform || !social.url) return null;
-                  const Icon = platform.icon;
                   return (
                     
                     <a  key={index}
@@ -110,8 +102,8 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                       rel="noopener noreferrer"
                       className="flex items-center gap-2"
                     >
-                      {Icon && <Icon size={14} style={{ color: accentColor }} />}
-                      <span className="break-all">{social.url}</span>
+                      <span style={{ color: accentColor }}>{platform.icon}</span>
+                      <span className="break-all">{social.label}</span>
                     </a>
                   );
                 })}
@@ -121,10 +113,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
 
           {hasContent(data.skills) && (
             <section className="mb-8">
-              <h2
-                className="text-sm font-semibold tracking-widest mb-3"
-                style={{ color: accentColor }}
-              >
+              <h2 className="text-sm font-semibold tracking-widest mb-3" style={{ color: accentColor }}>
                 SKILLS
               </h2>
               <div
@@ -134,12 +123,25 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
             </section>
           )}
 
+          {data.languages?.length > 0 && (
+            <section className="mb-8">
+              <h2 className="text-sm font-semibold tracking-widest mb-3" style={{ color: accentColor }}>
+                LANGUAGES
+              </h2>
+              <div className="space-y-1 text-sm text-zinc-700">
+                {data.languages.map((lang, index) => (
+                  <p key={index}>
+                    {lang.name}
+                    {lang.level ? ` — ${lang.level}` : ""}
+                  </p>
+                ))}
+              </div>
+            </section>
+          )}
+
           {hasContent(data.certifications) && (
             <section className="mb-8">
-              <h2
-                className="text-sm font-semibold tracking-widest mb-3"
-                style={{ color: accentColor }}
-              >
+              <h2 className="text-sm font-semibold tracking-widest mb-3" style={{ color: accentColor }}>
                 CERTIFICATIONS
               </h2>
               <div
@@ -151,10 +153,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
 
           {hasContent(data.interests) && (
             <section className="mb-8">
-              <h2
-                className="text-sm font-semibold tracking-widest mb-3"
-                style={{ color: accentColor }}
-              >
+              <h2 className="text-sm font-semibold tracking-widest mb-3" style={{ color: accentColor }}>
                 INTERESTS
               </h2>
               <div
@@ -168,10 +167,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
         <main className="col-span-2 p-8 pt-0">
           {hasContent(data.professional_summary) && (
             <section className="mb-8">
-              <h2
-                className="text-sm font-semibold tracking-widest mb-3"
-                style={{ color: accentColor }}
-              >
+              <h2 className="text-sm font-semibold tracking-widest mb-3" style={{ color: accentColor }}>
                 SUMMARY
               </h2>
               <div
@@ -183,10 +179,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
 
           {data.experience?.length > 0 && (
             <section className="mb-8">
-              <h2
-                className="text-sm font-semibold tracking-widest mb-4"
-                style={{ color: accentColor }}
-              >
+              <h2 className="text-sm font-semibold tracking-widest mb-4" style={{ color: accentColor }}>
                 EXPERIENCE
               </h2>
               <div className="space-y-4">
@@ -201,9 +194,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     </div>
                     <p className="text-sm text-zinc-600 mb-1">{exp.company}</p>
                     {exp.description && (
-                      <p className="text-sm text-zinc-700 whitespace-pre-line">
-                        {exp.description}
-                      </p>
+                      <p className="text-sm text-zinc-700 whitespace-pre-line">{exp.description}</p>
                     )}
                   </div>
                 ))}
@@ -213,10 +204,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
 
           {data.education?.length > 0 && (
             <section className="mb-8">
-              <h2
-                className="text-sm font-semibold tracking-widest mb-4"
-                style={{ color: accentColor }}
-              >
+              <h2 className="text-sm font-semibold tracking-widest mb-4" style={{ color: accentColor }}>
                 EDUCATION
               </h2>
               <div className="space-y-4">
@@ -233,25 +221,20 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                       </span>
                     </div>
                     <p className="text-sm text-zinc-600">{edu.institution}</p>
-                    {edu.gpa && (
-                      <p className="text-sm text-zinc-500">GPA: {edu.gpa}</p>
-                    )}
+                    {edu.gpa && <p className="text-sm text-zinc-500">GPA: {edu.gpa}</p>}
                   </div>
                 ))}
               </div>
             </section>
           )}
 
-          {data.projects?.length > 0 && (
+          {data.project?.length > 0 && (
             <section className="mb-8">
-              <h2
-                className="text-sm font-semibold tracking-widest mb-4"
-                style={{ color: accentColor }}
-              >
+              <h2 className="text-sm font-semibold tracking-widest mb-4" style={{ color: accentColor }}>
                 PROJECTS
               </h2>
               <div className="space-y-4">
-                {data.projects.map((proj, index) => (
+                {data.project.map((proj, index) => (
                   <div key={index}>
                     <div className="flex justify-between items-baseline">
                       <h3 className="font-semibold text-zinc-800">{proj.name}</h3>
@@ -272,9 +255,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     )}
                     {proj.technologies && (
                       <p className="text-xs text-zinc-500 mt-1">
-                        {Array.isArray(proj.technologies)
-                          ? proj.technologies.join(", ")
-                          : proj.technologies}
+                        {Array.isArray(proj.technologies) ? proj.technologies.join(", ") : proj.technologies}
                       </p>
                     )}
                   </div>

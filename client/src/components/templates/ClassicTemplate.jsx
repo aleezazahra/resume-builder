@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Globe } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { SOCIAL_PLATFORMS } from "../Home/AddSocials";
 
 const normalizeUrl = (url) => {
@@ -30,9 +30,12 @@ const ClassicTemplate = ({ data, accentColor }) => {
         className="text-center mb-8 pb-6 border-b-2"
         style={{ borderColor: accentColor }}
       >
-        <h1 className="text-3xl font-bold mb-2" style={{ color: accentColor }}>
+        <h1 className="text-3xl font-bold mb-1" style={{ color: accentColor }}>
           {data.personal_info?.full_name || "Your Name"}
         </h1>
+        {data.personal_info?.title && (
+          <p className="text-gray-600 font-medium mb-3">{data.personal_info.title}</p>
+        )}
 
         <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm text-gray-600">
           {data.personal_info?.email && (
@@ -54,34 +57,27 @@ const ClassicTemplate = ({ data, accentColor }) => {
             </span>
           )}
           {data.personal_info?.website && (
-            
-             <a href={normalizeUrl(data.personal_info.website)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1"
-            >
-              <Globe size={14} style={{ color: accentColor }} />
+            <a href={normalizeUrl(data.personal_info.website)} target="_blank" rel="noopener noreferrer">
               {data.personal_info.website}
             </a>
           )}
         </div>
 
-        {data.personal_info?.socials?.length > 0 && (
-          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm text-gray-600 mt-1">
-            {data.personal_info.socials.map((social, index) => {
-              const platform = SOCIAL_PLATFORMS.find((p) => p.key === social.platform);
+        {data.socials?.length > 0 && (
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm text-gray-600 mt-2">
+            {data.socials.map((social, index) => {
+              const platform = SOCIAL_PLATFORMS.find((p) => p.id === social.platform);
               if (!platform || !social.url) return null;
-              const Icon = platform.icon;
               return (
                 
-                <a  key={index}
-                  href={normalizeUrl(social.url)}
+              <a    key={index}
+                 href={normalizeUrl(social.url)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-1"
                 >
-                  {Icon && <Icon size={14} style={{ color: accentColor }} />}
-                  {social.url}
+                  <span style={{ color: accentColor }}>{platform.icon}</span>
+                  {social.label}
                 </a>
               );
             })}
@@ -108,11 +104,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
           </h2>
           <div className="space-y-4">
             {data.experience.map((exp, index) => (
-              <div
-                key={index}
-                className="border-l-2 pl-4"
-                style={{ borderColor: accentColor }}
-              >
+              <div key={index} className="border-l-2 pl-4" style={{ borderColor: accentColor }}>
                 <div className="flex justify-between items-start mb-2">
                   <div>
                     <h3 className="font-semibold text-gray-900">{exp.position}</h3>
@@ -143,11 +135,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
           </h2>
           <div className="space-y-4">
             {data.education.map((edu, index) => (
-              <div
-                key={index}
-                className="border-l-2 pl-4"
-                style={{ borderColor: accentColor }}
-              >
+              <div key={index} className="border-l-2 pl-4" style={{ borderColor: accentColor }}>
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="font-semibold text-gray-900">
@@ -155,9 +143,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                       {edu.field_of_study ? `, ${edu.field_of_study}` : ""}
                     </h3>
                     <p className="text-gray-700 font-medium">{edu.institution}</p>
-                    {edu.gpa && (
-                      <p className="text-sm text-gray-600">GPA: {edu.gpa}</p>
-                    )}
+                    {edu.gpa && <p className="text-sm text-gray-600">GPA: {edu.gpa}</p>}
                   </div>
                   <div className="text-right text-sm text-gray-600">
                     <p>
@@ -172,18 +158,14 @@ const ClassicTemplate = ({ data, accentColor }) => {
         </section>
       )}
 
-      {data.projects?.length > 0 && (
+      {data.project?.length > 0 && (
         <section className="mb-6">
           <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
             PROJECTS
           </h2>
           <div className="space-y-4">
-            {data.projects.map((proj, index) => (
-              <div
-                key={index}
-                className="border-l-2 pl-4"
-                style={{ borderColor: accentColor }}
-              >
+            {data.project.map((proj, index) => (
+              <div key={index} className="border-l-2 pl-4" style={{ borderColor: accentColor }}>
                 <div className="flex justify-between items-start">
                   <h3 className="font-semibold text-gray-900">{proj.name}</h3>
                   {proj.link && (
@@ -203,9 +185,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                 )}
                 {proj.technologies && (
                   <p className="text-sm text-gray-500 mt-1">
-                    {Array.isArray(proj.technologies)
-                      ? proj.technologies.join(", ")
-                      : proj.technologies}
+                    {Array.isArray(proj.technologies) ? proj.technologies.join(", ") : proj.technologies}
                   </p>
                 )}
               </div>
@@ -223,6 +203,23 @@ const ClassicTemplate = ({ data, accentColor }) => {
             className="text-gray-700 leading-relaxed ql-editor !p-0"
             dangerouslySetInnerHTML={{ __html: data.skills }}
           />
+        </section>
+      )}
+
+      {data.languages?.length > 0 && (
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-3" style={{ color: accentColor }}>
+            LANGUAGES
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {data.languages.map((lang, index) => (
+              <span key={index} className="text-sm text-gray-700">
+                {lang.name}
+                {lang.level ? ` (${lang.level})` : ""}
+                {index < data.languages.length - 1 ? " ·" : ""}
+              </span>
+            ))}
+          </div>
         </section>
       )}
 
