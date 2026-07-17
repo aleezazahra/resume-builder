@@ -80,7 +80,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
               )}
               {data.personal_info?.website && (
                 
-                  <a href={normalizeUrl(data.personal_info.website)}
+               <a   href={normalizeUrl(data.personal_info.website)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2"
@@ -104,7 +104,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                   const Icon = platform.icon;
                   return (
                     
-                     <a key={index}
+                    <a  key={index}
                       href={normalizeUrl(social.url)}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -233,6 +233,50 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                       </span>
                     </div>
                     <p className="text-sm text-zinc-600">{edu.institution}</p>
+                    {edu.gpa && (
+                      <p className="text-sm text-zinc-500">GPA: {edu.gpa}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {data.projects?.length > 0 && (
+            <section className="mb-8">
+              <h2
+                className="text-sm font-semibold tracking-widest mb-4"
+                style={{ color: accentColor }}
+              >
+                PROJECTS
+              </h2>
+              <div className="space-y-4">
+                {data.projects.map((proj, index) => (
+                  <div key={index}>
+                    <div className="flex justify-between items-baseline">
+                      <h3 className="font-semibold text-zinc-800">{proj.name}</h3>
+                      {proj.link && (
+                        
+                       <a   href={normalizeUrl(proj.link)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs underline"
+                          style={{ color: accentColor }}
+                        >
+                          Link
+                        </a>
+                      )}
+                    </div>
+                    {proj.description && (
+                      <p className="text-sm text-zinc-700 mt-1">{proj.description}</p>
+                    )}
+                    {proj.technologies && (
+                      <p className="text-xs text-zinc-500 mt-1">
+                        {Array.isArray(proj.technologies)
+                          ? proj.technologies.join(", ")
+                          : proj.technologies}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>

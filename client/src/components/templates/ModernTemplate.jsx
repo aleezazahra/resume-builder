@@ -56,7 +56,7 @@ const ModernTemplate = ({ data, accentColor }) => {
           )}
           {data.personal_info?.website && (
             
-             <a target="_blank"
+              <a target="_blank"
               rel="noopener noreferrer"
               href={normalizeUrl(data.personal_info.website)}
               className="flex items-center gap-2"
@@ -73,7 +73,7 @@ const ModernTemplate = ({ data, accentColor }) => {
             const Icon = platform.icon;
             return (
               
-               <a key={index}
+              <a  key={index}
                 target="_blank"
                 rel="noopener noreferrer"
                 href={normalizeUrl(social.url)}
@@ -131,6 +131,44 @@ const ModernTemplate = ({ data, accentColor }) => {
           </section>
         )}
 
+        {data.projects?.length > 0 && (
+          <section className="mb-8">
+            <h2 className="text-2xl font-light mb-6 pb-2 border-b border-gray-200">
+              Projects
+            </h2>
+            <div className="space-y-6">
+              {data.projects.map((proj, index) => (
+                <div key={index} className="relative pl-6 border-l border-gray-200">
+                  <div className="flex justify-between items-start mb-1">
+                    <h3 className="text-xl font-medium text-gray-900">{proj.name}</h3>
+                    {proj.link && (
+                      
+                    <a    href={normalizeUrl(proj.link)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm underline"
+                        style={{ color: accentColor }}
+                      >
+                        Link
+                      </a>
+                    )}
+                  </div>
+                  {proj.description && (
+                    <p className="text-gray-700 mt-1">{proj.description}</p>
+                  )}
+                  {proj.technologies && (
+                    <p className="text-sm text-gray-500 mt-1">
+                      {Array.isArray(proj.technologies)
+                        ? proj.technologies.join(", ")
+                        : proj.technologies}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {hasContent(data.skills) && (
           <section className="mb-8">
             <div className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
@@ -168,10 +206,13 @@ const ModernTemplate = ({ data, accentColor }) => {
                     {edu.field_of_study ? `, ${edu.field_of_study}` : ""}
                   </h3>
                   <p style={{ color: accentColor }}>{edu.institution}</p>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-gray-500 block">
                     {formatDate(edu.start_date)} -{" "}
                     {edu.is_current ? "Present" : formatDate(edu.end_date)}
                   </span>
+                  {edu.gpa && (
+                    <span className="text-sm text-gray-500 block">GPA: {edu.gpa}</span>
+                  )}
                 </div>
               ))}
             </section>

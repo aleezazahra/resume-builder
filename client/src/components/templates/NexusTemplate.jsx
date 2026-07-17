@@ -186,22 +186,47 @@ const NexusTemplate = ({ data, accentColor }) => {
                     {formatDate(edu.start_date)} –{" "}
                     {edu.is_current ? "Present" : formatDate(edu.end_date)}
                   </p>
+                  {edu.gpa && (
+                    <p className="text-xs text-gray-500">GPA: {edu.gpa}</p>
+                  )}
                 </div>
               ))}
             </div>
           </section>
         )}
 
-        {data.project?.length > 0 && (
+        {data.projects?.length > 0 && (
           <section>
             <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
               PROJECTS
             </h2>
             <div className="space-y-3">
-              {data.project.map((proj, i) => (
+              {data.projects.map((proj, i) => (
                 <div key={i} className="border-l-2 border-gray-300 pl-4">
-                  <p className="font-semibold text-gray-800 text-sm">{proj.name}</p>
-                  <p className="text-gray-600 text-sm">{proj.description}</p>
+                  <div className="flex justify-between items-baseline">
+                    <p className="font-semibold text-gray-800 text-sm">{proj.name}</p>
+                    {proj.link && (
+                      
+                   <a     href={normalizeUrl(proj.link)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs underline"
+                        style={{ color: accentColor }}
+                      >
+                        Link
+                      </a>
+                    )}
+                  </div>
+                  {proj.description && (
+                    <p className="text-gray-600 text-sm">{proj.description}</p>
+                  )}
+                  {proj.technologies && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      {Array.isArray(proj.technologies)
+                        ? proj.technologies.join(", ")
+                        : proj.technologies}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>

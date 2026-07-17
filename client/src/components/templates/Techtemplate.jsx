@@ -64,7 +64,7 @@ const TechTemplate = ({ data, accentColor }) => {
               const Icon = platform.icon;
               return (
                 
-                  <a key={i}
+                <a  key={i}
                   href={normalizeUrl(social.url)}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -130,6 +130,41 @@ const TechTemplate = ({ data, accentColor }) => {
                 </span>
               </div>
               <p className="text-gray-700 italic">{edu.institution}</p>
+              {edu.gpa && <p className="text-gray-600 text-xs">GPA: {edu.gpa}</p>}
+            </div>
+          ))}
+        </section>
+      )}
+
+      {data.projects?.length > 0 && (
+        <section className="mb-6">
+          <h2 className="font-bold border-b border-gray-300 mb-3" style={{ color: accentColor }}>
+            Projects
+          </h2>
+          {data.projects.map((proj, i) => (
+            <div key={i} className="mb-4">
+              <div className="flex justify-between items-baseline">
+                <span className="font-bold text-gray-900">{proj.name}</span>
+                {proj.link && (
+                  
+                   <a href={normalizeUrl(proj.link)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline text-xs"
+                    style={{ color: accentColor }}
+                  >
+                    Link
+                  </a>
+                )}
+              </div>
+              {proj.description && <p className="text-gray-700 mt-1">{proj.description}</p>}
+              {proj.technologies && (
+                <p className="text-gray-600 text-xs mt-1">
+                  {Array.isArray(proj.technologies)
+                    ? proj.technologies.join(", ")
+                    : proj.technologies}
+                </p>
+              )}
             </div>
           ))}
         </section>

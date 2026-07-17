@@ -55,7 +55,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
           )}
           {data.personal_info?.website && (
             
-            <a  href={normalizeUrl(data.personal_info.website)}
+             <a href={normalizeUrl(data.personal_info.website)}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1"
@@ -74,7 +74,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
               const Icon = platform.icon;
               return (
                 
-                 <a key={index}
+                <a  key={index}
                   href={normalizeUrl(social.url)}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -155,6 +155,9 @@ const ClassicTemplate = ({ data, accentColor }) => {
                       {edu.field_of_study ? `, ${edu.field_of_study}` : ""}
                     </h3>
                     <p className="text-gray-700 font-medium">{edu.institution}</p>
+                    {edu.gpa && (
+                      <p className="text-sm text-gray-600">GPA: {edu.gpa}</p>
+                    )}
                   </div>
                   <div className="text-right text-sm text-gray-600">
                     <p>
@@ -163,6 +166,48 @@ const ClassicTemplate = ({ data, accentColor }) => {
                     </p>
                   </div>
                 </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {data.projects?.length > 0 && (
+        <section className="mb-6">
+          <h2 className="text-xl font-semibold mb-4" style={{ color: accentColor }}>
+            PROJECTS
+          </h2>
+          <div className="space-y-4">
+            {data.projects.map((proj, index) => (
+              <div
+                key={index}
+                className="border-l-2 pl-4"
+                style={{ borderColor: accentColor }}
+              >
+                <div className="flex justify-between items-start">
+                  <h3 className="font-semibold text-gray-900">{proj.name}</h3>
+                  {proj.link && (
+                    
+                     <a href={normalizeUrl(proj.link)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm underline"
+                      style={{ color: accentColor }}
+                    >
+                      Link
+                    </a>
+                  )}
+                </div>
+                {proj.description && (
+                  <p className="text-gray-700 leading-relaxed mt-1">{proj.description}</p>
+                )}
+                {proj.technologies && (
+                  <p className="text-sm text-gray-500 mt-1">
+                    {Array.isArray(proj.technologies)
+                      ? proj.technologies.join(", ")
+                      : proj.technologies}
+                  </p>
+                )}
               </div>
             ))}
           </div>

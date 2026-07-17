@@ -37,7 +37,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
           {data.personal_info?.title && <span>{data.personal_info.title}</span>}
           {data.personal_info?.website && (
             
-           <a   href={normalizeUrl(data.personal_info.website)}
+            <a  href={normalizeUrl(data.personal_info.website)}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:underline break-all"
@@ -55,7 +55,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
               const Icon = platform.icon;
               return (
                 
-                 <a key={index}
+                <a  key={index}
                   href={normalizeUrl(social.url)}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -135,6 +135,47 @@ const MinimalTemplate = ({ data, accentColor }) => {
                   </span>
                 </div>
                 <p className="text-gray-600">{edu.institution}</p>
+                {edu.gpa && <p className="text-sm text-gray-500">GPA: {edu.gpa}</p>}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {data.projects?.length > 0 && (
+        <section className="mb-10">
+          <h2
+            className="text-sm uppercase tracking-widest mb-6 font-medium"
+            style={{ color: accentColor }}
+          >
+            Projects
+          </h2>
+          <div className="space-y-6">
+            {data.projects.map((proj, index) => (
+              <div key={index}>
+                <div className="flex justify-between items-baseline mb-1">
+                  <h3 className="text-lg font-medium">{proj.name}</h3>
+                  {proj.link && (
+                    
+                   <a  href={normalizeUrl(proj.link)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm hover:underline"
+                    >
+                      Link
+                    </a>
+                  )}
+                </div>
+                {proj.description && (
+                  <p className="text-gray-700">{proj.description}</p>
+                )}
+                {proj.technologies && (
+                  <p className="text-sm text-gray-500 mt-1">
+                    {Array.isArray(proj.technologies)
+                      ? proj.technologies.join(", ")
+                      : proj.technologies}
+                  </p>
+                )}
               </div>
             ))}
           </div>
