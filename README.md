@@ -90,8 +90,13 @@ For Server
 
 The application should now be accessible via your browser at the development URL provided in your terminal (usually http://localhost:5173 or http://localhost:3000).
 
+### Ai usage
+Used AI in templates, and debugging of code
+
 ### License
 MIT — do whatever you want with it.
 
 ### Developer Note
 I will add more templates in future 
+
+
