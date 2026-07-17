@@ -173,7 +173,7 @@ const NexusTemplate = ({ data, accentColor }) => {
                 <div key={i} className="border-l-2 border-gray-300 pl-4">
                   <h3 className="font-semibold text-gray-900 text-sm">
                     {edu.degree}
-                    {edu.field_of_study ? `, ${edu.field_of_study}` : ""}
+                    {edu.field? `, ${edu.field}` : ""}
                   </h3>
                   <p className="text-gray-700 text-sm font-medium mb-1">{edu.institution}</p>
                   <p className="text-xs text-gray-500">

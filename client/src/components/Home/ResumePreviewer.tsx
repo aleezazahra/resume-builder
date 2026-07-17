@@ -47,21 +47,20 @@ const ResumePreviewer: React.FC<ResumePreviewerProps> = ({ data, template, accen
         {renderTemplate()}
       </div>
 
-      <style dangerouslySetInnerHTML={{ __html: `
+     <style dangerouslySetInnerHTML={{ __html: `
         #resume-preview-container::-webkit-scrollbar {
-  width: 8px;
- 
-}
-#resume-preview-container::-webkit-scrollbar-track {
-  background: transparent;
-}
-#resume-preview-container::-webkit-scrollbar-thumb {
-  background: #3f3f46;
-  border-radius: 999px;
-}
-#resume-preview-container::-webkit-scrollbar-thumb:hover {
-  background: #71717a;
-}
+          width: 8px;
+        }
+        #resume-preview-container::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        #resume-preview-container::-webkit-scrollbar-thumb {
+          background: #3f3f46;
+          border-radius: 999px;
+        }
+        #resume-preview-container::-webkit-scrollbar-thumb:hover {
+          background: #71717a;
+        }
         #resume-preview ol {
           list-style-type: decimal !important;
           padding-left: 1.5em !important;
@@ -72,34 +71,6 @@ const ResumePreviewer: React.FC<ResumePreviewerProps> = ({ data, template, accen
         }
         #resume-preview li {
           display: list-item !important;
-        }
-        @page {
-          size: letter;
-          margin: 0;
-        }
-        @media print {
-          html, body {
-            width: 8.5in;
-            height: 11in;
-            overflow: hidden;
-          }
-          body * {
-            visibility: hidden;
-          }
-          #resume-preview, #resume-preview * {
-            visibility: visible;
-          }
-          #resume-preview {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: auto;
-            margin: 0;
-            padding: 0;
-            box-shadow: none !important;
-            border: none !important;
-          }
         }
       `}} />
     </div>

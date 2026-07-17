@@ -167,7 +167,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                 <div key={index} className="mb-4">
                   <h3 className="font-semibold text-gray-900">
                     {edu.degree}
-                    {edu.field_of_study ? `, ${edu.field_of_study}` : ""}
+                    {edu.field ? `, ${edu.field}` : ""}
                   </h3>
                   <p style={{ color: accentColor }}>{edu.institution}</p>
                   <span className="text-sm text-gray-500 block">

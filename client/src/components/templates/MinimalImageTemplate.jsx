@@ -213,7 +213,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                     <div className="flex justify-between items-baseline">
                       <h3 className="font-semibold text-zinc-800">
                         {edu.degree}
-                        {edu.field_of_study ? `, ${edu.field_of_study}` : ""}
+                        {edu.field? `, ${edu.field}` : ""}
                       </h3>
                       <span className="text-xs text-zinc-500">
                         {formatDate(edu.start_date)} -{" "}

@@ -110,7 +110,7 @@ const TechTemplate = ({ data, accentColor }) => {
               <div className="flex justify-between items-baseline">
                 <span className="font-bold text-gray-900">
                   {edu.degree}
-                  {edu.field_of_study ? `, ${edu.field_of_study}` : ""}
+                  {edu.field ? `, ${edu.field}` : ""}
                 </span>
                 <span className="text-gray-600 text-xs">
                   {formatDate(edu.start_date)} -{" "}

@@ -117,7 +117,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
                 <div className="flex justify-between items-baseline mb-1">
                   <h3 className="text-lg font-medium">
                     {edu.degree}
-                    {edu.field_of_study ? `, ${edu.field_of_study}` : ""}
+                    {edu.field ? `, ${edu.field}` : ""}
                   </h3>
                   <span className="text-sm text-gray-500">
                     {formatDate(edu.start_date)} -{" "}

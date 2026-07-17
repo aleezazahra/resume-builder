@@ -140,7 +140,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                   <div>
                     <h3 className="font-semibold text-gray-900">
                       {edu.degree}
-                      {edu.field_of_study ? `, ${edu.field_of_study}` : ""}
+                      {edu.field ? `, ${edu.field}` : ""}
                     </h3>
                     <p className="text-gray-700 font-medium">{edu.institution}</p>
                     {edu.gpa && <p className="text-sm text-gray-600">GPA: {edu.gpa}</p>}

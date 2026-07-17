@@ -160,16 +160,16 @@ useEffect(() => {
 
 
 const handlePrint = useCallback(() => {
-    if (!resumeRef.current) return;
-    
-    const styleId = "resume-print-style";
-    let styleEl = document.getElementById(styleId);
-    if (!styleEl) {
-      styleEl = document.createElement("style");
-      styleEl.id = styleId;
-      document.head.appendChild(styleEl);
-    }
-    styleEl.innerHTML = `
+  if (!resumeRef.current) return;
+
+  const styleId = "resume-print-style";
+  let styleEl = document.getElementById(styleId);
+  if (!styleEl) {
+    styleEl = document.createElement("style");
+    styleEl.id = styleId;
+    document.head.appendChild(styleEl);
+  }
+ styleEl.innerHTML = `
   @media print {
     body > * { display: none !important; }
     #resume-print-portal { display: block !important; }
@@ -190,38 +190,50 @@ const handlePrint = useCallback(() => {
       background: white !important;
     }
     #resume-print-portal section {
-      page-break-inside: avoid;
-      break-inside: avoid;
-      padding-top: 15mm;
+      break-inside: avoid-page;
+      padding-top: 6mm;
     }
     #resume-print-portal h2 {
-      page-break-after: avoid;
-      break-after: avoid;
+      break-after: avoid-page;
     }
     #resume-print-portal section:first-of-type {
       padding-top: 0;
     }
   }
 `;
+  let portal = document.getElementById("resume-print-portal");
+  if (!portal) {
+    portal = document.createElement("div");
+    portal.id = "resume-print-portal";
+    document.body.appendChild(portal);
+  }
+  portal.innerHTML = "";
+  const clone = resumeRef.current.cloneNode(true) as HTMLElement;
+  clone.style.cssText = "width:210mm;margin:0;padding:0;box-sizing:border-box;background:white;";
+  portal.appendChild(clone);
 
-    let portal = document.getElementById("resume-print-portal");
-    if (!portal) {
-      portal = document.createElement("div");
-      portal.id = "resume-print-portal";
-      document.body.appendChild(portal);
-    }
-    portal.innerHTML = "";
-    const clone = resumeRef.current.cloneNode(true) as HTMLElement;
-    clone.style.cssText = "width:210mm;margin:0;padding:0;box-sizing:border-box;background:white;";
-    portal.appendChild(clone);
-    
-    setIsPrinting(true);
-    requestAnimationFrame(() => {
-      window.print();
-      setIsPrinting(false);
-      portal!.innerHTML = "";
-    });
-  }, []);
+  setIsPrinting(true);
+
+  // Clean up only after the browser tells us printing is actually done.
+  // window.print() is blocking in Chrome but NOT in Firefox/Safari, so
+  // wiping the portal right after calling it (old code) could yank the
+  // content out from under the print engine before it finished rendering.
+  const cleanup = () => {
+    setIsPrinting(false);
+    portal!.innerHTML = "";
+    window.removeEventListener("afterprint", cleanup);
+  };
+  window.addEventListener("afterprint", cleanup);
+
+  // Fallback safety net in case afterprint never fires (some old/odd
+  // browser combos, or the user cancels via Esc on some platforms)
+  const fallback = setTimeout(cleanup, 60000);
+  window.addEventListener("afterprint", () => clearTimeout(fallback), { once: true });
+
+  requestAnimationFrame(() => {
+    window.print();
+  });
+}, []);
 
 
   const handleShare = useCallback(async () => {
