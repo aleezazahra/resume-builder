@@ -48,7 +48,7 @@ const SKillsForm = ({ data, onChange }: InterestsFormProps) => {
         <div className="space-y-4 w-full">
             <div className="mt-2 w-full overflow-hidden rounded-lg border border-dashed border-white/30">
                 <div
-                    id="interests-toolbar"
+                    id="toolbar"
                     className="border border-gray-300 rounded-t-lg p-2 bg-gray-50"
                 >
                     <button className="ql-bold" title="Bold" />
