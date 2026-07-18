@@ -64,7 +64,7 @@ const SKillsForm = ({ data, onChange }: InterestsFormProps) => {
                 />
             </div>
 
-            <p className="text-xs text-white/40 max-w-[80%] text-left mt-2">
+            <p className="text-xs text-gray-500 max-w-[80%] text-left mt-2">
                 e.g Languages : Python , C++
             </p>
         </div>

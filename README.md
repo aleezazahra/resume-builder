@@ -98,5 +98,3 @@ MIT — do whatever you want with it.
 
 ### Developer Note
 I will add more templates in future 
-
-
