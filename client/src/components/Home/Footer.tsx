@@ -99,7 +99,7 @@ const Footer = () => {
           </a>{" "}
           with 🩷 for{" "}
           <a
-            href="https://live.hackclub.com/"
+            href="hackclub.com"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white/70 underline underline-offset-4 transition-colors hover:text-white"
