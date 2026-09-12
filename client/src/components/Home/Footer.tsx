@@ -99,12 +99,12 @@ const Footer = () => {
           </a>{" "}
           with 🩷 for{" "}
           <a
-            href="https://horizons.hackclub.com/"
+            href="https://live.hackclub.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-white/70 underline underline-offset-4 transition-colors hover:text-white"
           >
-            Hack Club Horizons
+            Hack Club :3
           </a>
         </p>
       </div>
