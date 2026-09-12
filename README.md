@@ -6,7 +6,9 @@
 ---
 Naqsh makes builduing resume straightforward. Put in your information and choose from highly-customizable templates.Export it as PDF or use the link to spam recruiters :3
 
-The code base is open-source under the MIT license, with no ads or hidden costs.
+The code base is open-source under the MIT license, with no ads or hidden costs
+
+made for hackclub :3 
 
 ---
 ## Features
